@@ -1,4 +1,4 @@
-name: Tag Music from MEGA
+name: Untitled track killer
 
 on:
   workflow_dispatch:
