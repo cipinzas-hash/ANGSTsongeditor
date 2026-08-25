@@ -3,7 +3,7 @@ set -euo pipefail
 
 RAW_DIR="/tmp/musica_raw"
 PROCESSED_DIR="/tmp/musica_procesada"   # debe coincidir con "directory:" en beets_config.template.yaml
-STAGING="/untitledless"                 # carpeta temporal en MEGA, se borra al final
+STAGING="/beetstag_staging_tmp"          # carpeta temporal en MEGA, se borra al final
 mkdir -p "$RAW_DIR" "$PROCESSED_DIR"
 
 echo "== Iniciando sesion en MEGA =="

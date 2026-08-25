@@ -6,7 +6,7 @@ on:
       mega_source:
         description: "Ruta de la carpeta DENTRO DE TU CUENTA de MEGA (ej. /Musica/DiscosSinTaggear). No sirve un link publico: el bot necesita borrar y mover archivos dentro de esa carpeta."
         required: true
-        default: "/DiscosSinTaggear"
+        default: "/untitledless"
 
 jobs:
   tag:
