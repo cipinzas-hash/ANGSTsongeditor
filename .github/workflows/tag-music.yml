@@ -4,13 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       mega_source:
-        description: "Carpeta o link de MEGA de origen"
+        description: "Ruta de la carpeta DENTRO DE TU CUENTA de MEGA (ej. /Musica/DiscosSinTaggear). No sirve un link publico: el bot necesita borrar y mover archivos dentro de esa carpeta."
         required: true
-        default: "https://mega.nz/folder/UVBkmboB#Z-Vd85gXHkKe0ebhDAUL2w"
-      mega_dest:
-        description: "Carpeta de MEGA de destino (ya tageada)"
-        required: true
-        default: "/ProcesadoTags"
+        default: "/DiscosSinTaggear"
 
 jobs:
   tag:
@@ -20,7 +16,6 @@ jobs:
       MEGA_PASSWORD: ${{ secrets.MEGA_PASSWORD }}
       ACOUSTID_API_KEY: ${{ secrets.ACOUSTID_API_KEY }}
       MEGA_SOURCE: ${{ inputs.mega_source }}
-      MEGA_DEST: ${{ inputs.mega_dest }}
     steps:
       - uses: actions/checkout@v4
 
