@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       mega_source:
-        description: "Ruta de la carpeta DENTRO DE TU CUENTA de MEGA (ej. /Musica/DiscosSinTaggear). No sirve un link publico: el bot necesita borrar y mover archivos dentro de esa carpeta."
+        description: "Carpeta o link de MEGA de origen (solo lectura — no se borra ni se toca)"
         required: true
-        default: "/untitledless"
+        default: "https://mega.nz/folder/UVBkmboB#Z-Vd85gXHkKe0ebhDAUL2w"
 
 jobs:
   tag:
