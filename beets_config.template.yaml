@@ -5,6 +5,7 @@ import:
   move: yes
   quiet: yes
   quiet_fallback: asis   # si no hay match confiable, igual se sube con lo que se pudo inferir
+  duplicate_action: keep # sin esto, albumes distintos con album vacio (fromfilename no lo completa) se saltean entre si como si ya existieran
   timid: no
 
 plugins: chroma fromfilename fetchart embedart
