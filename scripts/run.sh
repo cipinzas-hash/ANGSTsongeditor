@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+shopt -s nullglob
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RAW_DIR="/tmp/musica_raw"
@@ -21,7 +22,7 @@ python3 "$SCRIPT_DIR/verify_tags.py" "$PROCESSED_DIR"
 
 echo "== Subiendo resultado tageado a $MEGA_DEST =="
 mega-mkdir -p "$MEGA_DEST" || true
-mega-put -c "$PROCESSED_DIR" "$MEGA_DEST"
+mega-put -c "$PROCESSED_DIR"/* "$MEGA_DEST"
 
 echo "== Cerrando sesion =="
 mega-logout
