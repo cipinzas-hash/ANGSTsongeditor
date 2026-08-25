@@ -1,0 +1,46 @@
+name: Tag Music from MEGA
+
+on:
+  workflow_dispatch:
+    inputs:
+      mega_source:
+        description: "Carpeta o link de MEGA de origen"
+        required: true
+        default: "https://mega.nz/folder/UVBkmboB#Z-Vd85gXHkKe0ebhDAUL2w"
+      mega_dest:
+        description: "Carpeta de MEGA de destino (ya tageada)"
+        required: true
+        default: "/ProcesadoTags"
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    env:
+      MEGA_EMAIL: ${{ secrets.MEGA_EMAIL }}
+      MEGA_PASSWORD: ${{ secrets.MEGA_PASSWORD }}
+      ACOUSTID_API_KEY: ${{ secrets.ACOUSTID_API_KEY }}
+      MEGA_SOURCE: ${{ inputs.mega_source }}
+      MEGA_DEST: ${{ inputs.mega_dest }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar dependencias del sistema (fpcalc, MEGAcmd)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libchromaprint-tools gnupg
+          wget -q https://mega.nz/linux/repo/xUbuntu_24.04/amd64/megacmd-xUbuntu_24.04_amd64.deb
+          sudo apt-get install -y ./megacmd-xUbuntu_24.04_amd64.deb
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependencias de Python
+        run: pip install -r requirements.txt
+
+      - name: Generar beets_config.yaml
+        run: envsubst < beets_config.template.yaml > beets_config.yaml
+
+      - name: Correr el bot
+        run: bash scripts/run.sh
