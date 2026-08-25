@@ -1,0 +1,19 @@
+directory: /tmp/musica_procesada
+library: /tmp/beetslib.db
+
+import:
+  move: yes
+  quiet: yes
+  quiet_fallback: asis   # si no hay match confiable, igual se sube con lo que se pudo inferir
+  timid: no
+
+plugins: chroma fromfilename fetchart embedart
+
+acoustid:
+  apikey: ${ACOUSTID_API_KEY}
+
+fetchart:
+  auto: yes
+
+embedart:
+  auto: yes
