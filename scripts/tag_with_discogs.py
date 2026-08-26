@@ -260,16 +260,18 @@ def main():
             f.rename(dest)
             if folder_album:
                 itunes = search_itunes_track(artist, folder_album, file_title)
+                # pista y genero via itunes (sin restriccion de album) demostraron
+                # ser poco confiables en la practica (matchean contra singles/otros
+                # releases con el mismo nombre de cancion) - se dejan sin escribir
+                # en vez de arriesgar un dato equivocado con apariencia de certeza.
                 write_tags(dest, artist, folder_album, file_title,
-                           itunes["track_num"], itunes["year"], itunes["genre"], itunes["cover_bytes"])
+                           None, itunes["year"], None, itunes["cover_bytes"])
                 extras = []
-                if itunes["track_num"]:
-                    extras.append(f"pista={itunes['track_num']}")
                 if itunes["year"]:
                     extras.append(f"año={itunes['year']}")
-                if itunes["genre"]:
-                    extras.append(f"genero={itunes['genre']}")
                 extras.append(f"caratula={'si' if itunes['cover_bytes'] else 'no'}")
+                if itunes["track_num"] or itunes["genre"]:
+                    extras.append(f"(descartado por poco confiable: pista={itunes['track_num']}, genero={itunes['genre']})")
                 print(f"    FALLBACK: {artist} - {folder_album} - {file_title} (sin confirmar en Discogs; itunes: {', '.join(extras)})")
             else:
                 print(f"    sin carpeta de album disponible, queda sin tagear")
