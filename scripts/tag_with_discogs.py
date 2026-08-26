@@ -214,10 +214,15 @@ def main():
 
         result = search_release(artist, folder_album, file_title)
         if not result:
-            print(f"    sin resultados en Discogs para '{artist} - {file_title}'")
+            print(f"    sin resultados en Discogs para '{artist} - {file_title}' -> tageando con lo parseado del nombre/carpeta")
             dest = PROCESSED_DIR / rel
             dest.parent.mkdir(parents=True, exist_ok=True)
             f.rename(dest)
+            if folder_album:
+                write_tags(dest, artist, folder_album, file_title, None, None, None, None)
+                print(f"    FALLBACK: {artist} - {folder_album} - {file_title} (sin confirmar en Discogs)")
+            else:
+                print(f"    sin carpeta de album disponible, queda sin tagear")
             continue
 
         detail = fetch_release_detail(result.get("id"))
