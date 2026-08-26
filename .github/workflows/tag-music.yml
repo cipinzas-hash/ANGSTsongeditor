@@ -4,9 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       mega_source:
-        description: "Carpeta o link de MEGA de origen (solo lectura — no se borra ni se toca)"
-        required: true
-        default: "https://mega.nz/folder/UVBkmboB#Z-Vd85gXHkKe0ebhDAUL2w"
+        description: "Ruta INTERNA de tu cuenta MEGA (no un link publico - hace falta poder listar y borrar dentro de ella). Ej: /musica"
+        required: false
+        default: ""
+      batch_size:
+        description: "Maximo de canciones a procesar en esta corrida"
+        required: false
+        default: "100"
+  schedule:
+    - cron: '0 */5 * * *'  # cada 5 horas
 
 jobs:
   tag:
@@ -15,7 +21,13 @@ jobs:
       MEGA_EMAIL: ${{ secrets.MEGA_EMAIL }}
       MEGA_PASSWORD: ${{ secrets.MEGA_PASSWORD }}
       DISCOGS_TOKEN: ${{ secrets.DISCOGS_TOKEN }}
-      MEGA_SOURCE: ${{ inputs.mega_source }}
+      # Los runs por schedule no tienen "inputs" (son solo de workflow_dispatch),
+      # por eso el fallback a vars.MEGA_SOURCE_PATH - hay que configurar esa
+      # variable de repo (Settings > Secrets and variables > Actions > Variables)
+      # para que las corridas automaticas sepan de donde leer.
+      MEGA_SOURCE: ${{ github.event.inputs.mega_source || vars.MEGA_SOURCE_PATH }}
+      MEGA_DEST: "/untitledless"
+      BATCH_SIZE: ${{ github.event.inputs.batch_size || '100' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -33,6 +45,13 @@ jobs:
 
       - name: Instalar dependencias de Python
         run: pip install -r requirements.txt
+
+      - name: Verificar que MEGA_SOURCE este configurado
+        run: |
+          if [ -z "$MEGA_SOURCE" ]; then
+            echo "ERROR: no hay MEGA_SOURCE. Para corridas manuales, completa el input. Para corridas automaticas (schedule), configura la variable de repo MEGA_SOURCE_PATH."
+            exit 1
+          fi
 
       - name: Correr el bot
         run: bash scripts/run.sh

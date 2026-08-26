@@ -240,16 +240,22 @@ def _ensure_moved(f: Path, dest: Path):
         f.rename(dest)
 
 
-def process_file(f: Path):
-    rel = f.relative_to(RAW_DIR)
-    dest = PROCESSED_DIR / rel
+def process_file(f: Path, raw_dir: Path = None, processed_dir: Path = None):
+    """Procesa un archivo. Por defecto usa RAW_DIR/PROCESSED_DIR globales
+    (uso normal del CLI); un caller externo (batch_run.py) puede pasar
+    directorios especificos para procesar un archivo suelto fuera del
+    escaneo completo de una carpeta."""
+    raw_dir = raw_dir or RAW_DIR
+    processed_dir = processed_dir or PROCESSED_DIR
+    rel = f.relative_to(raw_dir)
+    dest = processed_dir / rel
     print(f"[{rel}]")
 
     try:
         if already_tagged(f):
             print("    ya tenia tags completos, se deja tal cual")
             _ensure_moved(f, dest)
-            return
+            return dest
 
         folder_artist, folder_album = parse_album_folder(f.parent.name)
         file_artist, file_title = parse_filename(f, folder_artist)
@@ -258,7 +264,7 @@ def process_file(f: Path):
         if not artist or not file_title:
             print(f"    NO SE PUDO PARSEAR el nombre de archivo, se deja sin tagear")
             _ensure_moved(f, dest)
-            return
+            return dest
 
         result = search_release(artist, folder_album, file_title)
         if not result:
@@ -281,7 +287,7 @@ def process_file(f: Path):
                 print(f"    FALLBACK: {artist} - {folder_album} - {file_title} (sin confirmar en Discogs; itunes: {', '.join(extras)})")
             else:
                 print(f"    sin carpeta de album disponible, queda sin tagear")
-            return
+            return dest
 
         detail = fetch_release_detail(result.get("id"))
         tracklist = (detail or {}).get("tracklist", [])
@@ -303,6 +309,7 @@ def process_file(f: Path):
         _ensure_moved(f, dest)
         write_tags(dest, real_artist, album_name, track_title, track_num, year, genre, cover_bytes)
         print(f"    OK: {real_artist} - {album_name} - {track_title} ({year or '?'})")
+        return dest
 
     except Exception as e:
         # Un archivo problematico (corrupto, ID3 raro, lo que sea) NUNCA debe
@@ -310,6 +317,7 @@ def process_file(f: Path):
         # que se haya alcanzado a escribir), y se sigue con el resto.
         print(f"    ERROR procesando este archivo, se deja sin tagear y se continua con el resto: {e}")
         _ensure_moved(f, dest)
+        return dest
 
 
 def main():
@@ -317,7 +325,7 @@ def main():
     print(f"== Tageando {len(files)} archivo(s) via Discogs (busqueda por texto) ==\n")
 
     for f in files:
-        process_file(f)
+        process_file(f, RAW_DIR, PROCESSED_DIR)
 
     print("\n== Tageo con Discogs terminado ==")
 
