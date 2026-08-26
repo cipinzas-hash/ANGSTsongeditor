@@ -49,3 +49,4 @@ if incompletos:
     print("Incompletos:")
     for f in incompletos:
         print(f"  - {f}")
+    sys.exit(1)  # senal para que run.sh corte el pipeline y NO suba nada

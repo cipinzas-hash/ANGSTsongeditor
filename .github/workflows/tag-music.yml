@@ -14,15 +14,14 @@ jobs:
     env:
       MEGA_EMAIL: ${{ secrets.MEGA_EMAIL }}
       MEGA_PASSWORD: ${{ secrets.MEGA_PASSWORD }}
-      ACOUSTID_API_KEY: ${{ secrets.ACOUSTID_API_KEY }}
       MEGA_SOURCE: ${{ inputs.mega_source }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Instalar dependencias del sistema (fpcalc, MEGAcmd)
+      - name: Instalar MEGAcmd
         run: |
           sudo apt-get update
-          sudo apt-get install -y libchromaprint-tools gnupg
+          sudo apt-get install -y gnupg
           wget -q https://mega.nz/linux/repo/xUbuntu_24.04/amd64/megacmd-xUbuntu_24.04_amd64.deb
           sudo apt-get install -y ./megacmd-xUbuntu_24.04_amd64.deb
 

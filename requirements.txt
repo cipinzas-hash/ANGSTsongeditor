@@ -1,3 +1,2 @@
 beets
-pyacoustid
 mutagen

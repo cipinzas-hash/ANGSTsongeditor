@@ -5,20 +5,17 @@ import:
   move: yes
   quiet: yes
   quiet_fallback: asis   # si no hay match confiable, igual se sube con lo que se pudo inferir
-  duplicate_action: keep # sin esto, albumes distintos con album vacio (fromfilename no lo completa) se saltean entre si como si ya existieran
+  duplicate_action: keep # sin esto, albumes distintos con album vacio se saltean entre si como si ya existieran
   timid: no
 
-plugins: chroma fromfilename fetchart embedart
+plugins: fromfilename fetchart embedart
 
 match:
   # En modo quiet, beets SOLO auto-aplica matches "strong" (todo lo demas cae
   # a quiet_fallback: asis) - el default de strong_rec_thresh es 0.04 (muy
   # estricto). Se afloja a 0.15 para aceptar mas matches de MusicBrainz via
-  # texto (fromfilename) en vez de importar todo tal cual.
+  # texto (fromfilename da artista/titulo, MusicBrainz busca album/pista).
   strong_rec_thresh: 0.15
-
-acoustid:
-  apikey: ${ACOUSTID_API_KEY}
 
 fetchart:
   auto: yes
