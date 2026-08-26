@@ -138,28 +138,44 @@ def best_track_match(tracklist, guessed_title):
     return None
 
 
-def search_itunes_artwork(artist, album):
-    """Respaldo de caratula cuando Discogs no tiene el release.
-    API publica de Apple, sin auth. Devuelve bytes de la imagen o None."""
-    if not artist or not album:
-        return None
+def search_itunes_track(artist, album, track_title):
+    """Respaldo cuando Discogs no tiene el release: busca la CANCION puntual
+    (entity=song) en la API publica de Apple (sin auth). Devuelve dict con
+    lo que haya disponible: track_num, genre, year, cover_bytes. Cualquier
+    campo ausente en la respuesta se deja en None, no se inventa."""
+    out = {"track_num": None, "genre": None, "year": None, "cover_bytes": None}
+    if not artist or not track_title:
+        return out
     try:
-        params = {"term": f"{artist} {album}", "entity": "album", "limit": 1}
+        params = {
+            "term": f"{artist} {track_title}",
+            "entity": "song",
+            "limit": 1,
+        }
         url = f"https://itunes.apple.com/search?{urllib.parse.urlencode(params)}"
         req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
         with urllib.request.urlopen(req, timeout=15) as resp:
             data = json.loads(resp.read().decode("utf-8"))
         results = data.get("results") or []
         if not results:
-            return None
-        art_url = results[0].get("artworkUrl100")
-        if not art_url:
-            return None
-        art_url_hires = art_url.replace("100x100bb", "600x600bb")
-        return download(art_url_hires) or download(art_url)
+            return out
+        r = results[0]
+
+        out["track_num"] = r.get("trackNumber")
+        out["genre"] = r.get("primaryGenreName")
+
+        release_date = r.get("releaseDate")  # no siempre viene, no se garantiza
+        if release_date and len(release_date) >= 4:
+            out["year"] = release_date[:4]
+
+        art_url = r.get("artworkUrl100")
+        if art_url:
+            art_url_hires = art_url.replace("100x100bb", "600x600bb")
+            out["cover_bytes"] = download(art_url_hires) or download(art_url)
     except Exception as e:
-        print(f"    [itunes] busqueda de caratula fallo: {e}")
-        return None
+        print(f"    [itunes] busqueda fallo: {e}")
+    time.sleep(3.5)  # iTunes limita a ~20 req/min, esto da margen
+    return out
 
 
 def write_tags(path: Path, artist, album, title, track_num, year, genre, cover_bytes):
@@ -243,9 +259,18 @@ def main():
             dest.parent.mkdir(parents=True, exist_ok=True)
             f.rename(dest)
             if folder_album:
-                cover_bytes = search_itunes_artwork(artist, folder_album)
-                write_tags(dest, artist, folder_album, file_title, None, None, None, cover_bytes)
-                print(f"    FALLBACK: {artist} - {folder_album} - {file_title} (sin confirmar en Discogs, caratula={'itunes' if cover_bytes else 'no'})")
+                itunes = search_itunes_track(artist, folder_album, file_title)
+                write_tags(dest, artist, folder_album, file_title,
+                           itunes["track_num"], itunes["year"], itunes["genre"], itunes["cover_bytes"])
+                extras = []
+                if itunes["track_num"]:
+                    extras.append(f"pista={itunes['track_num']}")
+                if itunes["year"]:
+                    extras.append(f"año={itunes['year']}")
+                if itunes["genre"]:
+                    extras.append(f"genero={itunes['genre']}")
+                extras.append(f"caratula={'si' if itunes['cover_bytes'] else 'no'}")
+                print(f"    FALLBACK: {artist} - {folder_album} - {file_title} (sin confirmar en Discogs; itunes: {', '.join(extras)})")
             else:
                 print(f"    sin carpeta de album disponible, queda sin tagear")
             continue
