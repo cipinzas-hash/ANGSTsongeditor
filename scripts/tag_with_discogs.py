@@ -138,6 +138,30 @@ def best_track_match(tracklist, guessed_title):
     return None
 
 
+def search_itunes_artwork(artist, album):
+    """Respaldo de caratula cuando Discogs no tiene el release.
+    API publica de Apple, sin auth. Devuelve bytes de la imagen o None."""
+    if not artist or not album:
+        return None
+    try:
+        params = {"term": f"{artist} {album}", "entity": "album", "limit": 1}
+        url = f"https://itunes.apple.com/search?{urllib.parse.urlencode(params)}"
+        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        results = data.get("results") or []
+        if not results:
+            return None
+        art_url = results[0].get("artworkUrl100")
+        if not art_url:
+            return None
+        art_url_hires = art_url.replace("100x100bb", "600x600bb")
+        return download(art_url_hires) or download(art_url)
+    except Exception as e:
+        print(f"    [itunes] busqueda de caratula fallo: {e}")
+        return None
+
+
 def write_tags(path: Path, artist, album, title, track_num, year, genre, cover_bytes):
     try:
         audio = EasyID3(path)
@@ -219,8 +243,9 @@ def main():
             dest.parent.mkdir(parents=True, exist_ok=True)
             f.rename(dest)
             if folder_album:
-                write_tags(dest, artist, folder_album, file_title, None, None, None, None)
-                print(f"    FALLBACK: {artist} - {folder_album} - {file_title} (sin confirmar en Discogs)")
+                cover_bytes = search_itunes_artwork(artist, folder_album)
+                write_tags(dest, artist, folder_album, file_title, None, None, None, cover_bytes)
+                print(f"    FALLBACK: {artist} - {folder_album} - {file_title} (sin confirmar en Discogs, caratula={'itunes' if cover_bytes else 'no'})")
             else:
                 print(f"    sin carpeta de album disponible, queda sin tagear")
             continue
