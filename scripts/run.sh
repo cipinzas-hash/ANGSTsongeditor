@@ -4,7 +4,7 @@ shopt -s nullglob
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RAW_DIR="/tmp/musica_raw"
-PROCESSED_DIR="/tmp/musica_procesada"   # debe coincidir con "directory:" en beets_config.template.yaml
+PROCESSED_DIR="/tmp/musica_procesada"
 MEGA_DEST="/untitledless"               # carpeta fija de destino, archivos ya tageados
 mkdir -p "$RAW_DIR" "$PROCESSED_DIR"
 
@@ -17,8 +17,8 @@ mega-login "$MEGA_EMAIL" "$MEGA_PASSWORD"
 echo "== Descargando: $MEGA_SOURCE =="
 mega-get "$MEGA_SOURCE" "$RAW_DIR"
 
-echo "== Tageando con beets (nombre de archivo + busqueda por texto en MusicBrainz) =="
-beet -c beets_config.yaml import -q "$RAW_DIR"
+echo "== Tageando por texto (artista + titulo del nombre de archivo) via Discogs =="
+python3 "$SCRIPT_DIR/tag_with_discogs.py" "$RAW_DIR" "$PROCESSED_DIR"
 
 echo "== Verificando tags reales de lo procesado =="
 if ! python3 "$SCRIPT_DIR/verify_tags.py" "$PROCESSED_DIR"; then
