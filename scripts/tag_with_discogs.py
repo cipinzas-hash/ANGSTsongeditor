@@ -223,23 +223,33 @@ def already_tagged(path: Path) -> bool:
         audio = EasyID3(path)
     except ID3NoHeaderError:
         return False
+    except Exception:
+        # archivo corrupto/formato raro: no asumir que ya esta tageado,
+        # dejar que el resto del pipeline lo intente y lo marque incompleto
+        # si corresponde, en vez de propagar la excepcion.
+        return False
     return bool(audio.get("artist")) and bool(audio.get("album")) and bool(audio.get("title"))
 
 
-def main():
-    files = sorted(p for p in RAW_DIR.rglob("*") if p.suffix.lower() in AUDIO_EXTS)
-    print(f"== Tageando {len(files)} archivo(s) via Discogs (busqueda por texto) ==\n")
+def _ensure_moved(f: Path, dest: Path):
+    """Garantiza que el archivo termine en PROCESSED_DIR pase lo que pase,
+    aunque sea sin tags - asi verify_tags.py lo ve y lo reporta como
+    incompleto, en vez de que se pierda silenciosamente."""
+    if f.exists() and not dest.exists():
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        f.rename(dest)
 
-    for f in files:
-        rel = f.relative_to(RAW_DIR)
-        print(f"[{rel}]")
 
+def process_file(f: Path):
+    rel = f.relative_to(RAW_DIR)
+    dest = PROCESSED_DIR / rel
+    print(f"[{rel}]")
+
+    try:
         if already_tagged(f):
             print("    ya tenia tags completos, se deja tal cual")
-            dest = PROCESSED_DIR / rel
-            dest.parent.mkdir(parents=True, exist_ok=True)
-            f.rename(dest)
-            continue
+            _ensure_moved(f, dest)
+            return
 
         folder_artist, folder_album = parse_album_folder(f.parent.name)
         file_artist, file_title = parse_filename(f, folder_artist)
@@ -247,17 +257,13 @@ def main():
 
         if not artist or not file_title:
             print(f"    NO SE PUDO PARSEAR el nombre de archivo, se deja sin tagear")
-            dest = PROCESSED_DIR / rel
-            dest.parent.mkdir(parents=True, exist_ok=True)
-            f.rename(dest)
-            continue
+            _ensure_moved(f, dest)
+            return
 
         result = search_release(artist, folder_album, file_title)
         if not result:
             print(f"    sin resultados en Discogs para '{artist} - {file_title}' -> tageando con lo parseado del nombre/carpeta")
-            dest = PROCESSED_DIR / rel
-            dest.parent.mkdir(parents=True, exist_ok=True)
-            f.rename(dest)
+            _ensure_moved(f, dest)
             if folder_album:
                 itunes = search_itunes_track(artist, folder_album, file_title)
                 # pista y genero via itunes (sin restriccion de album) demostraron
@@ -275,7 +281,7 @@ def main():
                 print(f"    FALLBACK: {artist} - {folder_album} - {file_title} (sin confirmar en Discogs; itunes: {', '.join(extras)})")
             else:
                 print(f"    sin carpeta de album disponible, queda sin tagear")
-            continue
+            return
 
         detail = fetch_release_detail(result.get("id"))
         tracklist = (detail or {}).get("tracklist", [])
@@ -294,12 +300,24 @@ def main():
         cover_url = result.get("cover_image") or result.get("thumb")
         cover_bytes = download(cover_url) if cover_url else None
 
-        dest = PROCESSED_DIR / rel
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        f.rename(dest)
-
+        _ensure_moved(f, dest)
         write_tags(dest, real_artist, album_name, track_title, track_num, year, genre, cover_bytes)
         print(f"    OK: {real_artist} - {album_name} - {track_title} ({year or '?'})")
+
+    except Exception as e:
+        # Un archivo problematico (corrupto, ID3 raro, lo que sea) NUNCA debe
+        # matar la corrida entera - se loguea, se deja sin tagear (o con lo
+        # que se haya alcanzado a escribir), y se sigue con el resto.
+        print(f"    ERROR procesando este archivo, se deja sin tagear y se continua con el resto: {e}")
+        _ensure_moved(f, dest)
+
+
+def main():
+    files = sorted(p for p in RAW_DIR.rglob("*") if p.suffix.lower() in AUDIO_EXTS)
+    print(f"== Tageando {len(files)} archivo(s) via Discogs (busqueda por texto) ==\n")
+
+    for f in files:
+        process_file(f)
 
     print("\n== Tageo con Discogs terminado ==")
 
