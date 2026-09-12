@@ -60,6 +60,14 @@ def list_source_files():
     return sorted(l for l in lines if Path(l).suffix.lower() in AUDIO_EXTS)
 
 
+def sanitize_folder_name(name: str) -> str:
+    """Nombre de carpeta seguro para MEGA -- saca separadores de path y
+    espacios sobrantes. No hace falta más que esto: MEGA no tiene la lista
+    de caracteres prohibidos de Windows (: * ? " < > |), solo '/' rompe la
+    jerarquía de carpetas."""
+    return name.replace("/", "-").strip() or "Desconocido"
+
+
 def main():
     print(f"== Listando archivos en {MEGA_SOURCE} (sin descargar) ==")
     all_files = list_source_files()
@@ -116,7 +124,14 @@ def main():
                 incompletos += 1
                 continue
 
-            remote_dest_dir = f"{MEGA_DEST}/{Path(rel).parent}".rstrip("/.")
+            # Antes esto espejaba la carpeta de origen (Path(rel).parent) --
+            # con la fuente reorganizada a archivos sueltos, eso ya no daba
+            # ninguna estructura real. Ahora arma Artista/Álbum a partir de
+            # los tags YA VERIFICADOS arriba (verify["ok"] garantiza que
+            # artist/album no son "?" acá).
+            artista = sanitize_folder_name(verify["artist"])
+            album = sanitize_folder_name(verify["album"])
+            remote_dest_dir = f"{MEGA_DEST}/{artista}/{album}"
             try:
                 run_mega(["mega-mkdir", "-p", remote_dest_dir], check=False)
                 run_mega(["mega-put", "-c", str(dest), remote_dest_dir + "/"])
