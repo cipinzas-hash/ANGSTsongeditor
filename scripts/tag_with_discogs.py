@@ -300,8 +300,10 @@ def process_file(f: Path, raw_dir: Path = None, processed_dir: Path = None):
         artist = file_artist or folder_artist
 
         if not artist or not file_title:
-            print(f"    NO SE PUDO PARSEAR el nombre de archivo, se deja sin tagear")
+            print(f"    NO SE PUDO PARSEAR el nombre de archivo -> Unknown Artist/Unknown Disc")
             _ensure_moved(f, dest)
+            titulo_fallback = romanize_with_gemini(f.stem)
+            write_tags(dest, "Unknown Artist", "Unknown Disc", titulo_fallback, None, None, None, None)
             return dest
 
         result = search_release(artist, folder_album, file_title)
@@ -327,7 +329,18 @@ def process_file(f: Path, raw_dir: Path = None, processed_dir: Path = None):
                     extras.append(f"(descartado por poco confiable: pista={itunes['track_num']}, genero={itunes['genre']})")
                 print(f"    FALLBACK: {artist} - {folder_album} - {file_title} (sin confirmar en Discogs; itunes: {', '.join(extras)})")
             else:
-                print(f"    sin carpeta de album disponible, queda sin tagear")
+                # Antes esto quedaba sin tagear para siempre -- sin album ni
+                # match de Discogs, verify_tags lo marcaba incompleto en
+                # cada corrida, nunca se subía ni se borraba de la fuente.
+                # Se conserva el artista/título parseados del nombre de
+                # archivo (son reales, no hay motivo para descartarlos) y
+                # solo el álbum -- lo que realmente falta -- va a
+                # "Unknown Disc", así el archivo avanza y Cristopher puede
+                # revisar esa carpeta puntual a mano después.
+                artist_out = romanize_with_gemini(artist)
+                title_out = romanize_with_gemini(file_title)
+                write_tags(dest, artist_out, "Unknown Disc", title_out, None, None, None, None)
+                print(f"    FALLBACK sin álbum: {artist} - Unknown Disc - {file_title}")
             return dest
 
         detail = fetch_release_detail(result.get("id"))
