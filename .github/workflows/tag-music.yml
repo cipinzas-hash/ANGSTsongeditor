@@ -21,6 +21,7 @@ jobs:
       MEGA_EMAIL: ${{ secrets.MEGA_EMAIL }}
       MEGA_PASSWORD: ${{ secrets.MEGA_PASSWORD }}
       DISCOGS_TOKEN: ${{ secrets.DISCOGS_TOKEN }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       # Los runs por schedule no tienen "inputs" (son solo de workflow_dispatch),
       # por eso el fallback a vars.MEGA_SOURCE_PATH - hay que configurar esa
       # variable de repo (Settings > Secrets and variables > Actions > Variables)

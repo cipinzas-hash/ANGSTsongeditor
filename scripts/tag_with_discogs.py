@@ -23,9 +23,47 @@ from mutagen.id3 import ID3, APIC, ID3NoHeaderError
 from mutagen.mp3 import MP3
 
 DISCOGS_TOKEN = os.environ.get("DISCOGS_TOKEN", "").strip()
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "").strip()
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash").strip()
 USER_AGENT = "UntitledTrackKiller/1.0 +https://github.com/cipinzas-hash/ANGSTsongeditor"
 API_BASE = "https://api.discogs.com"
 RATE_LIMIT_SLEEP = 1.1  # 60 req/min autenticado -> margen de sobra
+
+# Hiragana, Katakana, Kanji (CJK unificado) -- alcanza para detectar japones
+# real sin falsos positivos con otros scripts no latinos.
+JAPANESE_RE = re.compile(r"[\u3040-\u309f\u30a0-\u30ff\u4e00-\u9fff]")
+
+
+def contains_japanese(text):
+    return bool(text) and bool(JAPANESE_RE.search(text))
+
+
+def romanize_with_gemini(text):
+    """Devuelve la romanizacion Hepburn de un tag en japones via Gemini. Si
+    falta la API key, la llamada falla, o la respuesta viene vacia, devuelve
+    el texto original sin tocar -- nunca se sube un tag vacio a cambio de
+    uno en japones que no se pudo romanizar."""
+    if not GEMINI_API_KEY or not contains_japanese(text):
+        return text
+    try:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
+        prompt = (
+            "Romaniza el siguiente texto japones a romaji usando el sistema "
+            "Hepburn, tal como se veria en un tag de metadata de musica "
+            "(nombre de artista, album o cancion). Devolve UNICAMENTE el "
+            "texto romanizado, sin comillas, sin explicacion, sin texto "
+            f"adicional. Texto: {text}"
+        )
+        payload = json.dumps({"contents": [{"parts": [{"text": prompt}]}]}).encode("utf-8")
+        req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        romanizado = data["candidates"][0]["content"]["parts"][0]["text"].strip().strip('"')
+        time.sleep(1.5)  # margen conservador, sin límite confirmado del plan de Cristopher
+        return romanizado or text
+    except Exception as e:
+        print(f"    [gemini] romanizacion fallo, se deja el original: {e}")
+        return text
 
 RAW_DIR = Path(sys.argv[1] if len(sys.argv) > 1 else "/tmp/musica_raw")
 PROCESSED_DIR = Path(sys.argv[2] if len(sys.argv) > 2 else "/tmp/musica_procesada")
@@ -276,7 +314,10 @@ def process_file(f: Path, raw_dir: Path = None, processed_dir: Path = None):
                 # ser poco confiables en la practica (matchean contra singles/otros
                 # releases con el mismo nombre de cancion) - se dejan sin escribir
                 # en vez de arriesgar un dato equivocado con apariencia de certeza.
-                write_tags(dest, artist, folder_album, file_title,
+                artist_out = romanize_with_gemini(artist)
+                album_out = romanize_with_gemini(folder_album)
+                title_out = romanize_with_gemini(file_title)
+                write_tags(dest, artist_out, album_out, title_out,
                            None, itunes["year"], None, itunes["cover_bytes"])
                 extras = []
                 if itunes["year"]:
@@ -305,6 +346,10 @@ def process_file(f: Path, raw_dir: Path = None, processed_dir: Path = None):
 
         cover_url = result.get("cover_image") or result.get("thumb")
         cover_bytes = download(cover_url) if cover_url else None
+
+        real_artist = romanize_with_gemini(real_artist)
+        album_name = romanize_with_gemini(album_name)
+        track_title = romanize_with_gemini(track_title)
 
         _ensure_moved(f, dest)
         write_tags(dest, real_artist, album_name, track_title, track_num, year, genre, cover_bytes)
