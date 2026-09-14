@@ -29,30 +29,50 @@ USER_AGENT = "UntitledTrackKiller/1.0 +https://github.com/cipinzas-hash/ANGSTson
 API_BASE = "https://api.discogs.com"
 RATE_LIMIT_SLEEP = 1.1  # 60 req/min autenticado -> margen de sobra
 
-# Hiragana, Katakana, Kanji (CJK unificado) -- alcanza para detectar japones
-# real sin falsos positivos con otros scripts no latinos.
-JAPANESE_RE = re.compile(r"[\u3040-\u309f\u30a0-\u30ff\u4e00-\u9fff]")
+# Cualquier script no latino común en metadata de música: japonés
+# (hiragana/katakana/kanji), coreano (hangul), chino (comparte el rango CJK
+# con kanji), cirílico, griego, árabe, hebreo, tailandés, devanagari (hindi).
+# No se generaliza a "cualquier caracter fuera de ASCII" a propósito --
+# acentos/diéresis/eñes latinos (café, Mötley, Björk) NO deberían disparar
+# una romanización, ya están en caracteres latinos.
+NON_LATIN_RE = re.compile(
+    "["
+    "\u3040-\u30ff"   # hiragana + katakana
+    "\u4e00-\u9fff"   # CJK unificado (chino + kanji)
+    "\uac00-\ud7af"   # hangul (coreano)
+    "\u0400-\u04ff"   # cirílico
+    "\u0370-\u03ff"   # griego
+    "\u0600-\u06ff"   # árabe
+    "\u0590-\u05ff"   # hebreo
+    "\u0e00-\u0e7f"   # tailandés
+    "\u0900-\u097f"   # devanagari (hindi)
+    "]"
+)
 
 
-def contains_japanese(text):
-    return bool(text) and bool(JAPANESE_RE.search(text))
+def contains_non_latin_script(text):
+    return bool(text) and bool(NON_LATIN_RE.search(text))
 
 
 def romanize_with_gemini(text):
-    """Devuelve la romanizacion Hepburn de un tag en japones via Gemini. Si
-    falta la API key, la llamada falla, o la respuesta viene vacia, devuelve
-    el texto original sin tocar -- nunca se sube un tag vacio a cambio de
-    uno en japones que no se pudo romanizar."""
-    if not GEMINI_API_KEY or not contains_japanese(text):
+    """Devuelve la romanizacion/transcripcion a caracteres latinos de un tag
+    en script no latino via Gemini -- cualquier idioma, no solo japones (ver
+    NON_LATIN_RE). Si falta la API key, la llamada falla, o la respuesta
+    viene vacia, devuelve el texto original sin tocar -- nunca se sube un
+    tag vacio a cambio de uno que no se pudo romanizar."""
+    if not GEMINI_API_KEY or not contains_non_latin_script(text):
         return text
     try:
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
         prompt = (
-            "Romaniza el siguiente texto japones a romaji usando el sistema "
-            "Hepburn, tal como se veria en un tag de metadata de musica "
-            "(nombre de artista, album o cancion). Devolve UNICAMENTE el "
-            "texto romanizado, sin comillas, sin explicacion, sin texto "
-            f"adicional. Texto: {text}"
+            "Transcribi el siguiente texto a caracteres latinos (romaji si es "
+            "japones, romanizacion revisada si es coreano, pinyin si es "
+            "chino, o el sistema de romanizacion estandar que corresponda "
+            "segun el idioma real del texto), tal como se veria en un tag de "
+            "metadata de musica (nombre de artista, album o cancion). No "
+            "traduzcas el significado, solo transcribi la pronunciacion. "
+            "Devolve UNICAMENTE el texto transcripto, sin comillas, sin "
+            f"explicacion, sin texto adicional. Texto: {text}"
         )
         payload = json.dumps({"contents": [{"parts": [{"text": prompt}]}]}).encode("utf-8")
         req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
@@ -62,7 +82,7 @@ def romanize_with_gemini(text):
         time.sleep(1.5)  # margen conservador, sin límite confirmado del plan de Cristopher
         return romanizado or text
     except Exception as e:
-        print(f"    [gemini] romanizacion fallo, se deja el original: {e}")
+        print(f"    [gemini] transcripcion fallo, se deja el original: {e}")
         return text
 
 RAW_DIR = Path(sys.argv[1] if len(sys.argv) > 1 else "/tmp/musica_raw")
