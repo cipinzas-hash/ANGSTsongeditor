@@ -85,6 +85,49 @@ def romanize_with_gemini(text):
         print(f"    [gemini] transcripcion fallo, se deja el original: {e}")
         return text
 
+
+def translate_with_gemini(text):
+    """Traduccion al espanol del SIGNIFICADO (no la pronunciacion) de un
+    titulo de cancion o album en script no latino -- para contexto, no
+    reemplaza el tag. Nunca se llama sobre nombre de artista (un nombre
+    propio no se traduce). Mismo criterio de fallo silencioso que
+    romanize_with_gemini: si algo falla, devuelve None y el comentario
+    simplemente no se agrega, no rompe nada del resto del tageo."""
+    if not GEMINI_API_KEY or not contains_non_latin_script(text):
+        return None
+    try:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
+        prompt = (
+            "Traduci al espanol el SIGNIFICADO (no la pronunciacion) del "
+            "siguiente titulo de cancion o album de musica. Traduccion "
+            "natural y breve, como quedaria el titulo si se publicara en "
+            "espanol -- no una traduccion literal palabra por palabra si "
+            "sale forzada. Devolve UNICAMENTE la traduccion, sin comillas, "
+            f"sin explicacion, sin texto adicional. Texto: {text}"
+        )
+        payload = json.dumps({"contents": [{"parts": [{"text": prompt}]}]}).encode("utf-8")
+        req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        traduccion = data["candidates"][0]["content"]["parts"][0]["text"].strip().strip('"')
+        time.sleep(1.5)
+        return traduccion or None
+    except Exception as e:
+        print(f"    [gemini] traduccion fallo, se omite el comentario: {e}")
+        return None
+
+
+def build_translation_comment(title_original, title_es, album_original, album_es):
+    """Arma el texto del campo comment a partir de las traducciones que
+    hayan salido bien -- cualquiera de las dos puede faltar sin romper la
+    otra. None si no hay nada que agregar (ninguna traduccion disponible)."""
+    partes = []
+    if title_es and title_es != title_original:
+        partes.append(f'Cancion: "{title_es}"')
+    if album_es and album_es != album_original:
+        partes.append(f'Disco: "{album_es}"')
+    return f"Traducción -- {' / '.join(partes)}" if partes else None
+
 RAW_DIR = Path(sys.argv[1] if len(sys.argv) > 1 else "/tmp/musica_raw")
 PROCESSED_DIR = Path(sys.argv[2] if len(sys.argv) > 2 else "/tmp/musica_procesada")
 AUDIO_EXTS = {".mp3"}  # el resto del pipeline (MEGA, verify_tags) asume mp3 en este bot
@@ -236,7 +279,7 @@ def search_itunes_track(artist, album, track_title):
     return out
 
 
-def write_tags(path: Path, artist, album, title, track_num, year, genre, cover_bytes):
+def write_tags(path: Path, artist, album, title, track_num, year, genre, cover_bytes, comment=None):
     try:
         audio = EasyID3(path)
     except ID3NoHeaderError:
@@ -258,6 +301,8 @@ def write_tags(path: Path, artist, album, title, track_num, year, genre, cover_b
         audio["date"] = str(year)
     if genre:
         audio["genre"] = genre
+    if comment:
+        audio["comment"] = comment
     audio.save()
 
     if cover_bytes:
@@ -323,7 +368,8 @@ def process_file(f: Path, raw_dir: Path = None, processed_dir: Path = None):
             print(f"    NO SE PUDO PARSEAR el nombre de archivo -> Unknown Artist/Unknown Disc")
             _ensure_moved(f, dest)
             titulo_fallback = romanize_with_gemini(f.stem)
-            write_tags(dest, "Unknown Artist", "Unknown Disc", titulo_fallback, None, None, None, None)
+            comment = build_translation_comment(f.stem, translate_with_gemini(f.stem), None, None)
+            write_tags(dest, "Unknown Artist", "Unknown Disc", titulo_fallback, None, None, None, None, comment)
             return dest
 
         result = search_release(artist, folder_album, file_title)
@@ -336,11 +382,13 @@ def process_file(f: Path, raw_dir: Path = None, processed_dir: Path = None):
                 # ser poco confiables en la practica (matchean contra singles/otros
                 # releases con el mismo nombre de cancion) - se dejan sin escribir
                 # en vez de arriesgar un dato equivocado con apariencia de certeza.
+                comment = build_translation_comment(file_title, translate_with_gemini(file_title),
+                                                     folder_album, translate_with_gemini(folder_album))
                 artist_out = romanize_with_gemini(artist)
                 album_out = romanize_with_gemini(folder_album)
                 title_out = romanize_with_gemini(file_title)
                 write_tags(dest, artist_out, album_out, title_out,
-                           None, itunes["year"], None, itunes["cover_bytes"])
+                           None, itunes["year"], None, itunes["cover_bytes"], comment)
                 extras = []
                 if itunes["year"]:
                     extras.append(f"año={itunes['year']}")
@@ -357,9 +405,10 @@ def process_file(f: Path, raw_dir: Path = None, processed_dir: Path = None):
                 # solo el álbum -- lo que realmente falta -- va a
                 # "Unknown Disc", así el archivo avanza y Cristopher puede
                 # revisar esa carpeta puntual a mano después.
+                comment = build_translation_comment(file_title, translate_with_gemini(file_title), None, None)
                 artist_out = romanize_with_gemini(artist)
                 title_out = romanize_with_gemini(file_title)
-                write_tags(dest, artist_out, "Unknown Disc", title_out, None, None, None, None)
+                write_tags(dest, artist_out, "Unknown Disc", title_out, None, None, None, None, comment)
                 print(f"    FALLBACK sin álbum: {artist} - Unknown Disc - {file_title}")
             return dest
 
@@ -380,12 +429,15 @@ def process_file(f: Path, raw_dir: Path = None, processed_dir: Path = None):
         cover_url = result.get("cover_image") or result.get("thumb")
         cover_bytes = download(cover_url) if cover_url else None
 
+        comment = build_translation_comment(track_title, translate_with_gemini(track_title),
+                                             album_name, translate_with_gemini(album_name))
+
         real_artist = romanize_with_gemini(real_artist)
         album_name = romanize_with_gemini(album_name)
         track_title = romanize_with_gemini(track_title)
 
         _ensure_moved(f, dest)
-        write_tags(dest, real_artist, album_name, track_title, track_num, year, genre, cover_bytes)
+        write_tags(dest, real_artist, album_name, track_title, track_num, year, genre, cover_bytes, comment)
         print(f"    OK: {real_artist} - {album_name} - {track_title} ({year or '?'})")
         return dest
 
