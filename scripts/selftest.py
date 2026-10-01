@@ -16,6 +16,18 @@ out = {"ts": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
        "gemini_model": T.GEMINI_MODEL, "gemini_key_present": bool(T.GEMINI_API_KEY),
        "gemini_key_length": len(T.GEMINI_API_KEY), "gemini": [], "discogs": None}
 
+# Modelos disponibles para esta key (solo nombres; la key nunca se imprime)
+try:
+    import json as _j, urllib.request as _u
+    _url = f"https://generativelanguage.googleapis.com/v1beta/models?pageSize=200&key={T.GEMINI_API_KEY}"
+    with _u.urlopen(_url, timeout=20) as _r:
+        _d = _j.loads(_r.read().decode("utf-8"))
+    out["modelos_generateContent"] = sorted(
+        m["name"].split("/")[-1] for m in _d.get("models", [])
+        if "generateContent" in m.get("supportedGenerationMethods", []))
+except Exception as e:
+    out["modelos_error"] = str(e).replace(T.GEMINI_API_KEY, "***")[:200]
+
 pruebas = [("ja", "古い心"), ("ko", "안녕하세요"), ("ja", "ふるい心")]
 for lang, texto in pruebas:
     item = {"lang": lang, "input": texto}
