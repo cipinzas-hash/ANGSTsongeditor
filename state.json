@@ -4,9 +4,9 @@
  "batch_size": 100,
  "runs": 4,
  "counts": {
-  "uploaded": 89,
-  "ya_completo": 83,
-  "sidecars": 5,
+  "uploaded": 109,
+  "ya_completo": 103,
+  "sidecars": 9,
   "retry": 59,
   "con_album": 6,
   "romanizados": 6
@@ -40,6 +40,7 @@
    "/untitledless/Normoria/Normoria Essentials (EP)",
    "/untitledless/Normoria/Origin",
    "/untitledless/Normoria/Voyage",
+   "/untitledless/PARADISE LOST/Draconian Times",
    "/untitledless/Paradise Lost/Draconian Times",
    "/untitledless/Paradise Lost/Icon",
    "/untitledless/Paradise Lost/Medusa",
