@@ -83,7 +83,7 @@
   ]
  },
  "gemini": {
-  "ok": 20,
+  "ok": 24,
   "fail": 0,
   "errors": []
  },
@@ -91,7 +91,7 @@
  "last_action": "run",
  "started_at": "2026-10-01T18:18:37Z",
  "last_run": "2026-10-01T19:56:12Z",
- "pending": 461,
+ "pending": 361,
  "fix_dl_v2": true,
  "dl_fail": {},
  "fix_dl_v3": true
