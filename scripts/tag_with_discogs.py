@@ -334,6 +334,39 @@ def _snapshot(tags: dict) -> dict:
     return {k: tags.get(k) for k in ("artist", "album", "title", "albumartist", "track", "year", "genre", "has_cover")}
 
 
+def _romanize_complete(f, dest, existing, nl_fields, info, attempt, g0):
+    """Archivo con tags completos pero en script no latino: se romanizan SOLO
+    los campos no latinos para poder encontrarlos al buscar. El valor original
+    queda en el comentario del archivo (y en el informe) -- nada se pierde."""
+    names = {"artist": "Artista", "album": "Disco", "title": "Cancion"}
+    proposed = {k: romanize_with_gemini(existing[k]) for k in nl_fields}
+    translations = {k: (translate_with_gemini(existing[k]) if k in ("album", "title") else None) for k in nl_fields}
+    comment = build_translation_comment(existing.get("title") if "title" in nl_fields else None, translations.get("title"),
+                                        existing.get("album") if "album" in nl_fields else None, translations.get("album"))
+    originals = " / ".join(f'{names[k]}: "{existing[k]}"' for k in nl_fields)
+    comment = (comment + "\n" if comment else "") + f"Original -- {originals}"
+
+    info["gemini_fail"] = STATS["gemini_fail"] - g0
+    failed = [k for k in nl_fields if contains_non_latin_script(proposed[k])]
+    if failed and attempt < 2:
+        info.update(status="reintentar", note="Gemini fallo al romanizar; se reintenta")
+        return None, info
+    ok_fields = {k for k in nl_fields if k not in failed}
+    if not ok_fields:
+        print("    no se pudo romanizar (Gemini); se sube sin cambios y queda marcado")
+        _ensure_moved(f, dest)
+        info.update(status="ya_completo", source="existente", after=info["before"], no_latin=True,
+                    note="romanizacion fallida: tags originales intactos")
+        return dest, info
+    _ensure_moved(f, dest)
+    written = write_tags(dest, {k: proposed[k] for k in ok_fields}, existing, None, comment, overwrite=ok_fields)
+    after = read_tags(dest)
+    info.update(status="ok", source="romanizado", romanized=True, written=written, after=_snapshot(after),
+                no_latin=bool(failed), note=("campos sin romanizar: " + ", ".join(failed)) if failed else None)
+    print(f"    ROMANIZADO: {after.get('artist')} - {after.get('album')} - {after.get('title')}")
+    return dest, info
+
+
 def process_file_ex(f: Path, raw_dir: Path = None, processed_dir: Path = None, attempt: int = 1):
     """Procesa un archivo. Devuelve (dest, info).
 
@@ -362,11 +395,13 @@ def process_file_ex(f: Path, raw_dir: Path = None, processed_dir: Path = None, a
             return None, info
 
         if is_complete(existing):
-            print("    ya tenia tags reales completos, se deja tal cual")
-            _ensure_moved(f, dest)
-            info.update(status="ya_completo", source="existente", after=info["before"])
-            info["no_latin"] = any(contains_non_latin_script(existing.get(k)) for k in ("artist", "album", "title"))
-            return dest, info
+            nl_fields = [k for k in ("artist", "album", "title") if contains_non_latin_script(existing.get(k))]
+            if not nl_fields:
+                print("    ya tenia tags reales completos, se deja tal cual")
+                _ensure_moved(f, dest)
+                info.update(status="ya_completo", source="existente", after=info["before"])
+                return dest, info
+            return _romanize_complete(f, dest, existing, nl_fields, info, attempt, g0)
 
         folder_artist, folder_album = parse_album_folder(f.parent.name)
         file_artist, file_title = parse_filename(f, folder_artist)

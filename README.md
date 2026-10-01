@@ -1,108 +1,77 @@
 # Untitled track killer
 
-Bot incremental que lee canciones desde una carpeta de MEGA, les completa
-metadata (artista, álbum, título, carátula) buscando por **texto** en
-Discogs — con respaldo en iTunes cuando Discogs no tiene el release — y
-sube el resultado tageado a `/untitledless` en tu MEGA. **Reemplaza** el
-original: una vez confirmada la subida del archivo tageado, borra el
-crudo de la fuente.
+Bot que lee canciones (mp3 y m4a) desde una carpeta de MEGA, completa su
+metadata (artista, álbum, título, carátula) y las reubica en
+`/untitledless/<Artista>/<Álbum>/`. Busca por **texto** en Discogs (con
+respaldo de iTunes para año y carátula); no huella ni decodifica el audio.
+Pensado para música de nicho. **Reemplaza** el original: borra el crudo de la
+fuente solo después de confirmar la subida.
 
-Corre solo, cada 5 horas, procesando hasta 100 canciones por corrida (para
-no agotar cuota/espacio de MEGA de una sola vez en bibliotecas grandes). También
-se puede disparar a mano en cualquier momento.
+## Cómo funciona: un trabajo con inicio y fin
 
-No usa huella de audio ni decodifica el audio en ningún momento: todo el
-matching es por nombre de archivo + búsqueda de texto. Pensado para
-colecciones de nicho (industrial/EBM/underground) donde Discogs suele tener
-mejor cobertura que MusicBrainz.
+El bot **no procesa nada hasta que se lo pides**. Desde Actions → *Untitled
+track killer* → *Run workflow*, eliges una acción:
 
-## Cómo sabe qué procesar en cada corrida
+| Acción | Qué hace |
+|---|---|
+| `selftest` | Prueba Gemini (romanizar/traducir japonés y coreano) y Discogs. No toca MEGA. Resultado en `selftest.json` |
+| `inventory` | Cuenta los archivos de la fuente por extensión. No descarga ni mueve nada. Resultado en `inventory.json` |
+| `start` | Inicia el trabajo (o ajusta `batch_size` si ya hay uno activo) y corre un lote ya. Primer arranque recomendado: `batch_size=5` |
+| `run` | Corre un lote (es lo que hace el cron) |
+| `stop` | Detiene el trabajo |
 
-No hay manifest ni base de estado separada. La fuente misma es el estado:
-en cada corrida, lista (sin descargar) lo que hay en `MEGA_SOURCE_PATH`,
-toma los primeros `BATCH_SIZE` (100 por defecto) archivos que encuentra, y
-por cada uno:
+Con el trabajo activo, el cron (`0 */5 * * *`) corre un lote cada 5 h. Si no
+hay trabajo activo sale en segundos. Cuando no queda audio en la fuente, el
+trabajo rescata los acompañantes huérfanos, barre las carpetas vacías y pasa
+solo a `finished` (o `finished_with_leftovers` si quedan archivos no audio
+sin canción). Para rehacerlo, otro `start`.
 
-1. Descarga solo ese archivo (no toda la biblioteca).
-2. Si ya tiene ID3 completo, no llama a ninguna API — se sube tal cual.
-3. Si no, tagea por texto vía Discogs (con respaldo de iTunes).
-4. Verifica con `mutagen` que el resultado quedó completo.
-5. Si quedó completo: sube a `/untitledless` y **recién ahí** borra el
-   original de la fuente.
-6. Si quedó incompleto, o algo falló en el camino: el original **no se
-   toca**, queda en la fuente para reintentarse en una corrida futura.
+## Estado e informe (rama `job-state`)
 
-Como el borrado solo ocurre tras confirmar la subida, un archivo que
-falla nunca desaparece sin haberse reemplazado — y lo que queda en la
-fuente en cualquier momento es exactamente lo que falta procesar,
-sin necesidad de llevar un registro aparte.
+Todo vive en la rama `job-state`, sin tocar `main`:
 
-## Antes de correrlo
+- `summary.md` — estado, conteos y fallos de Gemini. **Empieza por acá.**
+- `report.jsonl` — una línea por archivo: tags **originales** antes de tocarlo, tags finales, fuente del dato (existente / discogs / itunes / nombre / romanizado), destino, acompañantes y motivo si no se procesó.
+- `state.json` — estado del trabajo, intentos por archivo.
+- `leftovers.json`, `inventory.json`, `selftest.json`.
 
-1. Sube esta carpeta a un repo de GitHub.
-2. Sacá un token gratuito de Discogs: `discogs.com` → tu cuenta → **Settings
-   → Developers → Generate new token**.
-3. En el repo, **Settings → Secrets and variables → Actions → pestaña
-   "Secrets"**, agregá:
-   - `MEGA_EMAIL` — el correo de tu cuenta MEGA
-   - `MEGA_PASSWORD` — la contraseña
-   - `DISCOGS_TOKEN` — el token del paso 2
-4. En la misma sección pero pestaña **"Variables"** (aparte de Secrets),
-   agregá `MEGA_SOURCE_PATH` con la **ruta interna** de tu cuenta MEGA
-   donde están los crudos sin tagear (ej. `/musica`). Tiene que ser la ruta
-   real dentro de tu cuenta — **no** un link público de `mega.nz/folder/...`,
-   porque el bot necesita poder listar y borrar dentro de esa carpeta, y
-   eso requiere estar logueado en la cuenta dueña, no acceder por link
-   compartido. Esta variable es la que usan las corridas automáticas
-   (schedule); una corrida manual puede pisarla completando el input.
-5. Listo — el workflow ya corre solo cada 5 horas. Para dispararlo a mano:
-   pestaña **Actions** → *Untitled track killer* → **Run workflow**.
+## Reglas de protección de tags
 
-## Advertencia: esto borra tus archivos originales
+- Un tag con **valor real** nunca se pisa. Vacío o placeholder (`Unknown Artist`, `Unknown Disc`, `Track 01`, `Untitled album`, …) cuenta como ausente: se completa si hay match confiable, o se deja **vacío** (nunca se escribe "Unknown").
+- Un match de Discogs/iTunes solo se acepta si su artista coincide con el artista real (se ignora el sufijo `(2)` de Discogs).
+- Una carátula incrustada existente nunca se reemplaza.
+- **Excepción deliberada — script no latino:** si artista/álbum/título están en japonés, coreano, chino, cirílico, etc., se **romanizan** vía Gemini para poder encontrarlos al buscar. El valor original queda en el comentario del archivo (`Original -- …`) y en `report.jsonl`; el comentario también lleva la traducción al español de título y álbum (nunca del artista). Si Gemini falla, se reintenta una vez y después se sube con los tags originales intactos (queda contado en `no_latin_kept`).
+- Se guardan en el informe los tags originales de cada archivo.
 
-El diseño reemplaza los crudos por la versión tageada. El borrado solo pasa
-después de confirmar que la subida a `/untitledless` fue exitosa (nunca
-antes), pero sigue siendo un borrado real y permanente en MEGA. Antes de
-dejarlo corriendo solo sobre tu biblioteca completa:
+## Dónde termina cada archivo
 
-- Probá primero con una carpeta chica.
-- Confirmá en `/untitledless` que el resultado de una corrida de prueba
-  está bien, antes de confiar en corridas automáticas sin supervisión.
+- **Procesado** → `/untitledless/<Artista>/<Álbum>/`; sin álbum → `Untitled album`.
+- **No procesado** → `/untitledless-nonprocessed/<ruta relativa>`, con el motivo en el informe: `sin_artista`, `sin_titulo`, `incompleto`, `error_descarga`, `error_lectura`, `error_tageo`, `error_subida` (tras 2 intentos), `formato_no_soportado` (flac, ogg, wav, etc.).
+- **Acompañantes** (no audio con el mismo nombre base que la canción: `.lrc`, `.jpg`, `.cue`…) se mueven con ella, renombrados con el nombre final. Si dos audios comparten nombre base, ninguno se lleva el acompañante.
+- **Imagen de carpeta** (`album`, `albumart`, `cover`, `folder`, `front`, `art`, `artwork`): se mueve solo si todas las canciones de esa carpeta de origen terminaron en el mismo álbum.
+- **Huérfanos**: al final, un acompañante cuya canción ya está en el destino (o en no procesados) se mueve junto a ella.
+- Nombre repetido en el destino → se renombra `Nombre (2).mp3`, nunca se pisa.
 
-## Cosas a tener en cuenta
+## Configuración
 
-- **Sin manifest, la fuente es la cola**: si agregás canciones nuevas a
-  `MEGA_SOURCE_PATH`, la próxima corrida las va a encontrar automáticamente
-  (aparecen en el listado, no están en `/untitledless` todavía).
-- **Nombres de archivo ambiguos**: si no hay un separador `Artista -
-  Título` claro en el nombre, no hay forma confiable de parsear el
-  artista — ese archivo queda incompleto (y por lo tanto sin borrar de la
-  fuente) a propósito, no se inventa nada.
-- **Rate limits**: Discogs ~60 req/min, iTunes ~20 req/min (el bot
-  respeta ambos con pausas). Con 100 archivos por corrida esto no debería
-  acercarse al límite de tiempo de un job de Actions, pero en bibliotecas
-  con muchos casos de respaldo-por-iTunes puede tardar más.
-- **Versión de Ubuntu**: el instalador de MEGAcmd asume `xUbuntu_24.04`.
-  Si GitHub cambia la versión por defecto de `ubuntu-latest` y la
-  instalación falla, ajustá ese número en
-  `.github/workflows/tag-music.yml`.
-- **Ajustar el intervalo o el tamaño del lote**: el cron (`0 */5 * * *`,
-  cada 5 horas) está en `.github/workflows/tag-music.yml`. El tamaño de
-  lote es el input `batch_size` (default 100) para corridas manuales, o la
-  variable de entorno `BATCH_SIZE` en el workflow para cambiar el default
-  de las corridas automáticas.
+**Secrets**: `MEGA_EMAIL`, `MEGA_PASSWORD`, `DISCOGS_TOKEN`, `GEMINI_API_KEY` (`ACOUSTID_API_KEY` ya no se usa pero se conserva a propósito).
+**Variables**: `MEGA_SOURCE_PATH` (ruta *interna* de MEGA, ej. `/MEGA/musica`, no un link público) y, opcional, `GEMINI_MODEL`.
 
-## Correrlo localmente (sin GitHub Actions)
+Gemini: modelo principal `gemini-3.1-flash-lite`, con reintentos ante 429/5xx/timeouts y respaldo en `gemini-flash-latest` y `gemini-3.5-flash` (`gemini-2.0-flash` fue retirado).
+
+## Robustez
+
+`timeout-minutes: 50` en el job, `concurrency` (una corrida a la vez), timeout por comando `mega-*` (3 seguidos abortan la corrida), presupuesto de 40 min por corrida, runner fijo en `ubuntu-24.04` (el `.deb` de MEGAcmd es de 24.04; `ubuntu-latest` migra a 26.04 el 19-oct-2026). El estado se guarda cada 20 archivos.
+
+## Advertencia: esto borra tus originales
+
+El borrado solo ocurre tras confirmar la subida, pero es real y permanente en MEGA. Prueba siempre con `batch_size=5` y revisa `report.jsonl` antes de subirlo.
+
+## Correrlo localmente
 
 ```bash
 pip install -r requirements.txt
-export MEGA_EMAIL="tu correo"
-export MEGA_PASSWORD="tu contraseña"
-export MEGA_SOURCE="/musica"    # ruta interna, no link publico
-export MEGA_DEST="/untitledless"
-export DISCOGS_TOKEN="tu token"
-export BATCH_SIZE=100
-bash scripts/run.sh
+export MEGA_EMAIL=… MEGA_PASSWORD=… DISCOGS_TOKEN=… GEMINI_API_KEY=…
+export MEGA_SOURCE=/musica STATE_DIR=./state ACTION=start BATCH_SIZE=5
+bash scripts/run.sh     # requiere megacmd instalado
 ```
-
-Necesitás `megacmd` instalado en el sistema.

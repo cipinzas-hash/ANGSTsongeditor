@@ -144,7 +144,7 @@ def _image_mime(data: bytes) -> str:
     return "image/png" if data[:8] == b"\x89PNG\r\n\x1a\n" else "image/jpeg"
 
 
-def write_tags(path: Path, proposed: dict, existing: dict, cover_bytes=None, comment=None) -> dict:
+def write_tags(path: Path, proposed: dict, existing: dict, cover_bytes=None, comment=None, overwrite=()) -> dict:
     """Escribe SOLO lo que corresponde segun las reglas de proteccion.
 
     proposed: valores nuevos (artist, album, title, track, year, genre).
@@ -156,6 +156,9 @@ def write_tags(path: Path, proposed: dict, existing: dict, cover_bytes=None, com
     - albumartist: se escribe (= artista) solo si estaba vacio.
     - track/year/genre: solo si estaban vacios.
     - Un placeholder existente sin reemplazo real se LIMPIA (campo vacio).
+    - overwrite: campos (artist/album/title) cuyo valor REAL puede reemplazarse;
+      se usa solo para romanizar tags en script no latino (el original queda
+      en el comentario y en el informe).
     """
     written = {}
     audio = _open_easy(path)
@@ -163,7 +166,10 @@ def write_tags(path: Path, proposed: dict, existing: dict, cover_bytes=None, com
     for field in ("artist", "album", "title"):
         cur = existing.get(field)
         new = proposed.get(field)
-        if is_placeholder(field, cur):
+        if field in overwrite and new and not is_placeholder(field, new):
+            audio[field] = new
+            written[field] = new
+        elif is_placeholder(field, cur):
             if new and not is_placeholder(field, new):
                 audio[field] = new
                 written[field] = new
@@ -171,8 +177,9 @@ def write_tags(path: Path, proposed: dict, existing: dict, cover_bytes=None, com
                 del audio[field]           # limpia el placeholder -> campo vacio
                 written[field] = None
 
-    artist_now = existing.get("artist") if not is_placeholder("artist", existing.get("artist")) else written.get("artist")
-    if artist_now and not existing.get("albumartist"):
+    artist_now = written.get("artist") or (existing.get("artist") if not is_placeholder("artist", existing.get("artist")) else None)
+    if artist_now and (not existing.get("albumartist")
+                       or ("artist" in overwrite and existing.get("albumartist") == existing.get("artist"))):
         audio["albumartist"] = artist_now
         written["albumartist"] = artist_now
 
@@ -182,8 +189,10 @@ def write_tags(path: Path, proposed: dict, existing: dict, cover_bytes=None, com
             audio[tagkey] = str(new)
             written[field] = str(new)
 
-    if comment and kind(path) == "m4a" and not existing.get("comment"):
-        audio["comment"] = comment
+    if comment and kind(path) == "m4a":
+        full = comment if not existing.get("comment") else (
+            existing["comment"] if comment in existing["comment"] else existing["comment"] + "\n" + comment)
+        audio["comment"] = full
         written["comment"] = comment
 
     audio.save()

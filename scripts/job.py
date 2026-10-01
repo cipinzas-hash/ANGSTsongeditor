@@ -109,7 +109,7 @@ def write_summary(st, note=None):
     if note:
         lines += [f"> {note}", ""]
     lines += ["## Conteos acumulados", ""]
-    for k in ("uploaded", "ya_completo", "con_album", "sin_album", "nonprocessed", "retry", "sidecars", "orphans_rescued", "folder_images",
+    for k in ("uploaded", "romanizados", "ya_completo", "con_album", "sin_album", "nonprocessed", "retry", "sidecars", "orphans_rescued", "folder_images",
               "no_latin_kept", "dup_renamed", "dirs_removed"):
         lines.append(f"- {k}: {c.get(k, 0)}")
     reasons = c.get("nonprocessed_reasons", {})
@@ -361,6 +361,8 @@ def handle_audio(ctx, remote, raw_dir, processed_dir):
         ctx.handled.add(remote)
     ctx.count("uploaded")
     ctx.count("ya_completo" if status == "ya_completo" else ("con_album" if v["album"] else "sin_album"))
+    if info.get("romanized"):
+        ctx.count("romanizados")
     if info.get("no_latin"):
         ctx.count("no_latin_kept")
     ctx.track_dir(remote, remote_dir)
