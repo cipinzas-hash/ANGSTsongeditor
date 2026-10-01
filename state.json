@@ -4,12 +4,17 @@
  "batch_size": 100,
  "runs": 4,
  "counts": {
-  "uploaded": 109,
-  "ya_completo": 103,
-  "sidecars": 9,
+  "uploaded": 124,
+  "ya_completo": 115,
+  "sidecars": 11,
   "retry": 59,
   "con_album": 6,
-  "romanizados": 6
+  "romanizados": 6,
+  "nonprocessed": 5,
+  "nonprocessed_reasons": {
+   "sin_artista": 5
+  },
+  "sin_album": 3
  },
  "attempts": {
   "/MEGA/musica/nine-treasures (7).mp3": 1,
@@ -41,16 +46,22 @@
    "/untitledless/Normoria/Origin",
    "/untitledless/Normoria/Voyage",
    "/untitledless/PARADISE LOST/Draconian Times",
+   "/untitledless/PORTWAVE x MEMORYRAVE/Untitled album",
+   "/untitledless/PORTWAVE/NEVERENDING",
+   "/untitledless/PORTWAVE/NEVERENDING LP (01.02.2014)",
+   "/untitledless/PORTWAVE/Untitled album",
    "/untitledless/Paradise Lost/Draconian Times",
    "/untitledless/Paradise Lost/Icon",
    "/untitledless/Paradise Lost/Medusa",
    "/untitledless/Red Hot Chili Peppers/Red Hot Chili Peppers: Greatest Hits",
    "/untitledless/Revolvr & DJ Red/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/Stadium/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
+   "/untitledless/TECHNIQUE x PORTWAVE/Untitled album",
    "/untitledless/The Squatters & Steve Edwards/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/Various Artists/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/Vato Gonzalez, Lethal Bizzle & Donae'o/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
-   "/untitledless/Virus Syndicate/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
+   "/untitledless/Virus Syndicate/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
+   "NONPROC"
   ]
  },
  "gemini": {
