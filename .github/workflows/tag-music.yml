@@ -42,6 +42,7 @@ jobs:
       MEGA_PASSWORD: ${{ secrets.MEGA_PASSWORD }}
       DISCOGS_TOKEN: ${{ secrets.DISCOGS_TOKEN }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
       MEGA_SOURCE: ${{ github.event.inputs.mega_source || vars.MEGA_SOURCE_PATH }}
       MEGA_DEST: "/untitledless"
       MEGA_NONPROC: "/untitledless-nonprocessed"

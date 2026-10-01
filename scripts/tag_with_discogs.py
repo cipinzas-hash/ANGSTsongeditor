@@ -31,7 +31,8 @@ from tagio import (AUDIO_EXTS, effective, is_complete, read_tags, same_name,
 
 DISCOGS_TOKEN = os.environ.get("DISCOGS_TOKEN", "").strip()
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "").strip()
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash").strip()
+# gemini-2.0-flash fue retirado (404). El alias -latest sigue al flash vigente.
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "").strip() or "gemini-flash-latest"
 USER_AGENT = "UntitledTrackKiller/1.0 +https://github.com/cipinzas-hash/ANGSTsongeditor"
 API_BASE = "https://api.discogs.com"
 RATE_LIMIT_SLEEP = 1.1  # 60 req/min autenticado -> margen de sobra
