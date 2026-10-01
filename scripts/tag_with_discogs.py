@@ -78,25 +78,46 @@ def _gem_fail(reason: str):
     print(f"    [gemini] FALLO: {r}")
 
 
-def gemini_generate(prompt: str, timeout: int = 20) -> str:
-    """Llama a Gemini y devuelve el texto. Lanza excepcion si falla. La API
-    key viaja en la URL: nunca se imprime la URL ni se la incluye en errores."""
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
+GEMINI_FALLBACK_MODEL = "gemini-2.5-flash"
+
+
+def _gemini_call(model: str, prompt: str, timeout: int):
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={GEMINI_API_KEY}"
     payload = json.dumps({"contents": [{"parts": [{"text": prompt}]}]}).encode("utf-8")
     req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-    except urllib.error.HTTPError as e:
-        body = ""
-        try:
-            body = e.read().decode("utf-8", "replace")[:160].replace(GEMINI_API_KEY, "***")
-        except Exception:
-            pass
-        raise RuntimeError(f"HTTP {e.code} modelo={GEMINI_MODEL} {body}") from None
-    except urllib.error.URLError as e:
-        raise RuntimeError(f"red: {e.reason}") from None
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        data = json.loads(resp.read().decode("utf-8"))
     return data["candidates"][0]["content"]["parts"][0]["text"].strip().strip('"')
+
+
+def gemini_generate(prompt: str, timeout: int = 30) -> str:
+    """Llama a Gemini y devuelve el texto; lanza RuntimeError si falla.
+    Reintenta 429/5xx con espera creciente y, si el modelo principal sigue
+    saturado, prueba un modelo de respaldo. La API key viaja en la URL: nunca
+    se imprime la URL ni se la incluye en errores."""
+    last = "sin intentos"
+    for model in (GEMINI_MODEL, GEMINI_FALLBACK_MODEL):
+        for wait in (0, 3, 8):
+            if wait:
+                time.sleep(wait)
+            try:
+                return _gemini_call(model, prompt, timeout)
+            except urllib.error.HTTPError as e:
+                try:
+                    body = e.read().decode("utf-8", "replace")[:160].replace(GEMINI_API_KEY, "***")
+                except Exception:
+                    body = ""
+                last = f"HTTP {e.code} modelo={model} {body}"
+                if e.code not in (429, 500, 502, 503, 504):
+                    break   # 404/400/403: reintentar el mismo modelo no sirve
+            except urllib.error.URLError as e:
+                last = f"red: {e.reason}"
+            except (KeyError, IndexError, ValueError) as e:
+                last = f"respuesta inesperada de {model}: {type(e).__name__}"
+                break
+        if model == GEMINI_FALLBACK_MODEL:
+            break
+    raise RuntimeError(last)
 
 
 def romanize_with_gemini(text):
