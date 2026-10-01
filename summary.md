@@ -1,8 +1,11 @@
 # ANGSTsongeditor — estado del trabajo
 
 - Estado: **active**  ·  fuente: `/MEGA/musica`  ·  lote: 100
-- Iniciado: 2026-10-01T18:18:37Z  ·  ultima corrida: 2026-10-01T18:27:45Z  ·  corridas: 2
+- Iniciado: 2026-10-01T18:18:37Z  ·  ultima corrida: 2026-10-01T18:35:36Z  ·  corridas: 3
 - Pendientes en la fuente (ultimo conteo): 559
+
+> Corrida abortada: 3 descargas seguidas fallaron (posible cuota de MEGA): mega-get /MEGA/musica/nine-treasures (3).mp3 fallo (exit 1): [Initiating MEGAcmd server in background. Log: /home/runner/.megaCmd/megacmdserver.log]
+                             Resuming session ...  . Se reintenta en la proxima.
 
 ## Conteos acumulados
 
@@ -12,7 +15,7 @@
 - con_album: 0
 - sin_album: 0
 - nonprocessed: 0
-- retry: 54
+- retry: 57
 - sidecars: 2
 - orphans_rescued: 0
 - folder_images: 0
