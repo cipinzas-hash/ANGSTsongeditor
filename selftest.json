@@ -1,0 +1,30 @@
+{
+ "ts": "2026-10-01T18:07:22Z",
+ "gemini_model": "gemini-2.0-flash",
+ "gemini_key_present": true,
+ "gemini_key_length": 53,
+ "gemini": [
+  {
+   "lang": "ja",
+   "input": "古い心",
+   "ok": false,
+   "error": "HTTP 404 modelo=gemini-2.0-flash {\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.0-flash is no longer available. Please update your code to use models/gemini-3.8-flas"
+  },
+  {
+   "lang": "ko",
+   "input": "안녕하세요",
+   "ok": false,
+   "error": "HTTP 404 modelo=gemini-2.0-flash {\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.0-flash is no longer available. Please update your code to use models/gemini-3.8-flas"
+  },
+  {
+   "lang": "ja",
+   "input": "ふるい心",
+   "ok": false,
+   "error": "HTTP 404 modelo=gemini-2.0-flash {\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.0-flash is no longer available. Please update your code to use models/gemini-3.8-flas"
+  }
+ ],
+ "discogs": {
+  "ok": true,
+  "resultados": 50
+ }
+}
