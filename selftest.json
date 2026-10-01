@@ -1,5 +1,5 @@
 {
- "ts": "2026-10-01T18:10:18Z",
+ "ts": "2026-10-01T18:11:47Z",
  "gemini_model": "gemini-flash-latest",
  "gemini_key_present": true,
  "gemini_key_length": 53,
@@ -7,21 +7,23 @@
   {
    "lang": "ja",
    "input": "古い心",
+   "romanizacion": "furui kokoro",
    "ok": false,
-   "error": "HTTP 404 modelo=gemini-2.5-flash {\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/ge"
+   "error": "The read operation timed out"
   },
   {
    "lang": "ko",
    "input": "안녕하세요",
-   "romanizacion": "annyeonghaseyo",
-   "traduccion_es": "Hola",
-   "ok": true
+   "ok": false,
+   "error": "The read operation timed out"
   },
   {
    "lang": "ja",
    "input": "ふるい心",
-   "ok": false,
-   "error": "HTTP 404 modelo=gemini-2.5-flash {\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/ge"
+   "romanizacion": "furui kokoro",
+   "traduccion_es": "Corazón antiguo",
+   "ok": true,
+   "modelo_usado": "gemini-3.1-flash-lite"
   }
  ],
  "discogs": {
