@@ -44,7 +44,7 @@
   "errors": []
  },
  "history": [],
- "last_action": "run",
+ "last_action": "diagnose",
  "started_at": "2026-10-01T18:18:37Z",
  "last_run": "2026-10-01T18:35:36Z",
  "pending": 559,

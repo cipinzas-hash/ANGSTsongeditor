@@ -1,0 +1,27 @@
+{
+ "ts": "2026-10-01T18:37:23Z",
+ "source": "/MEGA/musica",
+ "whoami": ".79.130.36\n    Country: CL\n    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36\n    -----\n    Session ID: JKDeqMnkb94\n    Session start: Thu Feb 18 09:04:23 2021\n    Most recent activity: Thu Feb 18 09:04:24 2021\n    IP: 186.79.133.85\n    Country: CL\n    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0 Safari/537.36 OPR/73.0\n    -----\n    Session ID: kH-OKddB8Ag\n    Session start: Wed Oct 14 19:11:26 2020\n    Most recent activity: Wed Oct 14 19:11:27 2020\n    IP: 152.172.224.46\n    Country: CL\n    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36\n    -----\n19 active sessions opened\n",
+ "df": "Cloud drive:           21476868787 in    2520 file(s) and     481 folder(s)\nInbox:                           0 in       0 file(s) and       2 folder(s)\nRubbish bin:                     0 in       0 file(s) and      28 folder(s)\n---------------------------------------------------------------------------\nUSED STORAGE:          21476868787                    40.00% of 53687091200\n---------------------------------------------------------------------------\nTotal size taken up by file versions:    912221698\n",
+ "transfers": "\n",
+ "pruebas": [
+  {
+   "archivo": "/MEGA/musica/nine-treasures (1).mp3",
+   "exit": 1,
+   "segundos": 4,
+   "mensaje": "[mega-cmd-server process seems to have stopped. Type to respawn or reconnect to it]",
+   "bajado": [
+    "nine-treasures (1).mp3"
+   ]
+  },
+  {
+   "archivo": "/MEGA/musica/nine-treasures (2).mp3",
+   "exit": 1,
+   "segundos": 6,
+   "mensaje": "(sin mensaje)",
+   "bajado": [
+    "nine-treasures (2).mp3"
+   ]
+  }
+ ]
+}

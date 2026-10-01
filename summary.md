@@ -4,9 +4,6 @@
 - Iniciado: 2026-10-01T18:18:37Z  ·  ultima corrida: 2026-10-01T18:35:36Z  ·  corridas: 3
 - Pendientes en la fuente (ultimo conteo): 559
 
-> Corrida abortada: 3 descargas seguidas fallaron (posible cuota de MEGA): mega-get /MEGA/musica/nine-treasures (3).mp3 fallo (exit 1): [Initiating MEGAcmd server in background. Log: /home/runner/.megaCmd/megacmdserver.log]
-                             Resuming session ...  . Se reintenta en la proxima.
-
 ## Conteos acumulados
 
 - uploaded: 51
