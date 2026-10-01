@@ -31,8 +31,9 @@ from tagio import (AUDIO_EXTS, effective, is_complete, read_tags, same_name,
 
 DISCOGS_TOKEN = os.environ.get("DISCOGS_TOKEN", "").strip()
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "").strip()
-# gemini-2.0-flash fue retirado (404). El alias -latest sigue al flash vigente.
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "").strip() or "gemini-flash-latest"
+# gemini-2.0-flash fue retirado (404) y gemini-2.5-flash responde 404 para esta key.
+# Se usa el modelo lite (rapido) con respaldo en el alias -latest y en 3.5-flash.
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "").strip() or "gemini-3.1-flash-lite"
 USER_AGENT = "UntitledTrackKiller/1.0 +https://github.com/cipinzas-hash/ANGSTsongeditor"
 API_BASE = "https://api.discogs.com"
 RATE_LIMIT_SLEEP = 1.1  # 60 req/min autenticado -> margen de sobra
@@ -78,7 +79,7 @@ def _gem_fail(reason: str):
     print(f"    [gemini] FALLO: {r}")
 
 
-GEMINI_FALLBACK_MODELS = ("gemini-3.1-flash-lite", "gemini-3.5-flash")
+GEMINI_FALLBACK_MODELS = ("gemini-flash-latest", "gemini-3.5-flash")
 LAST_MODEL = {"name": None}
 
 
@@ -114,11 +115,12 @@ def gemini_generate(prompt: str, timeout: int = 30) -> str:
                 last = f"HTTP {e.code} modelo={model} {body}"
                 if e.code not in (429, 500, 502, 503, 504):
                     break   # 404/400/403: reintentar el mismo modelo no sirve
-            except urllib.error.URLError as e:
-                last = f"red: {e.reason}"
             except (KeyError, IndexError, ValueError) as e:
                 last = f"respuesta inesperada de {model}: {type(e).__name__}"
                 break
+            except Exception as e:   # timeout, red caida, etc.: reintentable
+                reason = getattr(e, "reason", None) or str(e) or type(e).__name__
+                last = f"red/timeout con {model}: {reason}"
     raise RuntimeError(last)
 
 
