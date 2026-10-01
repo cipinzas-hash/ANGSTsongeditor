@@ -69,15 +69,15 @@
   ]
  },
  "gemini": {
-  "ok": 0,
+  "ok": 20,
   "fail": 0,
   "errors": []
  },
  "history": [],
- "last_action": "diagnose",
+ "last_action": "run",
  "started_at": "2026-10-01T18:18:37Z",
  "last_run": "2026-10-01T18:40:14Z",
- "pending": 559,
+ "pending": 461,
  "fix_dl_v2": true,
  "dl_fail": {},
  "fix_dl_v3": true
