@@ -4,9 +4,9 @@
  "batch_size": 100,
  "runs": 6,
  "counts": {
-  "uploaded": 284,
-  "ya_completo": 267,
-  "sidecars": 35,
+  "uploaded": 304,
+  "ya_completo": 285,
+  "sidecars": 37,
   "retry": 59,
   "con_album": 14,
   "romanizados": 10,
@@ -14,7 +14,7 @@
   "nonprocessed_reasons": {
    "sin_artista": 5
   },
-  "sin_album": 3
+  "sin_album": 5
  },
  "attempts": {},
  "dir_dest": {
@@ -76,9 +76,14 @@
    "/untitledless/Solar Fake/Reasons To Kill",
    "/untitledless/Solar Fake/This Generation Ends",
    "/untitledless/Sonata Arctica/Winterheart's Guild",
+   "/untitledless/SonidosMp3Gratis.com/Untitled album",
    "/untitledless/Stadium/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/State Of The Union/Evol Love Industry",
    "/untitledless/Stravaganzza/Requiem",
+   "/untitledless/Suicide Commando/Fucked Up Music For Fucked Up People (Remixes by Combichrist)",
+   "/untitledless/Symphony X/The Damnation Game",
+   "/untitledless/Symphony X/The Divine Wings of Tragedy",
+   "/untitledless/Symphony X/Underworld",
    "/untitledless/TECHNIQUE x PORTWAVE/Untitled album",
    "/untitledless/The Squatters & Steve Edwards/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/Various Artists/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
