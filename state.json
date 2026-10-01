@@ -1,0 +1,16 @@
+{
+ "status": "idle",
+ "mega_source": null,
+ "batch_size": 5,
+ "runs": 0,
+ "counts": {},
+ "attempts": {},
+ "dir_dest": {},
+ "gemini": {
+  "ok": 0,
+  "fail": 0,
+  "errors": []
+ },
+ "history": [],
+ "last_action": "inventory"
+}
