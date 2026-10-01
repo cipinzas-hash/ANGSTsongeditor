@@ -1,20 +1,29 @@
 {
  "status": "active",
  "mega_source": "/MEGA/musica",
- "batch_size": 5,
- "runs": 1,
+ "batch_size": 100,
+ "runs": 2,
  "counts": {
-  "uploaded": 5,
-  "ya_completo": 5
+  "uploaded": 25,
+  "ya_completo": 25
  },
  "attempts": {},
  "dir_dest": {
   "/MEGA/musica": [
+   "/untitledless/AKB48/Ralph el Demoledor (Música Original Compuesta)",
    "/untitledless/Aural Vampire/Aural Vampir II - EP",
    "/untitledless/Aural Vampire/Aural Vampire III: Border of the Dead - Single",
    "/untitledless/Aural Vampire/Freeeeze!! - Single",
    "/untitledless/Aural Vampire/Kerguelen Vortex",
-   "/untitledless/Ladytron/Witching Hour (Bonus Version)"
+   "/untitledless/Bar9/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
+   "/untitledless/Blur/The Best of Blur",
+   "/untitledless/Deekline & Ed Solo/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
+   "/untitledless/Drumsound & Bassline Smith/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
+   "/untitledless/Gorillaz/Demon Days",
+   "/untitledless/Hocico/Vile Whispers - EP",
+   "/untitledless/Josh Money/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
+   "/untitledless/Ladytron/Witching Hour (Bonus Version)",
+   "/untitledless/Red Hot Chili Peppers/Red Hot Chili Peppers: Greatest Hits"
   ]
  },
  "gemini": {
@@ -25,6 +34,6 @@
  "history": [],
  "last_action": "start",
  "started_at": "2026-10-01T18:18:37Z",
- "last_run": "2026-10-01T18:18:37Z",
+ "last_run": "2026-10-01T18:27:45Z",
  "pending": 605
 }
