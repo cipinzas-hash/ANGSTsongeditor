@@ -4,9 +4,9 @@
  "batch_size": 100,
  "runs": 5,
  "counts": {
-  "uploaded": 184,
-  "ya_completo": 171,
-  "sidecars": 19,
+  "uploaded": 204,
+  "ya_completo": 191,
+  "sidecars": 22,
   "retry": 59,
   "con_album": 10,
   "romanizados": 10,
