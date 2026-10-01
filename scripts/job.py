@@ -216,6 +216,7 @@ class Ctx:
         self.handled = set()
         self.t0 = time.time()
         self.since_checkpoint = 0
+        self.dl_streak = 0
 
     def rel(self, remote):
         return remote[len(self.source):].lstrip("/")
@@ -289,14 +290,34 @@ def handle_audio(ctx, remote, raw_dir, processed_dir):
 
     local_dir = raw_dir / Path(rel).parent
     local_dir.mkdir(parents=True, exist_ok=True)
+    def download_failed(err):
+        """Un fallo de descarga NO gasta intentos: suele ser sistemico (cuota de
+        transferencia de MEGA, red). 3 seguidos abortan la corrida sin mover
+        nada. Solo un archivo que falla en 4 corridas distintas va a no procesados."""
+        ctx.dl_streak += 1
+        fails = st.setdefault("dl_fail", {})
+        fails[remote] = fails.get(remote, 0) + 1
+        print(f"    ERROR descargando ({fails[remote]}): {err}")
+        entry.update(status="retry", reason="error_descarga", error=err[:200])
+        if fails[remote] >= 4:
+            to_nonprocessed(ctx, remote, "error_descarga")
+            fails.pop(remote, None)
+            entry.update(status="nonprocessed")
+        else:
+            ctx.count("retry")
+        append_report(entry)
+        if ctx.dl_streak >= 3:
+            raise AbortRun(f"3 descargas seguidas fallaron (posible cuota de MEGA): {err[:200]}")
+
     try:
         mega(["mega-get", remote, str(local_dir) + "/"], timeout=900)
     except RuntimeError as e:
-        print(f"    ERROR descargando: {e}")
-        return retry_or_giveup("error_descarga", str(e)[:120])
+        return download_failed(str(e))
     local = local_dir / Path(rel).name
     if not local.exists():
-        return retry_or_giveup("error_descarga", "la descarga no dejo el archivo")
+        return download_failed("la descarga no dejo el archivo")
+    ctx.dl_streak = 0
+    st.get("dl_fail", {}).pop(remote, None)
 
     dest, info = T.process_file_ex(local, raw_dir, processed_dir, attempt=n)
     status = info["status"]
@@ -461,6 +482,9 @@ def cmd_run(st):
     import tag_with_discogs as T
 
     source = st["mega_source"].rstrip("/")
+    if not st.get("fix_dl_v2"):      # los reintentos previos eran descargas fallidas, no fallas del archivo
+        st["attempts"] = {}
+        st["fix_dl_v2"] = True
     batch = int(os.environ.get("BATCH_SIZE") or st.get("batch_size") or 5)
     st["batch_size"] = batch
     st["runs"] = st.get("runs", 0) + 1
