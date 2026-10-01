@@ -126,7 +126,7 @@ def write_summary(st, note=None):
 _timeouts = 0
 
 
-def mega(args, timeout=300, check=True):
+def mega(args, timeout=300, check=True, verify=None):
     """Corre un comando mega-*, con timeout. Tres timeouts seguidos abortan la corrida."""
     global _timeouts
     try:
@@ -138,6 +138,16 @@ def mega(args, timeout=300, check=True):
             raise AbortRun(f"3 timeouts seguidos de mega ({args[0]})")
         raise RuntimeError(f"timeout de {timeout}s en {args[0]}")
     if check and r.returncode != 0:
+        # MEGAcmd a veces devuelve exit 1 ("mega-cmd-server process seems to have
+        # stopped") aunque la operacion se completo. Si el efecto se puede
+        # comprobar, se comprueba y se acepta.
+        try:
+            confirmed = bool(verify and verify())
+        except Exception:
+            confirmed = False
+        if confirmed:
+            print(f"    (aviso: {args[0]} devolvio exit {r.returncode} pero el resultado esta confirmado)")
+            return r
         raise RuntimeError(f"{' '.join(args[:2])} fallo (exit {r.returncode}): {clean_err(r)}")
     return r
 
@@ -186,7 +196,8 @@ def unique_name(remote_dir, name):
 def move_remote(src, dest_dir, new_name=None):
     mega(["mega-mkdir", "-p", dest_dir], check=False)
     target = f"{dest_dir}/{new_name}" if new_name else dest_dir + "/"
-    mega(["mega-mv", src, target])
+    final = f"{dest_dir}/{new_name or os.path.basename(src)}"
+    mega(["mega-mv", src, target], verify=lambda: remote_exists(final) and not remote_exists(src))
 
 
 # ------------------------------------------------------------------ indices
@@ -320,11 +331,13 @@ def handle_audio(ctx, remote, raw_dir, processed_dir):
         if ctx.dl_streak >= 3:
             raise AbortRun(f"3 descargas seguidas fallaron (posible cuota de MEGA): {err[:200]}")
 
+    from tagio import read_tags
+    local = local_dir / Path(rel).name
     try:
-        mega(["mega-get", remote, str(local_dir) + "/"], timeout=900)
+        mega(["mega-get", remote, str(local_dir) + "/"], timeout=900,
+             verify=lambda: local.exists() and local.stat().st_size > 0 and read_tags(local)["readable"])
     except RuntimeError as e:
         return download_failed(str(e))
-    local = local_dir / Path(rel).name
     if not local.exists():
         return download_failed("la descarga no dejo el archivo")
     ctx.dl_streak = 0
@@ -375,7 +388,8 @@ def handle_audio(ctx, remote, raw_dir, processed_dir):
             upload = dest.with_name(final)
             dest.rename(upload)
             ctx.count("dup_renamed")
-        mega(["mega-put", "-c", str(upload), remote_dir + "/"], timeout=900)
+        mega(["mega-put", "-c", str(upload), remote_dir + "/"], timeout=900,
+             verify=lambda: remote_exists(f"{remote_dir}/{final}"))
         if not remote_exists(f"{remote_dir}/{final}"):
             raise RuntimeError("la subida no se pudo confirmar")
     except RuntimeError as e:
@@ -384,7 +398,7 @@ def handle_audio(ctx, remote, raw_dir, processed_dir):
 
     moved, ambiguous = move_sidecars(ctx, remote, remote_dir, os.path.splitext(name)[0], os.path.splitext(final)[0])
     try:
-        mega(["mega-rm", "-f", remote])
+        mega(["mega-rm", "-f", remote], verify=lambda: not remote_exists(remote))
         ctx.handled.add(remote)
     except RuntimeError as e:
         # Ya esta subido: NO se reprocesa (duplicaria). El borrado queda pendiente.
@@ -493,9 +507,10 @@ def cmd_run(st):
     import tag_with_discogs as T
 
     source = st["mega_source"].rstrip("/")
-    if not st.get("fix_dl_v2"):      # los reintentos previos eran descargas fallidas, no fallas del archivo
+    if not st.get("fix_dl_v3"):      # los fallos previos eran falsos negativos de mega-get (exit 1 con descarga completa)
         st["attempts"] = {}
-        st["fix_dl_v2"] = True
+        st["dl_fail"] = {}
+        st["fix_dl_v3"] = True
     batch = int(os.environ.get("BATCH_SIZE") or st.get("batch_size") or 5)
     st["batch_size"] = batch
     st["runs"] = st.get("runs", 0) + 1
