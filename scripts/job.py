@@ -109,7 +109,7 @@ def write_summary(st, note=None):
     if note:
         lines += [f"> {note}", ""]
     lines += ["## Conteos acumulados", ""]
-    for k in ("uploaded", "ya_completo", "con_album", "sin_album", "nonprocessed", "retry", "sidecars", "folder_images",
+    for k in ("uploaded", "ya_completo", "con_album", "sin_album", "nonprocessed", "retry", "sidecars", "orphans_rescued", "folder_images",
               "no_latin_kept", "dup_renamed", "dirs_removed"):
         lines.append(f"- {k}: {c.get(k, 0)}")
     reasons = c.get("nonprocessed_reasons", {})
@@ -393,6 +393,42 @@ def handle_folder_images(ctx, remaining_audio):
         del ctx.st["dir_dest"][d]
 
 
+def rescue_orphans(ctx):
+    """Acompañantes huerfanos: archivos no audio que quedaron en el origen
+    porque su cancion ya se proceso en una corrida anterior (o en el flujo
+    viejo). Si su nombre base coincide con UNA sola cancion ya ubicada en el
+    destino (o en no procesados), se mueven junto a ella."""
+    left = [f for f in list_files(ctx.source) if ext(f) not in AUDIOISH and f not in ctx.handled]
+    if not left:
+        return 0
+    targets = {}
+    for root in (MEGA_DEST, MEGA_NONPROC):
+        if not remote_exists(root):
+            continue
+        for f in list_files(root):
+            if ext(f) in AUDIOISH:
+                targets.setdefault(os.path.splitext(os.path.basename(f))[0].casefold(), []).append(f)
+    moved = 0
+    for f in left:
+        if time.time() - ctx.t0 > RUN_BUDGET_SEC:
+            break
+        stem = os.path.splitext(os.path.basename(f))[0].casefold()
+        cands = targets.get(stem, [])
+        if len(cands) != 1:
+            continue
+        dest_dir = os.path.dirname(cands[0])
+        try:
+            final = unique_name(dest_dir, os.path.basename(f))
+            move_remote(f, dest_dir, None if final == os.path.basename(f) else final)
+            ctx.handled.add(f)
+            ctx.count("orphans_rescued")
+            append_report({"ts": now(), "run": ctx.st["runs"], "path": ctx.rel(f), "status": "orphan_rescued", "dest": dest_dir})
+            moved += 1
+        except RuntimeError as e:
+            print(f"    AVISO: huerfano no movido ({os.path.basename(f)}): {e}")
+    return moved
+
+
 def sweep_empty_dirs(ctx):
     """Borra subcarpetas VACIAS del origen (nunca la raiz, nunca con archivos adentro)."""
     files = list_files(ctx.source)
@@ -500,7 +536,9 @@ def cmd_run(st):
         return None
 
     # 3) nada de audio pendiente: barrer carpetas vacias y cerrar
-    print("== No queda audio en la fuente: barriendo carpetas vacias ==")
+    print("== No queda audio en la fuente: rescatando acompañantes huerfanos y barriendo carpetas vacias ==")
+    n = rescue_orphans(ctx)
+    print(f"Huerfanos movidos junto a su cancion: {n}")
     removed, done = sweep_empty_dirs(ctx)
     ctx.count("dirs_removed", removed)
     if not done:
