@@ -3,13 +3,26 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export MEGA_DEST="${MEGA_DEST:-/untitledless}"
-export BATCH_SIZE="${BATCH_SIZE:-100}"
+export MEGA_NONPROC="${MEGA_NONPROC:-/untitledless-nonprocessed}"
+ACTION="${ACTION:-run}"
+export ACTION
+
+if [ "$ACTION" = "selftest" ]; then
+  echo "== selftest (Gemini + Discogs, sin tocar MEGA) =="
+  python3 "$SCRIPT_DIR/selftest.py"
+  exit 0
+fi
+
+if [ "$ACTION" = "stop" ]; then
+  python3 "$SCRIPT_DIR/job.py"
+  exit 0
+fi
 
 # Pase lo que pase, cerrar sesion de MEGA al salir.
 trap 'echo "== Cerrando sesion =="; mega-logout || true' EXIT
 
 echo "== Iniciando sesion en MEGA =="
-mega-login "$MEGA_EMAIL" "$MEGA_PASSWORD"
+timeout 180 mega-login "$MEGA_EMAIL" "$MEGA_PASSWORD"
 
-echo "== Procesando lote (maximo $BATCH_SIZE archivos) desde $MEGA_SOURCE hacia $MEGA_DEST =="
-python3 "$SCRIPT_DIR/batch_run.py"
+echo "== Accion: $ACTION =="
+python3 "$SCRIPT_DIR/job.py"

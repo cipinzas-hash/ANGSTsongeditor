@@ -12,38 +12,29 @@ verificar un archivo puntual sin pasar por la CLI.
 """
 import sys
 from pathlib import Path
-from mutagen import File as MutagenFile
+sys.path.insert(0, str(Path(__file__).parent))
+from tagio import effective, read_tags
 
 
 def check_file(f: Path) -> dict:
     """Devuelve dict con artista/album/titulo/pista/caratula/ok para un
     archivo puntual. No lanza excepcion: un archivo no legible se reporta
-    como incompleto, no rompe al caller."""
-    try:
-        audio = MutagenFile(f, easy=True)
-    except Exception:
-        audio = None
+    como incompleto, no rompe al caller.
 
-    if audio is None:
-        return {"ok": False, "artist": "?", "album": "?", "title": "?",
-                "track": "?", "has_art": False, "reason": "no legible"}
-
-    artist = (audio.get("artist") or ["?"])[0]
-    album = (audio.get("album") or ["?"])[0]
-    title = (audio.get("title") or ["?"])[0]
-    track = (audio.get("tracknumber") or ["?"])[0]
-
-    has_art = False
-    try:
-        raw = MutagenFile(f)
-        if raw is not None and hasattr(raw, "tags") and raw.tags:
-            has_art = any(k.startswith("APIC") for k in raw.tags.keys()) or "covr" in raw.tags
-    except Exception:
-        pass
-
-    ok = artist != "?" and album != "?" and title != "?"
+    ok = artista y titulo REALES (los placeholders -- Unknown Artist,
+    Track 01, etc. -- cuentan como ausentes). El album puede faltar: en ese
+    caso 'album' es None y el archivo va a la carpeta 'Untitled album'."""
+    tags = read_tags(f)
+    if not tags["readable"]:
+        return {"ok": False, "artist": None, "album": None, "title": None,
+                "track": None, "has_art": False, "reason": "no legible"}
+    artist = effective(tags, "artist")
+    album = effective(tags, "album")
+    title = effective(tags, "title")
+    ok = bool(artist) and bool(title)
     return {"ok": ok, "artist": artist, "album": album, "title": title,
-            "track": track, "has_art": has_art, "reason": None if ok else "tags incompletos"}
+            "track": tags.get("track"), "has_art": tags["has_cover"],
+            "reason": None if ok else "faltan artista/titulo reales"}
 
 
 def _main_cli():
@@ -66,7 +57,7 @@ def _main_cli():
         if not r["ok"]:
             incompletos.append(f)
         print(f"[{marca}] {f.name}")
-        print(f"    artista={r['artist']} | album={r['album']} | titulo={r['title']} | pista={r['track']} | caratula={'si' if r['has_art'] else 'no'}")
+        print(f"    artista={r['artist'] or '?'} | album={r['album'] or '?'} | titulo={r['title'] or '?'} | pista={r['track'] or '?'} | caratula={'si' if r['has_art'] else 'no'}")
 
     print(f"\n== Resumen: {len(files)-len(incompletos)}/{len(files)} completos, {len(incompletos)} incompletos ==")
 

@@ -1,26 +1,33 @@
 #!/usr/bin/env python3
 """
-Reemplaza a beets/chroma: tagea por texto (artista + titulo extraidos del
-nombre de archivo) contra la API de Discogs, sin decodificar/fingerprintear
-audio. Pensado para musica de nicho (industrial/EBM/underground) donde
-Discogs suele tener mejor cobertura que MusicBrainz.
+Tagea por texto (artista + titulo del nombre de archivo, o de los tags que ya
+tenga) contra Discogs, con respaldo de iTunes para año/caratula. Sin
+decodificar ni fingerprintear audio. Pensado para musica de nicho.
 
-Requiere DISCOGS_TOKEN en el ambiente (token personal gratuito, se genera en
-discogs.com -> Settings -> Developers -> Generate new token).
+Reglas de proteccion (ver tagio.py):
+  * un tag con valor real nunca se pisa; un placeholder (Unknown Artist, etc.)
+    cuenta como ausente y se completa o se limpia (campo vacio);
+  * una caratula incrustada existente nunca se reemplaza;
+  * un match de Discogs solo se acepta si su artista coincide con el artista
+    real conocido.
+
+Requiere DISCOGS_TOKEN en el ambiente.
 """
+import json
 import os
 import re
 import sys
 import time
 import unicodedata
+import urllib.error
 import urllib.parse
 import urllib.request
-import json
 from pathlib import Path
 
-from mutagen.easyid3 import EasyID3
-from mutagen.id3 import ID3, APIC, ID3NoHeaderError
-from mutagen.mp3 import MP3
+sys.path.insert(0, str(Path(__file__).parent))
+import tagio
+from tagio import (AUDIO_EXTS, effective, is_complete, read_tags, same_name,
+                   strip_discogs_suffix, write_tags)
 
 DISCOGS_TOKEN = os.environ.get("DISCOGS_TOKEN", "").strip()
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "").strip()
@@ -29,12 +36,18 @@ USER_AGENT = "UntitledTrackKiller/1.0 +https://github.com/cipinzas-hash/ANGSTson
 API_BASE = "https://api.discogs.com"
 RATE_LIMIT_SLEEP = 1.1  # 60 req/min autenticado -> margen de sobra
 
-# Cualquier script no latino común en metadata de música: japonés
-# (hiragana/katakana/kanji), coreano (hangul), chino (comparte el rango CJK
-# con kanji), cirílico, griego, árabe, hebreo, tailandés, devanagari (hindi).
-# No se generaliza a "cualquier caracter fuera de ASCII" a propósito --
-# acentos/diéresis/eñes latinos (café, Mötley, Björk) NO deberían disparar
-# una romanización, ya están en caracteres latinos.
+RAW_DIR = Path(os.environ.get("RAW_DIR", "/tmp/musica_raw"))
+PROCESSED_DIR = Path(os.environ.get("PROCESSED_DIR", "/tmp/musica_procesada"))
+
+# Contadores de la corrida (los lee job.py para el informe). Un fallo de
+# Gemini ya no es silencioso: se cuenta y se guarda el motivo.
+STATS = {"gemini_ok": 0, "gemini_fail": 0, "gemini_errors": []}
+
+
+class DiscogsError(Exception):
+    pass
+
+
 NON_LATIN_RE = re.compile(
     "["
     "\u3040-\u30ff"   # hiragana + katakana
@@ -54,16 +67,47 @@ def contains_non_latin_script(text):
     return bool(text) and bool(NON_LATIN_RE.search(text))
 
 
+# ------------------------------------------------------------------- Gemini
+
+def _gem_fail(reason: str):
+    STATS["gemini_fail"] += 1
+    r = reason[:200]
+    if r not in STATS["gemini_errors"] and len(STATS["gemini_errors"]) < 5:
+        STATS["gemini_errors"].append(r)
+    print(f"    [gemini] FALLO: {r}")
+
+
+def gemini_generate(prompt: str, timeout: int = 20) -> str:
+    """Llama a Gemini y devuelve el texto. Lanza excepcion si falla. La API
+    key viaja en la URL: nunca se imprime la URL ni se la incluye en errores."""
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
+    payload = json.dumps({"contents": [{"parts": [{"text": prompt}]}]}).encode("utf-8")
+    req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        body = ""
+        try:
+            body = e.read().decode("utf-8", "replace")[:160].replace(GEMINI_API_KEY, "***")
+        except Exception:
+            pass
+        raise RuntimeError(f"HTTP {e.code} modelo={GEMINI_MODEL} {body}") from None
+    except urllib.error.URLError as e:
+        raise RuntimeError(f"red: {e.reason}") from None
+    return data["candidates"][0]["content"]["parts"][0]["text"].strip().strip('"')
+
+
 def romanize_with_gemini(text):
-    """Devuelve la romanizacion/transcripcion a caracteres latinos de un tag
-    en script no latino via Gemini -- cualquier idioma, no solo japones (ver
-    NON_LATIN_RE). Si falta la API key, la llamada falla, o la respuesta
-    viene vacia, devuelve el texto original sin tocar -- nunca se sube un
-    tag vacio a cambio de uno que no se pudo romanizar."""
-    if not GEMINI_API_KEY or not contains_non_latin_script(text):
+    """Romanizacion a caracteres latinos de un tag en script no latino. Si
+    falla, devuelve el original y CUENTA el fallo (STATS) para que el informe
+    lo muestre."""
+    if not contains_non_latin_script(text):
+        return text
+    if not GEMINI_API_KEY:
+        _gem_fail("falta GEMINI_API_KEY")
         return text
     try:
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
         prompt = (
             "Transcribi el siguiente texto a caracteres latinos (romaji si es "
             "japones, romanizacion revisada si es coreano, pinyin si es "
@@ -74,29 +118,27 @@ def romanize_with_gemini(text):
             "Devolve UNICAMENTE el texto transcripto, sin comillas, sin "
             f"explicacion, sin texto adicional. Texto: {text}"
         )
-        payload = json.dumps({"contents": [{"parts": [{"text": prompt}]}]}).encode("utf-8")
-        req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
-        with urllib.request.urlopen(req, timeout=20) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-        romanizado = data["candidates"][0]["content"]["parts"][0]["text"].strip().strip('"')
-        time.sleep(1.5)  # margen conservador, sin límite confirmado del plan de Cristopher
-        return romanizado or text
+        out = gemini_generate(prompt)
+        time.sleep(1.5)
+        if not out or contains_non_latin_script(out):
+            _gem_fail("respuesta vacia o aun en script no latino")
+            return text
+        STATS["gemini_ok"] += 1
+        return out
     except Exception as e:
-        print(f"    [gemini] transcripcion fallo, se deja el original: {e}")
+        _gem_fail(str(e))
         return text
 
 
 def translate_with_gemini(text):
-    """Traduccion al espanol del SIGNIFICADO (no la pronunciacion) de un
-    titulo de cancion o album en script no latino -- para contexto, no
-    reemplaza el tag. Nunca se llama sobre nombre de artista (un nombre
-    propio no se traduce). Mismo criterio de fallo silencioso que
-    romanize_with_gemini: si algo falla, devuelve None y el comentario
-    simplemente no se agrega, no rompe nada del resto del tageo."""
-    if not GEMINI_API_KEY or not contains_non_latin_script(text):
+    """Traduccion al español del SIGNIFICADO (para contexto, no reemplaza el
+    tag). Nunca sobre nombres de artista. None si falla (se cuenta)."""
+    if not contains_non_latin_script(text):
+        return None
+    if not GEMINI_API_KEY:
+        _gem_fail("falta GEMINI_API_KEY")
         return None
     try:
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
         prompt = (
             "Traduci al espanol el SIGNIFICADO (no la pronunciacion) del "
             "siguiente titulo de cancion o album de musica. Traduccion "
@@ -105,22 +147,19 @@ def translate_with_gemini(text):
             "sale forzada. Devolve UNICAMENTE la traduccion, sin comillas, "
             f"sin explicacion, sin texto adicional. Texto: {text}"
         )
-        payload = json.dumps({"contents": [{"parts": [{"text": prompt}]}]}).encode("utf-8")
-        req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
-        with urllib.request.urlopen(req, timeout=20) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-        traduccion = data["candidates"][0]["content"]["parts"][0]["text"].strip().strip('"')
+        out = gemini_generate(prompt)
         time.sleep(1.5)
-        return traduccion or None
+        if not out:
+            _gem_fail("traduccion vacia")
+            return None
+        STATS["gemini_ok"] += 1
+        return out
     except Exception as e:
-        print(f"    [gemini] traduccion fallo, se omite el comentario: {e}")
+        _gem_fail(str(e))
         return None
 
 
 def build_translation_comment(title_original, title_es, album_original, album_es):
-    """Arma el texto del campo comment a partir de las traducciones que
-    hayan salido bien -- cualquiera de las dos puede faltar sin romper la
-    otra. None si no hay nada que agregar (ninguna traduccion disponible)."""
     partes = []
     if title_es and title_es != title_original:
         partes.append(f'Cancion: "{title_es}"')
@@ -128,22 +167,19 @@ def build_translation_comment(title_original, title_es, album_original, album_es
         partes.append(f'Disco: "{album_es}"')
     return f"Traducción -- {' / '.join(partes)}" if partes else None
 
-RAW_DIR = Path(sys.argv[1] if len(sys.argv) > 1 else "/tmp/musica_raw")
-PROCESSED_DIR = Path(sys.argv[2] if len(sys.argv) > 2 else "/tmp/musica_procesada")
-AUDIO_EXTS = {".mp3"}  # el resto del pipeline (MEGA, verify_tags) asume mp3 en este bot
 
-if not DISCOGS_TOKEN:
-    print("ERROR: falta DISCOGS_TOKEN en el ambiente.", file=sys.stderr)
-    sys.exit(2)
-
+# ------------------------------------------------------------------ Discogs
 
 def discogs_get(path, params):
     params = dict(params)
     params["token"] = DISCOGS_TOKEN
     url = f"{API_BASE}{path}?{urllib.parse.urlencode(params)}"
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        data = json.loads(resp.read().decode("utf-8"))
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+    except Exception as e:
+        raise DiscogsError(str(e).replace(DISCOGS_TOKEN, "***")) from None
     time.sleep(RATE_LIMIT_SLEEP)
     return data
 
@@ -155,27 +191,19 @@ def clean_token(s):
     return s
 
 
-def parse_filename(path: Path, album_hint_artist: str | None):
-    """Extrae (artista, titulo) del nombre de archivo.
-    Soporta patrones vistos en la coleccion real:
-      'NN.Artista - Titulo.mp3'
-      'N.Artista - Titulo.mp3'
-      'Artista - Titulo.mp3'
-    Si no hay separador ' - ' claro, devuelve (None, titulo_crudo).
-    """
+def parse_filename(path: Path, album_hint_artist):
+    """'NN.Artista - Titulo.mp3' | 'Artista - Titulo.mp3' -> (artista, titulo).
+    Sin separador ' - ' claro: (album_hint_artist, stem)."""
     stem = path.stem
-    stem = re.sub(r"^\d{1,3}[.\s]+", "", stem)  # saca prefijo de numero de pista
+    stem = re.sub(r"^\d{1,3}[.\s]+", "", stem)
     stem = clean_token(stem)
-
     if " - " in stem:
         artist, title = stem.split(" - ", 1)
         return clean_token(artist), clean_token(title)
-
     return album_hint_artist, stem
 
 
 def parse_album_folder(folder_name: str):
-    """'Artista - Album' -> (artista, album). Si no matchea, (None, None)."""
     name = clean_token(folder_name)
     if " - " in name:
         artist, album = name.split(" - ", 1)
@@ -184,45 +212,32 @@ def parse_album_folder(folder_name: str):
 
 
 def search_release(artist, album, track_title):
-    """Busca en Discogs. Devuelve dict con datos del release o None."""
+    """Lista de resultados de Discogs (puede ser vacia). Lanza DiscogsError si
+    la API falla -- distinto de 'no hay resultados'."""
     if artist and album:
-        q = f"{artist} {album}"
-        params = {"q": q, "type": "release", "artist": artist, "release_title": album}
+        params = {"q": f"{artist} {album}", "type": "release", "artist": artist, "release_title": album}
     elif artist and track_title:
-        q = f"{artist} {track_title}"
-        params = {"q": q, "type": "release", "artist": artist}
-    elif track_title:
-        params = {"q": track_title, "type": "release"}
+        params = {"q": f"{artist} {track_title}", "type": "release", "artist": artist}
     else:
-        return None
-
-    try:
-        data = discogs_get("/database/search", params)
-    except Exception as e:
-        print(f"    [discogs] busqueda fallo: {e}")
-        return None
-
-    results = data.get("results") or []
-    if not results:
-        return None
-    return results[0]
+        return []
+    data = discogs_get("/database/search", params)
+    return data.get("results") or []
 
 
-def fetch_release_detail(resource_url_or_id):
-    try:
-        if isinstance(resource_url_or_id, str) and resource_url_or_id.startswith("http"):
-            req = urllib.request.Request(resource_url_or_id, headers={"User-Agent": USER_AGENT})
-            params_suffix = f"?token={DISCOGS_TOKEN}"
-            req.full_url += params_suffix
-            with urllib.request.urlopen(req, timeout=30) as resp:
-                data = json.loads(resp.read().decode("utf-8"))
-        else:
-            data = discogs_get(f"/releases/{resource_url_or_id}", {})
-        time.sleep(RATE_LIMIT_SLEEP)
-        return data
-    except Exception as e:
-        print(f"    [discogs] detalle de release fallo: {e}")
-        return None
+def pick_candidate(results, artist):
+    """Primer resultado (de los 5 primeros) cuyo artista coincide con el real.
+    El titulo de un resultado de Discogs viene como 'Artista - Album'."""
+    for r in results[:5]:
+        t = r.get("title", "")
+        if " - " not in t:
+            continue
+        if same_name(artist, t.split(" - ", 1)[0]):
+            return r
+    return None
+
+
+def fetch_release_detail(release_id):
+    return discogs_get(f"/releases/{release_id}", {})
 
 
 def best_track_match(tracklist, guessed_title):
@@ -239,79 +254,6 @@ def best_track_match(tracklist, guessed_title):
     return None
 
 
-def search_itunes_track(artist, album, track_title):
-    """Respaldo cuando Discogs no tiene el release: busca la CANCION puntual
-    (entity=song) en la API publica de Apple (sin auth). Devuelve dict con
-    lo que haya disponible: track_num, genre, year, cover_bytes. Cualquier
-    campo ausente en la respuesta se deja en None, no se inventa."""
-    out = {"track_num": None, "genre": None, "year": None, "cover_bytes": None}
-    if not artist or not track_title:
-        return out
-    try:
-        params = {
-            "term": f"{artist} {track_title}",
-            "entity": "song",
-            "limit": 1,
-        }
-        url = f"https://itunes.apple.com/search?{urllib.parse.urlencode(params)}"
-        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-        results = data.get("results") or []
-        if not results:
-            return out
-        r = results[0]
-
-        out["track_num"] = r.get("trackNumber")
-        out["genre"] = r.get("primaryGenreName")
-
-        release_date = r.get("releaseDate")  # no siempre viene, no se garantiza
-        if release_date and len(release_date) >= 4:
-            out["year"] = release_date[:4]
-
-        art_url = r.get("artworkUrl100")
-        if art_url:
-            art_url_hires = art_url.replace("100x100bb", "600x600bb")
-            out["cover_bytes"] = download(art_url_hires) or download(art_url)
-    except Exception as e:
-        print(f"    [itunes] busqueda fallo: {e}")
-    time.sleep(3.5)  # iTunes limita a ~20 req/min, esto da margen
-    return out
-
-
-def write_tags(path: Path, artist, album, title, track_num, year, genre, cover_bytes, comment=None):
-    try:
-        audio = EasyID3(path)
-    except ID3NoHeaderError:
-        audio = MP3(path)
-        audio.add_tags()
-        audio.save()
-        audio = EasyID3(path)
-
-    if artist:
-        audio["artist"] = artist
-        audio["albumartist"] = artist
-    if album:
-        audio["album"] = album
-    if title:
-        audio["title"] = title
-    if track_num:
-        audio["tracknumber"] = str(track_num)
-    if year:
-        audio["date"] = str(year)
-    if genre:
-        audio["genre"] = genre
-    if comment:
-        audio["comment"] = comment
-    audio.save()
-
-    if cover_bytes:
-        id3 = ID3(path)
-        id3.delall("APIC")
-        id3.add(APIC(encoding=3, mime="image/jpeg", type=3, desc="Cover", data=cover_bytes))
-        id3.save(path)
-
-
 def download(url):
     try:
         req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
@@ -321,142 +263,216 @@ def download(url):
         return None
 
 
-def already_tagged(path: Path) -> bool:
+def search_itunes_track(artist, album, track_title):
+    """Respaldo: año y caratula desde iTunes. Pista y genero se descartan a
+    proposito (poco confiables en la practica)."""
+    out = {"year": None, "cover_bytes": None}
+    if not artist or not track_title:
+        return out
     try:
-        audio = EasyID3(path)
-    except ID3NoHeaderError:
-        return False
-    except Exception:
-        # archivo corrupto/formato raro: no asumir que ya esta tageado,
-        # dejar que el resto del pipeline lo intente y lo marque incompleto
-        # si corresponde, en vez de propagar la excepcion.
-        return False
-    return bool(audio.get("artist")) and bool(audio.get("album")) and bool(audio.get("title"))
+        params = {"term": f"{artist} {track_title}", "entity": "song", "limit": 1}
+        url = f"https://itunes.apple.com/search?{urllib.parse.urlencode(params)}"
+        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        results = data.get("results") or []
+        if results:
+            r = results[0]
+            # solo se acepta si el artista coincide
+            if same_name(artist, r.get("artistName", "")):
+                rd = r.get("releaseDate")
+                if rd and len(rd) >= 4:
+                    out["year"] = rd[:4]
+                art_url = r.get("artworkUrl100")
+                if art_url:
+                    out["cover_bytes"] = download(art_url.replace("100x100bb", "600x600bb")) or download(art_url)
+    except Exception as e:
+        print(f"    [itunes] busqueda fallo: {e}")
+    time.sleep(3.5)  # iTunes limita a ~20 req/min
+    return out
+
+
+# ------------------------------------------------------------------ proceso
+
+def already_tagged(path: Path) -> bool:
+    return is_complete(read_tags(path))
 
 
 def _ensure_moved(f: Path, dest: Path):
-    """Garantiza que el archivo termine en PROCESSED_DIR pase lo que pase,
-    aunque sea sin tags - asi verify_tags.py lo ve y lo reporta como
-    incompleto, en vez de que se pierda silenciosamente."""
     if f.exists() and not dest.exists():
         dest.parent.mkdir(parents=True, exist_ok=True)
         f.rename(dest)
 
 
-def process_file(f: Path, raw_dir: Path = None, processed_dir: Path = None):
-    """Procesa un archivo. Por defecto usa RAW_DIR/PROCESSED_DIR globales
-    (uso normal del CLI); un caller externo (batch_run.py) puede pasar
-    directorios especificos para procesar un archivo suelto fuera del
-    escaneo completo de una carpeta."""
+def _snapshot(tags: dict) -> dict:
+    return {k: tags.get(k) for k in ("artist", "album", "title", "albumartist", "track", "year", "genre", "has_cover")}
+
+
+def process_file_ex(f: Path, raw_dir: Path = None, processed_dir: Path = None, attempt: int = 1):
+    """Procesa un archivo. Devuelve (dest, info).
+
+    info["status"]:
+      ya_completo  tags reales completos: no se toca nada
+      ok           artista + titulo reales (album real o vacio)
+      sin_artista / sin_titulo / incompleto  -> no se pudo; el original queda intacto
+      reintentar   fallo transitorio (Discogs/Gemini) y attempt < 2; no se escribio nada
+      error        no legible o excepcion
+    dest es None cuando el archivo no se modifico ni se movio.
+    """
     raw_dir = raw_dir or RAW_DIR
     processed_dir = processed_dir or PROCESSED_DIR
     rel = f.relative_to(raw_dir)
     dest = processed_dir / rel
+    info = {"rel": str(rel), "status": None, "source": None, "before": None, "after": None,
+            "written": {}, "note": None, "gemini_fail": 0, "no_latin": False}
+    g0 = STATS["gemini_fail"]
     print(f"[{rel}]")
 
     try:
-        if already_tagged(f):
-            print("    ya tenia tags completos, se deja tal cual")
+        existing = read_tags(f)
+        info["before"] = _snapshot(existing)
+        if not existing["readable"]:
+            info.update(status="error", note="archivo no legible")
+            return None, info
+
+        if is_complete(existing):
+            print("    ya tenia tags reales completos, se deja tal cual")
             _ensure_moved(f, dest)
-            return dest
+            info.update(status="ya_completo", source="existente", after=info["before"])
+            info["no_latin"] = any(contains_non_latin_script(existing.get(k)) for k in ("artist", "album", "title"))
+            return dest, info
 
         folder_artist, folder_album = parse_album_folder(f.parent.name)
         file_artist, file_title = parse_filename(f, folder_artist)
-        artist = file_artist or folder_artist
+        artist = effective(existing, "artist") or file_artist or folder_artist
+        album_known = effective(existing, "album") or folder_album
+        title = effective(existing, "title") or file_title
 
-        if not artist or not file_title:
-            print(f"    NO SE PUDO PARSEAR el nombre de archivo -> Unknown Artist/Unknown Disc")
-            _ensure_moved(f, dest)
-            titulo_fallback = romanize_with_gemini(f.stem)
-            comment = build_translation_comment(f.stem, translate_with_gemini(f.stem), None, None)
-            write_tags(dest, "Unknown Artist", "Unknown Disc", titulo_fallback, None, None, None, None, comment)
-            return dest
+        if not artist:
+            info.update(status="sin_artista", note="no hay artista confiable (ni en tags ni en el nombre)")
+            print(f"    SIN ARTISTA confiable -> no procesable")
+            return None, info
+        if not title:
+            info.update(status="sin_titulo", note="no hay titulo")
+            return None, info
 
-        result = search_release(artist, folder_album, file_title)
-        if not result:
-            print(f"    sin resultados en Discogs para '{artist} - {file_title}' -> tageando con lo parseado del nombre/carpeta")
-            _ensure_moved(f, dest)
-            if folder_album:
-                itunes = search_itunes_track(artist, folder_album, file_title)
-                # pista y genero via itunes (sin restriccion de album) demostraron
-                # ser poco confiables en la practica (matchean contra singles/otros
-                # releases con el mismo nombre de cancion) - se dejan sin escribir
-                # en vez de arriesgar un dato equivocado con apariencia de certeza.
-                comment = build_translation_comment(file_title, translate_with_gemini(file_title),
-                                                     folder_album, translate_with_gemini(folder_album))
-                artist_out = romanize_with_gemini(artist)
-                album_out = romanize_with_gemini(folder_album)
-                title_out = romanize_with_gemini(file_title)
-                write_tags(dest, artist_out, album_out, title_out,
-                           None, itunes["year"], None, itunes["cover_bytes"], comment)
-                extras = []
-                if itunes["year"]:
-                    extras.append(f"año={itunes['year']}")
-                extras.append(f"caratula={'si' if itunes['cover_bytes'] else 'no'}")
-                if itunes["track_num"] or itunes["genre"]:
-                    extras.append(f"(descartado por poco confiable: pista={itunes['track_num']}, genero={itunes['genre']})")
-                print(f"    FALLBACK: {artist} - {folder_album} - {file_title} (sin confirmar en Discogs; itunes: {', '.join(extras)})")
+        # ---- busqueda (todas las consultas de red ANTES de escribir) ----
+        cand = None
+        discogs_failed = False
+        try:
+            results = search_release(artist, album_known, title)
+            cand = pick_candidate(results, artist)
+            if results and not cand:
+                print(f"    Discogs: resultados descartados (artista no coincide con '{artist}')")
+        except DiscogsError as e:
+            discogs_failed = True
+            print(f"    [discogs] busqueda fallo: {e}")
+
+        detail = None
+        if cand:
+            try:
+                detail = fetch_release_detail(cand.get("id"))
+            except DiscogsError as e:
+                discogs_failed = True
+                print(f"    [discogs] detalle fallo: {e}")
+
+        if discogs_failed and attempt < 2:
+            info.update(status="reintentar", note="Discogs no respondio; se reintenta")
+            return None, info
+
+        proposed = {"artist": artist, "album": album_known, "title": title}
+        cover_bytes = None
+        source = "nombre"
+
+        confirmed = False
+        if detail:
+            d_artists = detail.get("artists") or []
+            d_artist = strip_discogs_suffix(d_artists[0].get("name", "")) if d_artists else ""
+            d_album = detail.get("title") or ""
+            artist_ok = (not d_artist) or same_name(artist, d_artist)
+            album_ok = (not album_known) or (not d_album) or same_name(album_known, d_album)
+            if artist_ok and album_ok:
+                confirmed = True
+                matched = best_track_match(detail.get("tracklist", []), title)
+                proposed["artist"] = d_artist or artist
+                proposed["album"] = d_album or album_known
+                proposed["title"] = matched["title"] if matched else title
+                proposed["track"] = matched.get("position") if matched else None
+                proposed["year"] = detail.get("year") or cand.get("year")
+                genres = detail.get("genres") or cand.get("genre") or []
+                proposed["genre"] = ", ".join(genres) if genres else None
+                cu = cand.get("cover_image") or cand.get("thumb")
+                if cu and not existing.get("has_cover"):
+                    cover_bytes = download(cu)
+                source = "discogs"
             else:
-                # Antes esto quedaba sin tagear para siempre -- sin album ni
-                # match de Discogs, verify_tags lo marcaba incompleto en
-                # cada corrida, nunca se subía ni se borraba de la fuente.
-                # Se conserva el artista/título parseados del nombre de
-                # archivo (son reales, no hay motivo para descartarlos) y
-                # solo el álbum -- lo que realmente falta -- va a
-                # "Unknown Disc", así el archivo avanza y Cristopher puede
-                # revisar esa carpeta puntual a mano después.
-                comment = build_translation_comment(file_title, translate_with_gemini(file_title), None, None)
-                artist_out = romanize_with_gemini(artist)
-                title_out = romanize_with_gemini(file_title)
-                write_tags(dest, artist_out, "Unknown Disc", title_out, None, None, None, None, comment)
-                print(f"    FALLBACK sin álbum: {artist} - Unknown Disc - {file_title}")
-            return dest
+                print(f"    Discogs: match descartado (artista/album no coinciden)")
 
-        detail = fetch_release_detail(result.get("id"))
-        tracklist = (detail or {}).get("tracklist", [])
-        matched_track = best_track_match(tracklist, file_title)
+        if not confirmed and album_known and not existing.get("has_cover"):
+            it = search_itunes_track(artist, album_known, title)
+            if it["year"]:
+                proposed["year"] = it["year"]
+            if it["cover_bytes"]:
+                cover_bytes = it["cover_bytes"]
+                source = "itunes"
 
-        album_name = (detail or {}).get("title") or folder_album or result.get("title", "").split(" - ")[-1]
-        real_artist = artist
-        if detail and detail.get("artists"):
-            real_artist = detail["artists"][0].get("name", artist)
-        track_title = matched_track["title"] if matched_track else file_title
-        track_num = matched_track.get("position") if matched_track else None
-        year = (detail or {}).get("year") or result.get("year")
-        genres = (detail or {}).get("genres") or result.get("genre") or []
-        genre = ", ".join(genres) if genres else None
+        # ---- solo se procesa (romaniza/traduce) lo que realmente se va a escribir ----
+        for field in ("artist", "album", "title"):
+            if effective(existing, field):
+                proposed[field] = None      # valor real existente: no se toca
+        title_w, album_w = proposed.get("title"), proposed.get("album")
+        comment = None
+        if title_w or album_w:
+            comment = build_translation_comment(
+                title_w, translate_with_gemini(title_w) if title_w else None,
+                album_w, translate_with_gemini(album_w) if album_w else None)
+        for field in ("artist", "album", "title"):
+            if proposed.get(field):
+                proposed[field] = romanize_with_gemini(proposed[field])
 
-        cover_url = result.get("cover_image") or result.get("thumb")
-        cover_bytes = download(cover_url) if cover_url else None
-
-        comment = build_translation_comment(track_title, translate_with_gemini(track_title),
-                                             album_name, translate_with_gemini(album_name))
-
-        real_artist = romanize_with_gemini(real_artist)
-        album_name = romanize_with_gemini(album_name)
-        track_title = romanize_with_gemini(track_title)
+        info["gemini_fail"] = STATS["gemini_fail"] - g0
+        if info["gemini_fail"] and attempt < 2:
+            info.update(status="reintentar", note="Gemini fallo; se reintenta antes de subir sin romanizar")
+            return None, info
 
         _ensure_moved(f, dest)
-        write_tags(dest, real_artist, album_name, track_title, track_num, year, genre, cover_bytes, comment)
-        print(f"    OK: {real_artist} - {album_name} - {track_title} ({year or '?'})")
-        return dest
+        written = write_tags(dest, proposed, existing, cover_bytes, comment)
+        after = read_tags(dest)
+        info["written"] = {k: v for k, v in written.items() if k != "comment" or v}
+        info["after"] = _snapshot(after)
+        info["source"] = source
+        info["no_latin"] = any(contains_non_latin_script(after.get(k)) for k in ("artist", "album", "title"))
+        if effective(after, "artist") and effective(after, "title"):
+            info["status"] = "ok"
+            print(f"    OK ({source}): {after.get('artist')} - {after.get('album') or '(sin album)'} - {after.get('title')}")
+        else:
+            info.update(status="incompleto", note="faltan artista/titulo tras el tageo")
+        return dest, info
 
     except Exception as e:
-        # Un archivo problematico (corrupto, ID3 raro, lo que sea) NUNCA debe
-        # matar la corrida entera - se loguea, se deja sin tagear (o con lo
-        # que se haya alcanzado a escribir), y se sigue con el resto.
-        print(f"    ERROR procesando este archivo, se deja sin tagear y se continua con el resto: {e}")
-        _ensure_moved(f, dest)
-        return dest
+        print(f"    ERROR procesando este archivo: {e}")
+        info.update(status="error", note=str(e)[:200])
+        return None, info
+
+
+def process_file(f: Path, raw_dir: Path = None, processed_dir: Path = None):
+    """Compatibilidad con el CLI antiguo: devuelve la ruta de destino."""
+    raw_dir = raw_dir or RAW_DIR
+    processed_dir = processed_dir or PROCESSED_DIR
+    dest, _ = process_file_ex(f, raw_dir, processed_dir)
+    return dest or (processed_dir / f.relative_to(raw_dir))
 
 
 def main():
-    files = sorted(p for p in RAW_DIR.rglob("*") if p.suffix.lower() in AUDIO_EXTS)
+    if not DISCOGS_TOKEN:
+        print("ERROR: falta DISCOGS_TOKEN en el ambiente.", file=sys.stderr)
+        sys.exit(2)
+    raw = Path(sys.argv[1]) if len(sys.argv) > 1 else RAW_DIR
+    processed = Path(sys.argv[2]) if len(sys.argv) > 2 else PROCESSED_DIR
+    files = sorted(p for p in raw.rglob("*") if p.suffix.lower() in AUDIO_EXTS)
     print(f"== Tageando {len(files)} archivo(s) via Discogs (busqueda por texto) ==\n")
-
     for f in files:
-        process_file(f, RAW_DIR, PROCESSED_DIR)
-
+        process_file(f, raw, processed)
     print("\n== Tageo con Discogs terminado ==")
 
 

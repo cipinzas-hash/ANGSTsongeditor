@@ -1,58 +1,116 @@
 name: Untitled track killer
 
+# Trabajo con inicio y fin: NO procesa nada hasta que se lo pides con
+# action=start. Desde ahi corre cada 5 h (cron) hasta dejar vacia la carpeta
+# de origen, y se apaga solo. El estado, el informe y el resumen viven en la
+# rama `job-state` (state.json, report.jsonl, summary.md, ...).
 on:
   workflow_dispatch:
     inputs:
+      action:
+        description: "start = iniciar/ajustar trabajo y correr un lote | run = correr un lote | stop = detener | inventory = contar por extension | selftest = probar Gemini y Discogs"
+        required: true
+        default: "selftest"
+        type: choice
+        options: [selftest, inventory, start, run, stop]
       mega_source:
-        description: "Ruta INTERNA de tu cuenta MEGA (no un link publico - hace falta poder listar y borrar dentro de ella). Ej: /musica"
+        description: "Ruta INTERNA de MEGA (solo para start/inventory; vacio = variable MEGA_SOURCE_PATH)"
         required: false
         default: ""
       batch_size:
-        description: "Maximo de canciones a procesar en esta corrida"
+        description: "Canciones por corrida (vacio = el valor guardado; el primer start usa 5)"
         required: false
-        default: "100"
+        default: ""
   schedule:
-    - cron: '0 */5 * * *'  # cada 5 horas
+    - cron: '0 */5 * * *'  # cada 5 horas; sale en segundos si no hay trabajo activo
+
+# Una sola corrida a la vez: una colgada no se superpone con la siguiente.
+concurrency:
+  group: tag-music
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # empujar la rama job-state
 
 jobs:
   tag:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04   # fijo: ubuntu-latest pasa a 26.04 el 19-oct-2026 y el .deb de MEGAcmd es de 24.04
+    timeout-minutes: 50
     env:
+      ACTION: ${{ github.event.inputs.action || 'run' }}
       MEGA_EMAIL: ${{ secrets.MEGA_EMAIL }}
       MEGA_PASSWORD: ${{ secrets.MEGA_PASSWORD }}
       DISCOGS_TOKEN: ${{ secrets.DISCOGS_TOKEN }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-      # Los runs por schedule no tienen "inputs" (son solo de workflow_dispatch),
-      # por eso el fallback a vars.MEGA_SOURCE_PATH - hay que configurar esa
-      # variable de repo (Settings > Secrets and variables > Actions > Variables)
-      # para que las corridas automaticas sepan de donde leer.
       MEGA_SOURCE: ${{ github.event.inputs.mega_source || vars.MEGA_SOURCE_PATH }}
       MEGA_DEST: "/untitledless"
-      BATCH_SIZE: ${{ github.event.inputs.batch_size || '100' }}
+      MEGA_NONPROC: "/untitledless-nonprocessed"
+      BATCH_SIZE: ${{ github.event.inputs.batch_size }}
+      STATE_DIR: ${{ github.workspace }}/state
     steps:
       - uses: actions/checkout@v4
 
+      - name: Preparar rama de estado (job-state)
+        run: |
+          git config user.name "songeditor-bot"
+          git config user.email "songeditor-bot@users.noreply.github.com"
+          if git ls-remote --exit-code --heads origin job-state >/dev/null 2>&1; then
+            git fetch -q origin job-state
+            git worktree add -q --detach state FETCH_HEAD
+          else
+            git worktree add -q --detach state HEAD
+            git -C state checkout -q --orphan job-state-new
+            git -C state rm -rq --cached . || true
+            find state -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+            git -C state commit -q --allow-empty -m "job-state: inicio"
+          fi
+
+      - name: Decidir si hay algo que hacer
+        id: gate
+        run: |
+          go=yes
+          if [ "$ACTION" = "run" ]; then
+            st=$(python3 -c "import json,os;p=os.path.join(os.environ['STATE_DIR'],'state.json');print(json.load(open(p)).get('status','idle') if os.path.exists(p) else 'idle')")
+            echo "Estado del trabajo: $st"
+            case "$st" in active|sweeping) ;; *) go=no ;; esac
+          fi
+          echo "go=$go" >> "$GITHUB_OUTPUT"
+          [ "$go" = "yes" ] || echo "Sin trabajo activo: nada que hacer."
+
+      - name: Setup Python
+        if: steps.gate.outputs.go == 'yes'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependencias de Python
+        if: steps.gate.outputs.go == 'yes'
+        run: pip install -r requirements.txt
+
       - name: Instalar MEGAcmd
+        if: steps.gate.outputs.go == 'yes' && env.ACTION != 'selftest' && env.ACTION != 'stop'
         run: |
           sudo apt-get update
           sudo apt-get install -y gnupg
           wget -q https://mega.nz/linux/repo/xUbuntu_24.04/amd64/megacmd-xUbuntu_24.04_amd64.deb
           sudo apt-get install -y ./megacmd-xUbuntu_24.04_amd64.deb
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Instalar dependencias de Python
-        run: pip install -r requirements.txt
-
-      - name: Verificar que MEGA_SOURCE este configurado
+      - name: Verificar MEGA_SOURCE
+        if: steps.gate.outputs.go == 'yes' && (env.ACTION == 'start' || env.ACTION == 'inventory')
         run: |
           if [ -z "$MEGA_SOURCE" ]; then
-            echo "ERROR: no hay MEGA_SOURCE. Para corridas manuales, completa el input. Para corridas automaticas (schedule), configura la variable de repo MEGA_SOURCE_PATH."
+            echo "ERROR: falta MEGA_SOURCE (input mega_source o variable de repo MEGA_SOURCE_PATH)."
             exit 1
           fi
 
       - name: Correr el bot
+        if: steps.gate.outputs.go == 'yes'
         run: bash scripts/run.sh
+
+      - name: Guardar estado (selftest / inventory / stop)
+        if: always() && steps.gate.outputs.go == 'yes' && (env.ACTION == 'selftest' || env.ACTION == 'inventory' || env.ACTION == 'stop')
+        run: |
+          cd state
+          git add -A
+          git diff --cached --quiet || git commit -q -m "$ACTION"
+          for i in 1 2 3; do git push -q origin HEAD:job-state && break || git pull -q --rebase origin job-state; done
