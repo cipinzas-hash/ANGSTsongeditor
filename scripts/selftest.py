@@ -37,6 +37,7 @@ for lang, texto in pruebas:
         item["traduccion_es"] = T.gemini_generate(
             "Traduci al espanol el significado, devolve UNICAMENTE la traduccion: " + texto)
         item["ok"] = True
+        item["modelo_usado"] = T.LAST_MODEL["name"]
     except Exception as e:
         item["ok"] = False
         item["error"] = str(e)[:300]

@@ -78,7 +78,8 @@ def _gem_fail(reason: str):
     print(f"    [gemini] FALLO: {r}")
 
 
-GEMINI_FALLBACK_MODEL = "gemini-2.5-flash"
+GEMINI_FALLBACK_MODELS = ("gemini-3.1-flash-lite", "gemini-3.5-flash")
+LAST_MODEL = {"name": None}
 
 
 def _gemini_call(model: str, prompt: str, timeout: int):
@@ -96,12 +97,15 @@ def gemini_generate(prompt: str, timeout: int = 30) -> str:
     saturado, prueba un modelo de respaldo. La API key viaja en la URL: nunca
     se imprime la URL ni se la incluye en errores."""
     last = "sin intentos"
-    for model in (GEMINI_MODEL, GEMINI_FALLBACK_MODEL):
+    chain = (GEMINI_MODEL,) + tuple(m for m in GEMINI_FALLBACK_MODELS if m != GEMINI_MODEL)
+    for model in chain:
         for wait in (0, 3, 8):
             if wait:
                 time.sleep(wait)
             try:
-                return _gemini_call(model, prompt, timeout)
+                out = _gemini_call(model, prompt, timeout)
+                LAST_MODEL["name"] = model
+                return out
             except urllib.error.HTTPError as e:
                 try:
                     body = e.read().decode("utf-8", "replace")[:160].replace(GEMINI_API_KEY, "***")
@@ -115,8 +119,6 @@ def gemini_generate(prompt: str, timeout: int = 30) -> str:
             except (KeyError, IndexError, ValueError) as e:
                 last = f"respuesta inesperada de {model}: {type(e).__name__}"
                 break
-        if model == GEMINI_FALLBACK_MODEL:
-            break
     raise RuntimeError(last)
 
 
