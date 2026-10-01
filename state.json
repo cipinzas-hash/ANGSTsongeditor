@@ -4,11 +4,27 @@
  "batch_size": 100,
  "runs": 2,
  "counts": {
-  "uploaded": 45,
-  "ya_completo": 45,
-  "sidecars": 2
+  "uploaded": 51,
+  "ya_completo": 51,
+  "sidecars": 2,
+  "retry": 14
  },
- "attempts": {},
+ "attempts": {
+  "/MEGA/musica/nine-treasures (1).mp3": 1,
+  "/MEGA/musica/nine-treasures (2).mp3": 1,
+  "/MEGA/musica/nine-treasures (3).mp3": 1,
+  "/MEGA/musica/nine-treasures (4).mp3": 1,
+  "/MEGA/musica/nine-treasures (5).mp3": 1,
+  "/MEGA/musica/nine-treasures (6).mp3": 1,
+  "/MEGA/musica/nine-treasures (7).mp3": 1,
+  "/MEGA/musica/nine-treasures-10-years.mp3": 1,
+  "/MEGA/musica/nine-treasures.mp3": 1,
+  "/MEGA/musica/noir-synthpop-a-forest.mp3": 1,
+  "/MEGA/musica/noir-synthpop-in-every-dream-home-a-heartache.mp3": 1,
+  "/MEGA/musica/noir-synthpop-my-dear.mp3": 1,
+  "/MEGA/musica/noir-synthpop-the-bells.mp3": 1,
+  "/MEGA/musica/noir-synthpop-the-grifter.mp3": 1
+ },
  "dir_dest": {
   "/MEGA/musica": [
    "/untitledless/AKB48/Ralph el Demoledor (Música Original Compuesta)",
@@ -18,8 +34,10 @@
    "/untitledless/Aural Vampire/Freeeeze!! - Single",
    "/untitledless/Aural Vampire/Kerguelen Vortex",
    "/untitledless/Bar9/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
+   "/untitledless/Blame/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/Blur/The Best of Blur",
    "/untitledless/Deekline & Ed Solo/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
+   "/untitledless/Dodge & Fuski & Sandro Silva/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/Drumsound & Bassline Smith/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/Gorillaz/Demon Days",
    "/untitledless/Hocico/Vile Whispers - EP",
@@ -28,8 +46,11 @@
    "/untitledless/Ladytron/Witching Hour (Bonus Version)",
    "/untitledless/Red Hot Chili Peppers/Red Hot Chili Peppers: Greatest Hits",
    "/untitledless/Revolvr & DJ Red/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
+   "/untitledless/Stadium/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/The Squatters & Steve Edwards/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
-   "/untitledless/Vato Gonzalez, Lethal Bizzle & Donae'o/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
+   "/untitledless/Various Artists/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
+   "/untitledless/Vato Gonzalez, Lethal Bizzle & Donae'o/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
+   "/untitledless/Virus Syndicate/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
   ]
  },
  "gemini": {
