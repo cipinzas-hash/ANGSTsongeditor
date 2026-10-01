@@ -4,12 +4,12 @@
  "batch_size": 100,
  "runs": 4,
  "counts": {
-  "uploaded": 124,
-  "ya_completo": 115,
-  "sidecars": 11,
+  "uploaded": 144,
+  "ya_completo": 133,
+  "sidecars": 14,
   "retry": 59,
-  "con_album": 6,
-  "romanizados": 6,
+  "con_album": 8,
+  "romanizados": 8,
   "nonprocessed": 5,
   "nonprocessed_reasons": {
    "sin_artista": 5
@@ -53,6 +53,10 @@
    "/untitledless/Paradise Lost/Draconian Times",
    "/untitledless/Paradise Lost/Icon",
    "/untitledless/Paradise Lost/Medusa",
+   "/untitledless/Proyecto Crisis/Made In Chile",
+   "/untitledless/Punto Omega/Nostalgias Del Origen",
+   "/untitledless/Rage Against The Machine/Rage Against The Machine",
+   "/untitledless/Rage Against the Machine/Evil Empire",
    "/untitledless/Red Hot Chili Peppers/Red Hot Chili Peppers: Greatest Hits",
    "/untitledless/Revolvr & DJ Red/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/Stadium/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
