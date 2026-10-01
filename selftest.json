@@ -1,6 +1,6 @@
 {
- "ts": "2026-10-01T18:08:08Z",
- "gemini_model": "gemini-2.0-flash",
+ "ts": "2026-10-01T18:09:13Z",
+ "gemini_model": "gemini-flash-latest",
  "gemini_key_present": true,
  "gemini_key_length": 53,
  "gemini": [
@@ -8,19 +8,19 @@
    "lang": "ja",
    "input": "古い心",
    "ok": false,
-   "error": "HTTP 404 modelo=gemini-2.0-flash {\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.0-flash is no longer available. Please update your code to use models/gemini-3.8-flas"
+   "error": "HTTP 503 modelo=gemini-flash-latest {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later"
   },
   {
    "lang": "ko",
    "input": "안녕하세요",
    "ok": false,
-   "error": "HTTP 404 modelo=gemini-2.0-flash {\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.0-flash is no longer available. Please update your code to use models/gemini-3.8-flas"
+   "error": "HTTP 503 modelo=gemini-flash-latest {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later"
   },
   {
    "lang": "ja",
    "input": "ふるい心",
    "ok": false,
-   "error": "HTTP 404 modelo=gemini-2.0-flash {\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.0-flash is no longer available. Please update your code to use models/gemini-3.8-flas"
+   "error": "HTTP 503 modelo=gemini-flash-latest {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later"
   }
  ],
  "discogs": {
