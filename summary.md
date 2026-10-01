@@ -1,18 +1,19 @@
 # ANGSTsongeditor — estado del trabajo
 
-- Estado: **idle**  ·  fuente: `None`  ·  lote: 5
-- Iniciado: None  ·  ultima corrida: None  ·  corridas: 0
-- Pendientes en la fuente (ultimo conteo): None
+- Estado: **active**  ·  fuente: `/MEGA/musica`  ·  lote: 5
+- Iniciado: 2026-10-01T18:18:37Z  ·  ultima corrida: 2026-10-01T18:18:37Z  ·  corridas: 1
+- Pendientes en la fuente (ultimo conteo): 605
 
 ## Conteos acumulados
 
-- uploaded: 0
-- ya_completo: 0
+- uploaded: 5
+- ya_completo: 5
 - con_album: 0
 - sin_album: 0
 - nonprocessed: 0
 - retry: 0
 - sidecars: 0
+- orphans_rescued: 0
 - folder_images: 0
 - no_latin_kept: 0
 - dup_renamed: 0

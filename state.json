@@ -1,16 +1,30 @@
 {
- "status": "idle",
- "mega_source": null,
+ "status": "active",
+ "mega_source": "/MEGA/musica",
  "batch_size": 5,
- "runs": 0,
- "counts": {},
+ "runs": 1,
+ "counts": {
+  "uploaded": 5,
+  "ya_completo": 5
+ },
  "attempts": {},
- "dir_dest": {},
+ "dir_dest": {
+  "/MEGA/musica": [
+   "/untitledless/Aural Vampire/Aural Vampir II - EP",
+   "/untitledless/Aural Vampire/Aural Vampire III: Border of the Dead - Single",
+   "/untitledless/Aural Vampire/Freeeeze!! - Single",
+   "/untitledless/Aural Vampire/Kerguelen Vortex",
+   "/untitledless/Ladytron/Witching Hour (Bonus Version)"
+  ]
+ },
  "gemini": {
   "ok": 0,
   "fail": 0,
   "errors": []
  },
  "history": [],
- "last_action": "inventory"
+ "last_action": "start",
+ "started_at": "2026-10-01T18:18:37Z",
+ "last_run": "2026-10-01T18:18:37Z",
+ "pending": 605
 }
