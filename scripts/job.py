@@ -138,8 +138,19 @@ def mega(args, timeout=300, check=True):
             raise AbortRun(f"3 timeouts seguidos de mega ({args[0]})")
         raise RuntimeError(f"timeout de {timeout}s en {args[0]}")
     if check and r.returncode != 0:
-        raise RuntimeError(f"{' '.join(args[:2])} fallo (exit {r.returncode}): {r.stderr.strip()[:200]}")
+        raise RuntimeError(f"{' '.join(args[:2])} fallo (exit {r.returncode}): {clean_err(r)}")
     return r
+
+
+def clean_err(r):
+    """Cola del mensaje de error de mega-*, sin barras de progreso (TRANSFERRING ...)."""
+    txt = (r.stderr or "") + "\n" + (r.stdout or "")
+    lines = []
+    for l in txt.replace("\r", "\n").replace("\x00", "").splitlines():
+        l = l.strip()
+        if l and "TRANSFERRING" not in l and "Initiating MEGAcmd" not in l and "Resuming session" not in l:
+            lines.append(l)
+    return " | ".join(lines[-4:])[:300] or "(sin mensaje)"
 
 
 def list_files(root):
@@ -599,6 +610,33 @@ def cmd_inventory(st):
     print(json.dumps(out, ensure_ascii=False, indent=1))
 
 
+def cmd_diagnose(st):
+    """Diagnostico de descargas: cuenta/cuota y un mega-get de prueba con la salida completa."""
+    source = (st.get("mega_source") or os.environ.get("MEGA_SOURCE") or "").rstrip("/")
+    out = {"ts": now(), "source": source}
+    for name, args in (("whoami", ["mega-whoami", "-l"]), ("df", ["mega-df"]), ("transfers", ["mega-transfers", "--only-downloads"])):
+        try:
+            r = subprocess.run(args, capture_output=True, text=True, timeout=60)
+            out[name] = (r.stdout + r.stderr).replace("\x00", "")[-800:]
+        except Exception as e:
+            out[name] = f"error: {e}"
+    files = [f for f in list_files(source) if ext(f) in AUDIO_EXTS]
+    probes = [f for f in files if ext(f) == ".mp3"][:2] + [f for f in files if ext(f) == ".m4a"][:1]
+    out["pruebas"] = []
+    for f in probes:
+        with tempfile.TemporaryDirectory() as tmp:
+            t0 = time.time()
+            try:
+                r = subprocess.run(["mega-get", f, tmp + "/"], capture_output=True, text=True, timeout=150)
+                res = {"archivo": f, "exit": r.returncode, "segundos": round(time.time() - t0),
+                       "mensaje": clean_err(r), "bajado": sorted(os.listdir(tmp))}
+            except subprocess.TimeoutExpired:
+                res = {"archivo": f, "exit": "timeout", "segundos": 150}
+        out["pruebas"].append(res)
+    (STATE_DIR / "diagnose.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(json.dumps(out, ensure_ascii=False, indent=1))
+
+
 def main():
     action = (os.environ.get("ACTION") or "run").strip()
     st = load_state()
@@ -610,6 +648,8 @@ def main():
         note = "Detenido a mano."
     elif action == "inventory":
         cmd_inventory(st)
+    elif action == "diagnose":
+        cmd_diagnose(st)
     elif action in ("start", "run"):
         if action == "run" and st["status"] not in active:
             print(f"El trabajo no esta activo (estado: {st['status']}). No hay nada que hacer.")
