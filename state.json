@@ -4,12 +4,12 @@
  "batch_size": 100,
  "runs": 9,
  "counts": {
-  "uploaded": 564,
-  "ya_completo": 531,
-  "sidecars": 96,
+  "uploaded": 584,
+  "ya_completo": 547,
+  "sidecars": 99,
   "retry": 59,
-  "con_album": 27,
-  "romanizados": 23,
+  "con_album": 31,
+  "romanizados": 27,
   "nonprocessed": 5,
   "nonprocessed_reasons": {
    "sin_artista": 5
@@ -36,6 +36,7 @@
    "/untitledless/Hurley/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/Josh Money/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/Ladytron/Witching Hour (Bonus Version)",
+   "/untitledless/Molchat Doma/Belaya Polosa",
    "/untitledless/Nine Treasures/Wisdom Eyes",
    "/untitledless/Noir/Darkly Near",
    "/untitledless/Noisuf-X/Fuck the Mainstream",
@@ -123,6 +124,7 @@
    "/untitledless/WarCry/La Quinta Esenci",
    "/untitledless/Warcry/Donde el Silencio Se Rompió",
    "/untitledless/XOVER/Aureola",
+   "/untitledless/XOVER/XGATE",
    "/untitledless/Xerox/Return to the Sauce",
    "/untitledless/the GazettE/DIM",
    "/untitledless/Ｓｃｈｗａｒｚ　Ｓｔｅｉｎ/Ａｒｔｉｆｉｃｉａｌ　Ｈａｌｌｕｃｉｎａｔｉｏｎ",
