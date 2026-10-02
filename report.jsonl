@@ -666,3 +666,221 @@
 {"ts": "2026-10-02T19:43:46Z", "run": 9, "path": "молчат-дома-тоска.mp3", "attempt": 1, "before": {"artist": "Молчат Дома", "album": "Этажи", "title": "Тоска", "albumartist": null, "track": "05", "year": "2018", "genre": "New Wave", "has_cover": false}, "after": {"artist": "Molchat Doma", "album": "Etazhi", "title": "Toska", "albumartist": "Molchat Doma", "track": "05", "year": "2018", "genre": "New Wave", "has_cover": false}, "source": "romanizado", "written": {"artist": "Molchat Doma", "album": "Etazhi", "title": "Toska", "albumartist": "Molchat Doma", "comment": "Traducción -- Cancion: \"Angustia\" / Disco: \"Pisos\"\nOriginal -- Artista: \"Молчат Дома\" / Disco: \"Этажи\" / Cancion: \"Тоска\""}, "note": null, "gemini_fail": 0, "no_latin": false, "status": "uploaded", "dest": "/untitledless/Molchat Doma/Etazhi/молчат-дома-тоска.mp3", "sidecars": [], "ambiguous_sidecars": false}
 {"ts": "2026-10-02T19:44:03Z", "run": 9, "path": "молчат-дома-удалил-твои-номер.mp3", "attempt": 1, "before": {"artist": "Molchat Doma", "album": "Monument", "title": "Удалил Твой Номер / Udalil Tvoy Nomer", "albumartist": "Molchat Doma", "track": "07", "year": "2020", "genre": null, "has_cover": true}, "after": {"artist": "Molchat Doma", "album": "Monument", "title": "Udalil Tvoy Nomer", "albumartist": "Molchat Doma", "track": "07", "year": "2020", "genre": null, "has_cover": true}, "source": "romanizado", "written": {"title": "Udalil Tvoy Nomer", "comment": "Traducción -- Cancion: \"Borré tu número\"\nOriginal -- Cancion: \"Удалил Твой Номер / Udalil Tvoy Nomer\""}, "note": null, "gemini_fail": 0, "no_latin": false, "status": "uploaded", "dest": "/untitledless/Molchat Doma/Monument/молчат-дома-удалил-твои-номер.mp3", "sidecars": [], "ambiguous_sidecars": false}
 {"ts": "2026-10-02T19:44:09Z", "run": 9, "path": "молчат-дома-утонуть.mp3", "attempt": 1, "before": {"artist": "Molchat Doma", "album": "Monument", "title": "Утонуть / Utonut'", "albumartist": "Molchat Doma", "track": "01", "year": "2020", "genre": null, "has_cover": true}, "after": {"artist": "Molchat Doma", "album": "Monument", "title": "Utonut'", "albumartist": "Molchat Doma", "track": "01", "year": "2020", "genre": null, "has_cover": true}, "source": "romanizado", "written": {"title": "Utonut'", "comment": "Traducción -- Cancion: \"Ahogarse\"\nOriginal -- Cancion: \"Утонуть / Utonut'\""}, "note": null, "gemini_fail": 0, "no_latin": false, "status": "uploaded", "dest": "/untitledless/Molchat Doma/Monument/молчат-дома-утонуть.mp3", "sidecars": [], "ambiguous_sidecars": false}
+{"ts": "2026-10-02T19:44:17Z", "run": 9, "path": "молчат-дома-фильмы.mp3", "attempt": 1, "before": {"artist": "Молчат Дома", "album": "Этажи", "title": "Фильмы", "albumartist": null, "track": "03", "year": "2018", "genre": "New Wave", "has_cover": false}, "after": {"artist": "Molchat Doma", "album": "Etazhi", "title": "Filmy", "albumartist": "Molchat Doma", "track": "03", "year": "2018", "genre": "New Wave", "has_cover": false}, "source": "romanizado", "written": {"artist": "Molchat Doma", "album": "Etazhi", "title": "Filmy", "albumartist": "Molchat Doma", "comment": "Traducción -- Cancion: \"Películas\" / Disco: \"Pisos\"\nOriginal -- Artista: \"Молчат Дома\" / Disco: \"Этажи\" / Cancion: \"Фильмы\""}, "note": null, "gemini_fail": 0, "no_latin": false, "status": "uploaded", "dest": "/untitledless/Molchat Doma/Etazhi/молчат-дома-фильмы.mp3", "sidecars": [], "ambiguous_sidecars": false}
+{"ts": "2026-10-02T19:44:29Z", "run": 9, "path": "01 - Plague.lrc", "status": "orphan_rescued", "dest": "/untitledless/Crystal Castles/(III)"}
+{"ts": "2026-10-02T19:44:29Z", "run": 9, "path": "01. Bare Your Teeth.lrc", "status": "orphan_rescued", "dest": "/untitledless/Ashbury Heights/Three Cheers For The Newlydeads"}
+{"ts": "2026-10-02T19:44:29Z", "run": 9, "path": "01. Mein Herz Brennt.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Mutter (Limited Tour Edition)"}
+{"ts": "2026-10-02T19:44:30Z", "run": 9, "path": "02 - Celestica.lrc", "status": "orphan_rescued", "dest": "/untitledless/Crystal Castles/Crystal Castles ( II )"}
+{"ts": "2026-10-02T19:44:31Z", "run": 9, "path": "02. Links 2-3-4.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Mutter (Limited Tour Edition)"}
+{"ts": "2026-10-02T19:44:31Z", "run": 9, "path": "03 - Wrath of God.lrc", "status": "orphan_rescued", "dest": "/untitledless/Crystal Castles/(III)"}
+{"ts": "2026-10-02T19:44:31Z", "run": 9, "path": "03. Dying Wish - Autumn's Final Sun.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dying Wish/Dying Wish - Serration"}
+{"ts": "2026-10-02T19:44:32Z", "run": 9, "path": "03. Schwarz.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Zeit"}
+{"ts": "2026-10-02T19:44:32Z", "run": 9, "path": "03. Sonne.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Mutter (Limited Tour Edition)"}
+{"ts": "2026-10-02T19:44:32Z", "run": 9, "path": "04. Giftig.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Zeit"}
+{"ts": "2026-10-02T19:44:32Z", "run": 9, "path": "04. Spieluhr (Live).lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Mutter (Limited Tour Edition)"}
+{"ts": "2026-10-02T19:44:33Z", "run": 9, "path": "05. Stripped.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Raritäten"}
+{"ts": "2026-10-02T19:44:33Z", "run": 9, "path": "05. Yor Zarad.lrc", "status": "orphan_rescued", "dest": "/untitledless/Angine de Poitrine/Vol.II"}
+{"ts": "2026-10-02T19:44:36Z", "run": 9, "path": "05. Zick Zack.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Zeit"}
+{"ts": "2026-10-02T19:44:36Z", "run": 9, "path": "06. Amerika.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Reise, Reise"}
+{"ts": "2026-10-02T19:44:36Z", "run": 9, "path": "06. Bück Dich.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Sehnsucht (Japanese Edition)"}
+{"ts": "2026-10-02T19:44:37Z", "run": 9, "path": "06. Cry Havoc.lrc", "status": "orphan_rescued", "dest": "/untitledless/Ashbury Heights/Three Cheers For The Newlydeads"}
+{"ts": "2026-10-02T19:44:37Z", "run": 9, "path": "06. OK.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Zeit"}
+{"ts": "2026-10-02T19:44:37Z", "run": 9, "path": "07.  Meine Tränen.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Zeit"}
+{"ts": "2026-10-02T19:44:37Z", "run": 9, "path": "07. Swansong.lrc", "status": "orphan_rescued", "dest": "/untitledless/Ashbury Heights/Three Cheers For The Newlydeads"}
+{"ts": "2026-10-02T19:44:38Z", "run": 9, "path": "08 - Transgender.lrc", "status": "orphan_rescued", "dest": "/untitledless/Crystal Castles/(III)"}
+{"ts": "2026-10-02T19:44:38Z", "run": 9, "path": "08. Angst.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Zeit"}
+{"ts": "2026-10-02T19:44:38Z", "run": 9, "path": "08. Heirate Mich.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Herzeleid"}
+{"ts": "2026-10-02T19:44:38Z", "run": 9, "path": "08. Illusion.lrc", "status": "orphan_rescued", "dest": "/untitledless/Ashbury Heights/Three Cheers For The Newlydeads"}
+{"ts": "2026-10-02T19:44:39Z", "run": 9, "path": "08. Klavier.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Sehnsucht (Japanese Edition)"}
+{"ts": "2026-10-02T19:44:39Z", "run": 9, "path": "08. Pussy.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Liebe Ist Für Alle Da"}
+{"ts": "2026-10-02T19:44:39Z", "run": 9, "path": "09. Dicke Titten.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Zeit"}
+{"ts": "2026-10-02T19:44:41Z", "run": 9, "path": "09. Te Quiero Puta!.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Rosenrot"}
+{"ts": "2026-10-02T19:44:44Z", "run": 9, "path": "10. Corsair.lrc", "status": "orphan_rescued", "dest": "/untitledless/Ashbury Heights/Three Cheers For The Newlydeads"}
+{"ts": "2026-10-02T19:44:44Z", "run": 9, "path": "10. Eifersucht.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Sehnsucht (Japanese Edition)"}
+{"ts": "2026-10-02T19:44:44Z", "run": 9, "path": "10. Lügen.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Zeit"}
+{"ts": "2026-10-02T19:44:44Z", "run": 9, "path": "11 - Mercenary.lrc", "status": "orphan_rescued", "dest": "/untitledless/Crystal Castles/(III)"}
+{"ts": "2026-10-02T19:44:48Z", "run": 9, "path": "11 - Pap Smear.lrc", "status": "orphan_rescued", "dest": "/untitledless/Crystal Castles/Crystal Castles ( II )"}
+{"ts": "2026-10-02T19:44:48Z", "run": 9, "path": "11. Adieu.lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Zeit"}
+{"ts": "2026-10-02T19:44:48Z", "run": 9, "path": "12 - Not in Love.lrc", "status": "orphan_rescued", "dest": "/untitledless/Crystal Castles/Crystal Castles ( II )"}
+{"ts": "2026-10-02T19:44:48Z", "run": 9, "path": "12. Spiel Mit Mir (2023 Mix).lrc", "status": "orphan_rescued", "dest": "/untitledless/Rammstein/Sehnsucht (Anniversary Edition - Remastered)"}
+{"ts": "2026-10-02T19:44:49Z", "run": 9, "path": "12. Suicide Anthem.lrc", "status": "orphan_rescued", "dest": "/untitledless/Ashbury Heights/Three Cheers For The Newlydeads"}
+{"ts": "2026-10-02T19:44:49Z", "run": 9, "path": "1200-micrograms-ayahuasca.lrc", "status": "orphan_rescued", "dest": "/untitledless/Unknown Artist/Unknown Disc"}
+{"ts": "2026-10-02T19:44:52Z", "run": 9, "path": "1200-micrograms-marijuana.lrc", "status": "orphan_rescued", "dest": "/untitledless/Unknown Artist/Unknown Disc"}
+{"ts": "2026-10-02T19:44:52Z", "run": 9, "path": "2x-la-hora-del-juicio.lrc", "status": "orphan_rescued", "dest": "/untitledless/2x/pateando craneos"}
+{"ts": "2026-10-02T19:44:53Z", "run": 9, "path": "2x-no-seremos-mas.lrc", "status": "orphan_rescued", "dest": "/untitledless/2x/Lucha Eterna"}
+{"ts": "2026-10-02T19:44:53Z", "run": 9, "path": "Childre Of Bodom - Needled 24_7 (www.hotplayer.ru) (1).lrc", "status": "orphan_rescued", "dest": "/untitledless/Children Of Bodom/Hate Crew Deathroll"}
+{"ts": "2026-10-02T19:44:53Z", "run": 9, "path": "anabantha-caen-las-hojas-sentido-pesame-ii.lrc", "status": "orphan_rescued", "dest": "/untitledless/Anabantha/Letanias Capitulo Prohibido"}
+{"ts": "2026-10-02T19:44:53Z", "run": 9, "path": "and-one-enjoy-the-unknown.lrc", "status": "orphan_rescued", "dest": "/untitledless/And One/Bodypop"}
+{"ts": "2026-10-02T19:44:53Z", "run": 9, "path": "and-one-exit.lrc", "status": "orphan_rescued", "dest": "/untitledless/And One/Anguish"}
+{"ts": "2026-10-02T19:44:54Z", "run": 9, "path": "angine-de-poitrine-tamebsz.lrc", "status": "orphan_rescued", "dest": "/untitledless/Angine de Poitrine/Vol.1"}
+{"ts": "2026-10-02T19:44:54Z", "run": 9, "path": "ashbury-heights-morningstar-in-a-black-car.lrc", "status": "orphan_rescued", "dest": "/untitledless/Ashbury Heights/Morningstar in a Black Car EP"}
+{"ts": "2026-10-02T19:44:54Z", "run": 9, "path": "beborn-beton-ambush.lrc", "status": "orphan_rescued", "dest": "/untitledless/Beborn Beton/Nightfall"}
+{"ts": "2026-10-02T19:44:55Z", "run": 9, "path": "beborn-beton-conspiracy.lrc", "status": "orphan_rescued", "dest": "/untitledless/Beborn Beton/Truth"}
+{"ts": "2026-10-02T19:44:55Z", "run": 9, "path": "beborn-beton-eisplanet.lrc", "status": "orphan_rescued", "dest": "/untitledless/Beborn Beton/Truth"}
+{"ts": "2026-10-02T19:44:55Z", "run": 9, "path": "beborn-beton-mindforce.lrc", "status": "orphan_rescued", "dest": "/untitledless/Beborn Beton/Nightfall"}
+{"ts": "2026-10-02T19:44:58Z", "run": 9, "path": "beborn-beton-sleeping-beauty.lrc", "status": "orphan_rescued", "dest": "/untitledless/Beborn Beton/Nightfall"}
+{"ts": "2026-10-02T19:45:01Z", "run": 9, "path": "beborn-beton-time-to-leave-you.lrc", "status": "orphan_rescued", "dest": "/untitledless/Beborn Beton/Nightfall"}
+{"ts": "2026-10-02T19:45:02Z", "run": 9, "path": "blutengel-massive-ego-nothing-but-a-void.lrc", "status": "orphan_rescued", "dest": "/untitledless/Blutengel & Massive Ego/Nothing But a Void"}
+{"ts": "2026-10-02T19:45:02Z", "run": 9, "path": "buffalo-daughter-five-minutes.lrc", "status": "orphan_rescued", "dest": "/untitledless/Buffalo Daughter/I"}
+{"ts": "2026-10-02T19:45:02Z", "run": 9, "path": "children-of-bodom-bodom-after-midnight.lrc", "status": "orphan_rescued", "dest": "/untitledless/Children Of Bodom/Follow The Reaper (RELOADED Edition)"}
+{"ts": "2026-10-02T19:45:05Z", "run": 9, "path": "children-of-bodom-children-of-decadence.lrc", "status": "orphan_rescued", "dest": "/untitledless/Children Of Bodom/Follow The Reaper (RELOADED Edition)"}
+{"ts": "2026-10-02T19:45:05Z", "run": 9, "path": "children-of-bodom-everytime-i-die.lrc", "status": "orphan_rescued", "dest": "/untitledless/Children Of Bodom/Follow The Reaper (RELOADED Edition)"}
+{"ts": "2026-10-02T19:45:06Z", "run": 9, "path": "children-of-bodom-follow-the-reaper.lrc", "status": "orphan_rescued", "dest": "/untitledless/Children Of Bodom/Follow The Reaper (RELOADED Edition)"}
+{"ts": "2026-10-02T19:45:07Z", "run": 9, "path": "children-of-bodom-glass-houses.lrc", "status": "orphan_rescued", "dest": "/untitledless/Children Of Bodom/Hexed (Deluxe Version)"}
+{"ts": "2026-10-02T19:45:07Z", "run": 9, "path": "children-of-bodom-hate-me.lrc", "status": "orphan_rescued", "dest": "/untitledless/Children Of Bodom/Follow The Reaper (RELOADED Edition)"}
+{"ts": "2026-10-02T19:45:07Z", "run": 9, "path": "children-of-bodom-kissing-the-shadows.lrc", "status": "orphan_rescued", "dest": "/untitledless/Children Of Bodom/Follow The Reaper (RELOADED Edition)"}
+{"ts": "2026-10-02T19:45:07Z", "run": 9, "path": "children-of-bodom-mask-of-sanity.lrc", "status": "orphan_rescued", "dest": "/untitledless/Children Of Bodom/Follow The Reaper (RELOADED Edition)"}
+{"ts": "2026-10-02T19:45:08Z", "run": 9, "path": "children-of-bodom-northern-comfort.lrc", "status": "orphan_rescued", "dest": "/untitledless/Children Of Bodom/Follow The Reaper (RELOADED Edition)"}
+{"ts": "2026-10-02T19:45:08Z", "run": 9, "path": "children-of-bodom-taste-of-my-scythe.lrc", "status": "orphan_rescued", "dest": "/untitledless/Children Of Bodom/Follow The Reaper (RELOADED Edition)"}
+{"ts": "2026-10-02T19:45:08Z", "run": 9, "path": "cibo-matto-check-in.lrc", "status": "orphan_rescued", "dest": "/untitledless/Cibo Matto/Hotel Valentine (Clean)"}
+{"ts": "2026-10-02T19:45:08Z", "run": 9, "path": "cibo-matto-check-out.lrc", "status": "orphan_rescued", "dest": "/untitledless/Cibo Matto/Hotel Valentine (Clean)"}
+{"ts": "2026-10-02T19:45:09Z", "run": 9, "path": "cibo-matto-emerald-tuesday.lrc", "status": "orphan_rescued", "dest": "/untitledless/Cibo Matto/Hotel Valentine (Clean)"}
+{"ts": "2026-10-02T19:45:09Z", "run": 9, "path": "cibo-matto-spoon.lrc", "status": "orphan_rescued", "dest": "/untitledless/Cibo Matto/Stereotype A"}
+{"ts": "2026-10-02T19:45:09Z", "run": 9, "path": "cibo-matto-sugar-water.lrc", "status": "orphan_rescued", "dest": "/untitledless/Cibo Matto/Viva! La Woman"}
+{"ts": "2026-10-02T19:45:09Z", "run": 9, "path": "code-64-leaving-earth-thermostatic-remix.lrc", "status": "orphan_rescued", "dest": "/untitledless/Code 64/Leaving Earth"}
+{"ts": "2026-10-02T19:45:10Z", "run": 9, "path": "code-64-leaving-earth-universal-poplab-radio-version.lrc", "status": "orphan_rescued", "dest": "/untitledless/Code 64/Leaving Earth"}
+{"ts": "2026-10-02T19:45:10Z", "run": 9, "path": "code-64-reflections.lrc", "status": "orphan_rescued", "dest": "/untitledless/Code 64/Broken Rhythm"}
+{"ts": "2026-10-02T19:45:10Z", "run": 9, "path": "combichrist-at-the-end-of-it-all.lrc", "status": "orphan_rescued", "dest": "/untitledless/Combichrist/Today We Are All Demons"}
+{"ts": "2026-10-02T19:45:10Z", "run": 9, "path": "combichrist-god-bless.lrc", "status": "orphan_rescued", "dest": "/untitledless/Combichrist/Everybody Hates You"}
+{"ts": "2026-10-02T19:45:11Z", "run": 9, "path": "combichrist-happy-fcuking-birthday.lrc", "status": "orphan_rescued", "dest": "/untitledless/Combichrist/Everybody Hates You"}
+{"ts": "2026-10-02T19:45:11Z", "run": 9, "path": "combichrist-never-surrender.lrc", "status": "orphan_rescued", "dest": "/untitledless/Combichrist/Making Monsters"}
+{"ts": "2026-10-02T19:45:11Z", "run": 9, "path": "covenant-brave-new-world.lrc", "status": "orphan_rescued", "dest": "/untitledless/Covenant/Skyshaper"}
+{"ts": "2026-10-02T19:45:11Z", "run": 9, "path": "covenant-call-the-ships-to-port.lrc", "status": "orphan_rescued", "dest": "/untitledless/Covenant/Northern Light"}
+{"ts": "2026-10-02T19:45:12Z", "run": 9, "path": "covenant-greater-than-the-sun.lrc", "status": "orphan_rescued", "dest": "/untitledless/Covenant/Skyshaper"}
+{"ts": "2026-10-02T19:45:12Z", "run": 9, "path": "covenant-i-am.lrc", "status": "orphan_rescued", "dest": "/untitledless/Covenant/Europa"}
+{"ts": "2026-10-02T19:45:12Z", "run": 9, "path": "covenant-rising-sun.lrc", "status": "orphan_rescued", "dest": "/untitledless/Covenant/Northern Light"}
+{"ts": "2026-10-02T19:45:12Z", "run": 9, "path": "covenant-scared.lrc", "status": "orphan_rescued", "dest": "/untitledless/Covenant/Northern Light"}
+{"ts": "2026-10-02T19:45:12Z", "run": 9, "path": "crystal-castles-alice-practice.lrc", "status": "orphan_rescued", "dest": "/untitledless/Crystal Castles/Crystal Castles"}
+{"ts": "2026-10-02T19:45:13Z", "run": 9, "path": "crystal-castles-black-panther.lrc", "status": "orphan_rescued", "dest": "/untitledless/Crystal Castles/Crystal Castles"}
+{"ts": "2026-10-02T19:45:13Z", "run": 9, "path": "culture-kultur-distress-call.lrc", "status": "orphan_rescued", "dest": "/untitledless/Culture Kultur/Reborn"}
+{"ts": "2026-10-02T19:45:16Z", "run": 9, "path": "culture-kultur-engel.lrc", "status": "orphan_rescued", "dest": "/untitledless/Culture Kultur/Reborn"}
+{"ts": "2026-10-02T19:45:16Z", "run": 9, "path": "culture-kultur-new-born-mind.lrc", "status": "orphan_rescued", "dest": "/untitledless/Culture Kultur/Reborn"}
+{"ts": "2026-10-02T19:45:17Z", "run": 9, "path": "culture-kultur-wonder.lrc", "status": "orphan_rescued", "dest": "/untitledless/Culture Kultur/Reborn"}
+{"ts": "2026-10-02T19:45:17Z", "run": 9, "path": "dark-moor-a-new-world.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dark Moor/The Gates Of Oblivion"}
+{"ts": "2026-10-02T19:45:17Z", "run": 9, "path": "dark-moor-cyrano-de-bergerac.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dark Moor/Dark Moor"}
+{"ts": "2026-10-02T19:45:17Z", "run": 9, "path": "dark-moor-dies-irae-amadeus.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dark Moor/The Gates Of Oblivion"}
+{"ts": "2026-10-02T19:45:17Z", "run": 9, "path": "dark-moor-in-the-heart-of-stone.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dark Moor/The Gates Of Oblivion"}
+{"ts": "2026-10-02T19:45:18Z", "run": 9, "path": "dark-moor-nevermore.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dark Moor/The Gates Of Oblivion"}
+{"ts": "2026-10-02T19:45:18Z", "run": 9, "path": "dark-moor-starsmaker-elbereth.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dark Moor/The Gates Of Oblivion"}
+{"ts": "2026-10-02T19:45:18Z", "run": 9, "path": "dark-moor-the-bane-of-daninsky-the-werewolf.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dark Moor/Dark Moor"}
+{"ts": "2026-10-02T19:45:18Z", "run": 9, "path": "dark-moor-the-dark-moor.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dark Moor/Dark Moor"}
+{"ts": "2026-10-02T19:45:19Z", "run": 9, "path": "dark-moor-the-gates-of-oblivion.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dark Moor/The Gates Of Oblivion"}
+{"ts": "2026-10-02T19:45:19Z", "run": 9, "path": "dark-moor-the-night-of-the-age.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dark Moor/The Gates Of Oblivion"}
+{"ts": "2026-10-02T19:45:19Z", "run": 9, "path": "dark-moor-the-truth-for-me.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dark Moor/The Gates Of Oblivion"}
+{"ts": "2026-10-02T19:45:20Z", "run": 9, "path": "dark-moor-your-symphony.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dark Moor/The Gates Of Oblivion"}
+{"ts": "2026-10-02T19:45:20Z", "run": 9, "path": "dead-astronauts-b-side-perturbator-remix.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dead Astronauts/Dead Astronauts"}
+{"ts": "2026-10-02T19:45:20Z", "run": 9, "path": "delphic-clarion-call.lrc", "status": "orphan_rescued", "dest": "/untitledless/Delphic/Acolyte"}
+{"ts": "2026-10-02T19:45:20Z", "run": 9, "path": "delphic-doubt.lrc", "status": "orphan_rescued", "dest": "/untitledless/Delphic/Acolyte"}
+{"ts": "2026-10-02T19:45:20Z", "run": 9, "path": "detroit-metal-city-detroit-metal-city-satsugai.lrc", "status": "orphan_rescued", "dest": "/untitledless/Detroit Metal City/Detroit Metal City"}
+{"ts": "2026-10-02T19:45:21Z", "run": 9, "path": "die-antwoord-she-makes-me-a-killer.lrc", "status": "orphan_rescued", "dest": "/untitledless/Die Antwoord/$O$"}
+{"ts": "2026-10-02T19:45:21Z", "run": 9, "path": "diorama-alpha-animal-complex.lrc", "status": "orphan_rescued", "dest": "/untitledless/Diorama/Cubed"}
+{"ts": "2026-10-02T19:45:21Z", "run": 9, "path": "diorama-avatars.lrc", "status": "orphan_rescued", "dest": "/untitledless/Diorama/Tiny Missing Fragments"}
+{"ts": "2026-10-02T19:45:21Z", "run": 9, "path": "diorama-child-of-entertainment.lrc", "status": "orphan_rescued", "dest": "/untitledless/Diorama/Cubed"}
+{"ts": "2026-10-02T19:45:22Z", "run": 9, "path": "diorama-my-counterfeit.lrc", "status": "orphan_rescued", "dest": "/untitledless/Diorama/Cubed"}
+{"ts": "2026-10-02T19:45:22Z", "run": 9, "path": "diorama-orbitalia.lrc", "status": "orphan_rescued", "dest": "/untitledless/Diorama/Tiny Missing Fragments"}
+{"ts": "2026-10-02T19:45:22Z", "run": 9, "path": "diorama-refugee.lrc", "status": "orphan_rescued", "dest": "/untitledless/Diorama/Cubed"}
+{"ts": "2026-10-02T19:45:22Z", "run": 9, "path": "diorama-sensation.lrc", "status": "orphan_rescued", "dest": "/untitledless/Diorama/Tiny Missing Fragments"}
+{"ts": "2026-10-02T19:45:23Z", "run": 9, "path": "diorama-stereotype.lrc", "status": "orphan_rescued", "dest": "/untitledless/Diorama/Cubed"}
+{"ts": "2026-10-02T19:45:23Z", "run": 9, "path": "dope-stars-inc-braindamage.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dope Stars INC/Fuck the Mainstream"}
+{"ts": "2026-10-02T19:45:23Z", "run": 9, "path": "dope-stars-inc-chase-the-light.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dope Stars Inc./New Breed Of Digital Fuckers"}
+{"ts": "2026-10-02T19:45:23Z", "run": 9, "path": "dope-stars-inc-generation-plastic.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dope Stars Inc./New Breed Of Digital Fuckers"}
+{"ts": "2026-10-02T19:45:24Z", "run": 9, "path": "dope-stars-inc-infection-13.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dope Stars Inc./New Breed Of Digital Fuckers"}
+{"ts": "2026-10-02T19:45:25Z", "run": 9, "path": "dope-stars-inc-rebel-riot.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dope Stars Inc./New Breed Of Digital Fuckers"}
+{"ts": "2026-10-02T19:45:25Z", "run": 9, "path": "dope-stars-inc-theta-titanium.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dope Stars Inc./New Breed Of Digital Fuckers"}
+{"ts": "2026-10-02T19:45:25Z", "run": 9, "path": "dope-stars-inc-vyperpunk.lrc", "status": "orphan_rescued", "dest": "/untitledless/Dope Stars Inc./New Breed Of Digital Fuckers"}
+{"ts": "2026-10-02T19:45:26Z", "run": 9, "path": "editors-cold.lrc", "status": "orphan_rescued", "dest": "/untitledless/Editors/Violence"}
+{"ts": "2026-10-02T19:45:26Z", "run": 9, "path": "editors-counting-spooks.lrc", "status": "orphan_rescued", "dest": "/untitledless/Editors/Violence"}
+{"ts": "2026-10-02T19:45:26Z", "run": 9, "path": "editors-darkness-at-the-door.lrc", "status": "orphan_rescued", "dest": "/untitledless/Editors/Violence"}
+{"ts": "2026-10-02T19:45:26Z", "run": 9, "path": "editors-educate.lrc", "status": "orphan_rescued", "dest": "/untitledless/Editors/EBM"}
+{"ts": "2026-10-02T19:45:26Z", "run": 9, "path": "editors-hallelujah-so-low.lrc", "status": "orphan_rescued", "dest": "/untitledless/Editors/Violence"}
+{"ts": "2026-10-02T19:45:27Z", "run": 9, "path": "editors-heart-attack.lrc", "status": "orphan_rescued", "dest": "/untitledless/Editors/EBM"}
+{"ts": "2026-10-02T19:45:27Z", "run": 9, "path": "editors-kiss.lrc", "status": "orphan_rescued", "dest": "/untitledless/Editors/EBM"}
+{"ts": "2026-10-02T19:45:27Z", "run": 9, "path": "editors-magazine.lrc", "status": "orphan_rescued", "dest": "/untitledless/Editors/Violence"}
+{"ts": "2026-10-02T19:45:27Z", "run": 9, "path": "editors-no-sound-but-the-wind.lrc", "status": "orphan_rescued", "dest": "/untitledless/Editors/Violence"}
+{"ts": "2026-10-02T19:45:28Z", "run": 9, "path": "fleshgod-apocalypse-gravity.lrc", "status": "orphan_rescued", "dest": "/untitledless/Fleshgod Apocalypse/King"}
+{"ts": "2026-10-02T19:45:28Z", "run": 9, "path": "fleshgod-apocalypse-gravity.lrc (1)", "status": "orphan_rescued", "dest": "/untitledless/Fleshgod Apocalypse/King"}
+{"ts": "2026-10-02T19:45:28Z", "run": 9, "path": "fleshgod-apocalypse-gravity.lrc (2)", "status": "orphan_rescued", "dest": "/untitledless/Fleshgod Apocalypse/King"}
+{"ts": "2026-10-02T19:45:28Z", "run": 9, "path": "fleshgod-apocalypse-gravity.lrc (3)", "status": "orphan_rescued", "dest": "/untitledless/Fleshgod Apocalypse/King"}
+{"ts": "2026-10-02T19:45:28Z", "run": 9, "path": "fleshgod-apocalypse-gravity.lrc (4)", "status": "orphan_rescued", "dest": "/untitledless/Fleshgod Apocalypse/King"}
+{"ts": "2026-10-02T19:45:29Z", "run": 9, "path": "fleshgod-apocalypse-the-fool.lrc", "status": "orphan_rescued", "dest": "/untitledless/Fleshgod Apocalypse/King"}
+{"ts": "2026-10-02T19:45:29Z", "run": 9, "path": "front-242-animal-radio.lrc", "status": "orphan_rescued", "dest": "/untitledless/Front 242/Animal"}
+{"ts": "2026-10-02T19:45:29Z", "run": 9, "path": "front-242-born-to-breathe.lrc", "status": "orphan_rescued", "dest": "/untitledless/Front 242/Angels vs. Animals"}
+{"ts": "2026-10-02T19:45:29Z", "run": 9, "path": "front-242-felines.lrc", "status": "orphan_rescued", "dest": "/untitledless/Front 242/Front By Front 1988-1989"}
+{"ts": "2026-10-02T19:45:30Z", "run": 9, "path": "front-242-first-in-first-out.lrc", "status": "orphan_rescued", "dest": "/untitledless/Front 242/Front By Front 1988-1989"}
+{"ts": "2026-10-02T19:45:30Z", "run": 9, "path": "front-242-headhunter-v1-0.lrc", "status": "orphan_rescued", "dest": "/untitledless/Front 242/Front By Front 1988-1989"}
+{"ts": "2026-10-02T19:45:30Z", "run": 9, "path": "front-242-headhunter-v3-0.lrc", "status": "orphan_rescued", "dest": "/untitledless/Front 242/Front By Front 1988-1989"}
+{"ts": "2026-10-02T19:45:30Z", "run": 9, "path": "front-242-never-stop-v1-1.lrc", "status": "orphan_rescued", "dest": "/untitledless/Front 242/Front By Front 1988-1989"}
+{"ts": "2026-10-02T19:45:31Z", "run": 9, "path": "front-242-terminal-state.lrc", "status": "orphan_rescued", "dest": "/untitledless/Front 242/Front By Front 1988-1989"}
+{"ts": "2026-10-02T19:45:31Z", "run": 9, "path": "front-242-work-01.lrc", "status": "orphan_rescued", "dest": "/untitledless/Front 242/Front By Front 1988-1989"}
+{"ts": "2026-10-02T19:45:32Z", "run": 9, "path": "frozen-plasma-murderous-trap.lrc", "status": "orphan_rescued", "dest": "/untitledless/Frozen Plasma/Monumentum"}
+{"ts": "2026-10-02T19:45:32Z", "run": 9, "path": "frozen-plasma-tanz-die-revolution.lrc", "status": "orphan_rescued", "dest": "/untitledless/Frozen Plasma/Monumentum"}
+{"ts": "2026-10-02T19:45:33Z", "run": 9, "path": "frozen-plasma-the-speed-of-life.lrc", "status": "orphan_rescued", "dest": "/untitledless/Frozen Plasma/Monumentum"}
+{"ts": "2026-10-02T19:45:34Z", "run": 9, "path": "grandson-autonomous-delivery-robot.lrc", "status": "orphan_rescued", "dest": "/untitledless/grandson/INERTIA"}
+{"ts": "2026-10-02T19:45:34Z", "run": 9, "path": "grandson-overdose.lrc", "status": "orphan_rescued", "dest": "/untitledless/grandson/a modern tragedy vol. 1"}
+{"ts": "2026-10-02T19:45:34Z", "run": 9, "path": "health-ad-1000.lrc", "status": "orphan_rescued", "dest": "/untitledless/HEALTH/DISCO4 :: PART II"}
+{"ts": "2026-10-02T19:45:35Z", "run": 9, "path": "health-identity.lrc", "status": "orphan_rescued", "dest": "/untitledless/HEALTH/DISCO4 :: PART II"}
+{"ts": "2026-10-02T19:45:35Z", "run": 9, "path": "health-no-escape.lrc", "status": "orphan_rescued", "dest": "/untitledless/HEALTH/DISCO4 :: PART II"}
+{"ts": "2026-10-02T19:45:35Z", "run": 9, "path": "health-the-joy-of-sect.lrc", "status": "orphan_rescued", "dest": "/untitledless/HEALTH/DISCO4 :: PART II"}
+{"ts": "2026-10-02T19:45:35Z", "run": 9, "path": "health-these-days-2-0-2-1.lrc", "status": "orphan_rescued", "dest": "/untitledless/HEALTH/DISCO4 :: PART II"}
+{"ts": "2026-10-02T19:45:36Z", "run": 9, "path": "hocico-broken-empires.lrc", "status": "orphan_rescued", "dest": "/untitledless/Hocico/Broken Empires"}
+{"ts": "2026-10-02T19:45:36Z", "run": 9, "path": "hocico-fallen-paradise.lrc", "status": "orphan_rescued", "dest": "/untitledless/Hocico/The Screen"}
+{"ts": "2026-10-02T19:45:39Z", "run": 9, "path": "hocico-fed-up.lrc", "status": "orphan_rescued", "dest": "/untitledless/Hocico/memorias atrás"}
+{"ts": "2026-10-02T19:45:39Z", "run": 9, "path": "hocico-lost-world.lrc", "status": "orphan_rescued", "dest": "/untitledless/Hocico/HyperViolent"}
+{"ts": "2026-10-02T19:45:39Z", "run": 9, "path": "hocico-palabras-de-sangre.lrc", "status": "orphan_rescued", "dest": "/untitledless/Hocico/Artificial Extinction"}
+{"ts": "2026-10-02T19:45:43Z", "run": 9, "path": "hocico-shut-me-down.lrc", "status": "orphan_rescued", "dest": "/untitledless/Hocico/Artificial Extinction"}
+{"ts": "2026-10-02T19:45:43Z", "run": 9, "path": "hocico-spirals-of-time.lrc", "status": "orphan_rescued", "dest": "/untitledless/Hocico/memorias atrás"}
+{"ts": "2026-10-02T19:45:43Z", "run": 9, "path": "hora-zulu-a-don-enrique.lrc", "status": "orphan_rescued", "dest": "/untitledless/Hora Zulu/Siempre Soñé Saber Sobre Nadie Negó Nunca Nada"}
+{"ts": "2026-10-02T19:45:43Z", "run": 9, "path": "hora-zulu-agua-de-mayo.lrc", "status": "orphan_rescued", "dest": "/untitledless/Hora Zulu/Me Duele la Boca de Decirlo"}
+{"ts": "2026-10-02T19:45:45Z", "run": 9, "path": "hora-zulu-crom-en-su-montana.lrc", "status": "orphan_rescued", "dest": "/untitledless/Hora Zulu/Siempre Soñé Saber Sobre Nadie Negó Nunca Nada"}
+{"ts": "2026-10-02T19:45:45Z", "run": 9, "path": "hora-zulu-de-que-rer-ser.lrc", "status": "orphan_rescued", "dest": "/untitledless/Hora Zulu/Crisis de Claridad"}
+{"ts": "2026-10-02T19:45:45Z", "run": 9, "path": "hora-zulu-el-alma-y-los-pies.lrc", "status": "orphan_rescued", "dest": "/untitledless/Hora Zulu/Creer Querer, Querer Creer"}
+{"ts": "2026-10-02T19:45:45Z", "run": 9, "path": "hora-zulu-no-habra-viento-suficiente.lrc", "status": "orphan_rescued", "dest": "/untitledless/Hora Zulu/Crisis de Claridad"}
+{"ts": "2026-10-02T19:45:46Z", "run": 9, "path": "hora-zulu-nuestro-entonces.lrc", "status": "orphan_rescued", "dest": "/untitledless/Hora Zulu/Siempre Soñé Saber Sobre Nadie Negó Nunca Nada"}
+{"ts": "2026-10-02T19:45:46Z", "run": 9, "path": "hora-zulu-suficiente-moraleja.lrc", "status": "orphan_rescued", "dest": "/untitledless/Hora Zulu/Creer Querer, Querer Creer"}
+{"ts": "2026-10-02T19:45:46Z", "run": 9, "path": "hora-zulu-toma-y-obliga.lrc", "status": "orphan_rescued", "dest": "/untitledless/Hora Zulu/Creer Querer, Querer Creer"}
+{"ts": "2026-10-02T19:45:46Z", "run": 9, "path": "icon-of-coil-consumer.lrc", "status": "orphan_rescued", "dest": "/untitledless/Icon Of Coil/Machine Are Us"}
+{"ts": "2026-10-02T19:45:47Z", "run": 9, "path": "icon-of-coil-regret-combichrist-remix.lrc", "status": "orphan_rescued", "dest": "/untitledless/Icon Of Coil/Fucked Up Music For Fucked Up People (Remixes by Combichrist)"}
+{"ts": "2026-10-02T19:45:50Z", "run": 9, "path": "infected-mushroom-business-as-usual-feat-hope-6-and-nick-hexum.lrc", "status": "orphan_rescued", "dest": "/untitledless/Infected Mushroom/IM25"}
+{"ts": "2026-10-02T19:45:50Z", "run": 9, "path": "infected-mushroom-cities-of-the-future.lrc", "status": "orphan_rescued", "dest": "/untitledless/Infected Mushroom/IM the Supervisor"}
+{"ts": "2026-10-02T19:45:50Z", "run": 9, "path": "infected-mushroom-converting-vegetarians.lrc", "status": "orphan_rescued", "dest": "/untitledless/Infected Mushroom/Converting Vegetarians: The Other Side"}
+{"ts": "2026-10-02T19:45:51Z", "run": 9, "path": "infected-mushroom-franks.lrc", "status": "orphan_rescued", "dest": "/untitledless/Infected Mushroom/Legend of the Black Shawarma"}
+{"ts": "2026-10-02T19:45:51Z", "run": 9, "path": "infected-mushroom-illuminaughty.lrc", "status": "orphan_rescued", "dest": "/untitledless/Infected Mushroom/Converting Vegetarians: The Other Side"}
+{"ts": "2026-10-02T19:45:51Z", "run": 9, "path": "infected-mushroom-killing-time-feat-perry-ferrell.lrc", "status": "orphan_rescued", "dest": "/untitledless/Infected Mushroom/Legend of the Black Shawarma"}
+{"ts": "2026-10-02T19:45:51Z", "run": 9, "path": "infected-mushroom-lies-and-deceptions.lrc", "status": "orphan_rescued", "dest": "/untitledless/Infected Mushroom/IM25"}
+{"ts": "2026-10-02T19:45:52Z", "run": 9, "path": "infected-mushroom-pink-nightmares.lrc", "status": "orphan_rescued", "dest": "/untitledless/Infected Mushroom/Pink Nightmares (Single)"}
+{"ts": "2026-10-02T19:45:52Z", "run": 9, "path": "infected-mushroom-sense-of-direction.lrc", "status": "orphan_rescued", "dest": "/untitledless/Infected Mushroom/Converting Vegetarians II"}
+{"ts": "2026-10-02T19:45:52Z", "run": 9, "path": "infected-mushroom-smashing-the-opponent-feat-jonathan-davis.lrc", "status": "orphan_rescued", "dest": "/untitledless/Infected Mushroom/Legend of the Black Shawarma"}
+{"ts": "2026-10-02T19:45:55Z", "run": 9, "path": "infected-mushroom-walking-on-the-moon.lrc", "status": "orphan_rescued", "dest": "/untitledless/Infected Mushroom/Head of NASA and the 2 Amish Boys"}
+{"ts": "2026-10-02T19:45:55Z", "run": 9, "path": "infected-mushroom-zazim-beyhad-we-move-together-feat-may-sfadia.lrc", "status": "orphan_rescued", "dest": "/untitledless/Infected Mushroom/IM25"}
+{"ts": "2026-10-02T19:45:56Z", "run": 9, "path": "kamelot-black-tower.lrc", "status": "orphan_rescued", "dest": "/untitledless/Kamelot/Eternity"}
+{"ts": "2026-10-02T19:45:56Z", "run": 9, "path": "kamelot-dont-you-cry.lrc", "status": "orphan_rescued", "dest": "/untitledless/Kamelot/Karma"}
+{"ts": "2026-10-02T19:45:56Z", "run": 9, "path": "kamelot-elizabeth-ii-requiem-for-the-innocent.lrc", "status": "orphan_rescued", "dest": "/untitledless/Kamelot/Karma"}
+{"ts": "2026-10-02T19:45:59Z", "run": 9, "path": "kamelot-karma.lrc", "status": "orphan_rescued", "dest": "/untitledless/Kamelot/Karma"}
+{"ts": "2026-10-02T19:46:00Z", "run": 9, "path": "kamelot-once-and-future-king.lrc", "status": "orphan_rescued", "dest": "/untitledless/Kamelot/Karma"}
+{"ts": "2026-10-02T19:46:00Z", "run": 9, "path": "kamelot-one-day-ill-win.lrc", "status": "orphan_rescued", "dest": "/untitledless/Kamelot/Dominion"}
+{"ts": "2026-10-02T19:46:00Z", "run": 9, "path": "kamelot-proud-nomad.lrc", "status": "orphan_rescued", "dest": "/untitledless/Kamelot/Eternity"}
+{"ts": "2026-10-02T19:46:03Z", "run": 9, "path": "kamelot-the-spell.lrc", "status": "orphan_rescued", "dest": "/untitledless/Kamelot/Karma"}
+{"ts": "2026-10-02T19:46:03Z", "run": 9, "path": "kyary-pamyu-pamyu (1).lrc", "status": "orphan_rescued", "dest": "/untitledless/きゃりーぱみゅぱみゅ/ぱみゅぱみゅレボリューション"}
+{"ts": "2026-10-02T19:46:04Z", "run": 9, "path": "kyary-pamyu-pamyu-44.lrc", "status": "orphan_rescued", "dest": "/untitledless/きゃりーぱみゅぱみゅ/ぱみゅぱみゅレボリューション"}
+{"ts": "2026-10-02T19:46:04Z", "run": 9, "path": "kyary-pamyu-pamyu-candy-candy.lrc", "status": "orphan_rescued", "dest": "/untitledless/きゃりーぱみゅぱみゅ/CANDY CANDY"}
+{"ts": "2026-10-02T19:46:04Z", "run": 9, "path": "kyary-pamyu-pamyu-ponponpon-extended-version.lrc", "status": "orphan_rescued", "dest": "/untitledless/きゃりーぱみゅぱみゅ/もしもし原宿"}
+{"ts": "2026-10-02T19:46:04Z", "run": 9, "path": "kyary-pamyu-pamyu-tsukema-tsukeru.lrc", "status": "orphan_rescued", "dest": "/untitledless/Kyary Pamyu Pamyu/Tsukema Tsukeru"}
+{"ts": "2026-10-02T19:46:05Z", "run": 9, "path": "lacrimosa-avalon.lrc", "status": "orphan_rescued", "dest": "/untitledless/Lacrimosa/Lament"}
+{"ts": "2026-10-02T19:46:05Z", "run": 9, "path": "lacrimosa-die-strasse-der-zeit.lrc", "status": "orphan_rescued", "dest": "/untitledless/Lacrimosa/Stille"}
+{"ts": "2026-10-02T19:46:05Z", "run": 9, "path": "lacrimosa-ich-verlasse-heut-dein-herz.lrc", "status": "orphan_rescued", "dest": "/untitledless/Lacrimosa/Elodia"}
+{"ts": "2026-10-02T19:46:05Z", "run": 9, "path": "lacrimosa-punk-and-pomerol.lrc", "status": "orphan_rescued", "dest": "/untitledless/Lacrimosa/Lament"}
+{"ts": "2026-10-02T19:46:05Z", "run": 9, "path": "lacrimosa-the-turning-point.lrc", "status": "orphan_rescued", "dest": "/untitledless/Lacrimosa/Elodia"}
+{"ts": "2026-10-02T19:46:06Z", "run": 9, "path": "leandra-inverted-mirrors-of-decay.lrc", "status": "orphan_rescued", "dest": "/untitledless/Leandra/Metamorphine"}
+{"ts": "2026-10-02T19:46:06Z", "run": 9, "path": "leandra-lie-to-me.lrc", "status": "orphan_rescued", "dest": "/untitledless/Leandra/Metamorphine"}
+{"ts": "2026-10-02T19:46:06Z", "run": 9, "path": "leandra-pi.lrc", "status": "orphan_rescued", "dest": "/untitledless/Leandra/Metamorphine"}
+{"ts": "2026-10-02T19:46:06Z", "run": 9, "path": "leandra-son-of-venus-dannys-song.lrc", "status": "orphan_rescued", "dest": "/untitledless/Leandra/Metamorphine"}
+{"ts": "2026-10-02T19:46:07Z", "run": 9, "path": "lord-of-the-lost-forever-lost.lrc", "status": "orphan_rescued", "dest": "/untitledless/Lord of the lost/Blood & Glitter"}
+{"ts": "2026-10-02T19:46:07Z", "run": 9, "path": "lord-of-the-lost-river.lrc", "status": "orphan_rescued", "dest": "/untitledless/Lord of the lost/Weapons Of Mass Seduction (Deluxe Version)"}
+{"ts": "2026-10-02T19:46:07Z", "run": 9, "path": "lord-of-the-lost-save-our-souls-feat-ally-storch.lrc", "status": "orphan_rescued", "dest": "/untitledless/Lord of the lost/Blood & Glitter"}
+{"ts": "2026-10-02T19:46:07Z", "run": 9, "path": "lord-of-the-lost-till-death-us-do-part.lrc", "status": "orphan_rescued", "dest": "/untitledless/Lord of the lost/Fears"}
+{"ts": "2026-10-02T19:46:07Z", "run": 9, "path": "mago-de-oz-hasta-que-tu-muerte-nos-separe.lrc", "status": "orphan_rescued", "dest": "/untitledless/Mägo de Oz/Jesús de Chamberí"}
+{"ts": "2026-10-02T19:46:08Z", "run": 9, "path": "mago-de-oz-jesus-de-chamberi.lrc", "status": "orphan_rescued", "dest": "/untitledless/Mägo de Oz/Jesús de Chamberí"}
+{"ts": "2026-10-02T19:46:08Z", "run": 9, "path": "miranda-el-showcito.lrc", "status": "orphan_rescued", "dest": "/untitledless/Miranda!/Es Imposible!"}
+{"ts": "2026-10-02T19:46:08Z", "run": 9, "path": "miranda-tu-mirada.lrc", "status": "orphan_rescued", "dest": "/untitledless/Miranda!/Es Imposible!"}
+{"ts": "2026-10-02T19:46:08Z", "run": 9, "path": "neuroticfish-i-dont-need-the-city.lrc", "status": "orphan_rescued", "dest": "/untitledless/Neuroticfish/Gelb"}
+{"ts": "2026-10-02T19:46:09Z", "run": 9, "path": "neuroticfish-the-bomb.lrc", "status": "orphan_rescued", "dest": "/untitledless/Neuroticfish/Gelb"}
