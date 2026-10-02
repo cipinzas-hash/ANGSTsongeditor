@@ -4,12 +4,12 @@
  "batch_size": 100,
  "runs": 8,
  "counts": {
-  "uploaded": 464,
-  "ya_completo": 437,
-  "sidecars": 81,
+  "uploaded": 484,
+  "ya_completo": 455,
+  "sidecars": 85,
   "retry": 59,
-  "con_album": 22,
-  "romanizados": 18,
+  "con_album": 24,
+  "romanizados": 20,
   "nonprocessed": 5,
   "nonprocessed_reasons": {
    "sin_artista": 5
@@ -106,6 +106,8 @@
    "/untitledless/Tristania/World of Glass",
    "/untitledless/Various Artists/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/Vato Gonzalez, Lethal Bizzle & Donae'o/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
+   "/untitledless/Velvet Eden/Witch On Flames",
+   "/untitledless/Versailles -Philharmonic Quintet-/JUBILEE",
    "/untitledless/Virus Syndicate/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/the GazettE/DIM",
    "/untitledless/Ｓｃｈｗａｒｚ　Ｓｔｅｉｎ/Ａｒｔｉｆｉｃｉａｌ　Ｈａｌｌｕｃｉｎａｔｉｏｎ",
