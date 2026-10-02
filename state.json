@@ -4,9 +4,9 @@
  "batch_size": 100,
  "runs": 8,
  "counts": {
-  "uploaded": 524,
-  "ya_completo": 494,
-  "sidecars": 88,
+  "uploaded": 544,
+  "ya_completo": 514,
+  "sidecars": 92,
   "retry": 59,
   "con_album": 25,
   "romanizados": 21,
@@ -119,6 +119,8 @@
    "/untitledless/Virus Syndicate/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/Visions Of Atlantis/Cast Away",
    "/untitledless/Vnv Nation/Transnational",
+   "/untitledless/WarCry/La Quinta Esenci",
+   "/untitledless/Warcry/Donde el Silencio Se Rompió",
    "/untitledless/the GazettE/DIM",
    "/untitledless/Ｓｃｈｗａｒｚ　Ｓｔｅｉｎ/Ａｒｔｉｆｉｃｉａｌ　Ｈａｌｌｕｃｉｎａｔｉｏｎ",
    "NONPROC"
