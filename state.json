@@ -2,14 +2,14 @@
  "status": "active",
  "mega_source": "/MEGA/musica",
  "batch_size": 100,
- "runs": 6,
+ "runs": 7,
  "counts": {
-  "uploaded": 344,
-  "ya_completo": 323,
-  "sidecars": 43,
+  "uploaded": 364,
+  "ya_completo": 341,
+  "sidecars": 45,
   "retry": 59,
-  "con_album": 16,
-  "romanizados": 12,
+  "con_album": 18,
+  "romanizados": 14,
   "nonprocessed": 5,
   "nonprocessed_reasons": {
    "sin_artista": 5
@@ -88,11 +88,13 @@
    "/untitledless/Syrian/Kosmonauta (CD 1)",
    "/untitledless/Syrian/Kosmonauta CD2: Re-Synchronized",
    "/untitledless/TECHNIQUE x PORTWAVE/Untitled album",
+   "/untitledless/The Gazette/DISORDER",
    "/untitledless/The Gazette/Ninth",
    "/untitledless/The Squatters & Steve Edwards/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/Various Artists/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/Vato Gonzalez, Lethal Bizzle & Donae'o/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/Virus Syndicate/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
+   "/untitledless/the GazettE/DIM",
    "/untitledless/Ｓｃｈｗａｒｚ　Ｓｔｅｉｎ/Ａｒｔｉｆｉｃｉａｌ　Ｈａｌｌｕｃｉｎａｔｉｏｎ",
    "NONPROC"
   ]
@@ -105,7 +107,7 @@
  "history": [],
  "last_action": "run",
  "started_at": "2026-10-01T18:18:37Z",
- "last_run": "2026-10-01T23:32:31Z",
+ "last_run": "2026-10-02T02:42:01Z",
  "pending": 261,
  "fix_dl_v2": true,
  "dl_fail": {},
