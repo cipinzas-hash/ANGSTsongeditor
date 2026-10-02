@@ -4,12 +4,12 @@
  "batch_size": 100,
  "runs": 9,
  "counts": {
-  "uploaded": 584,
+  "uploaded": 604,
   "ya_completo": 547,
-  "sidecars": 99,
+  "sidecars": 102,
   "retry": 59,
-  "con_album": 31,
-  "romanizados": 27,
+  "con_album": 51,
+  "romanizados": 47,
   "nonprocessed": 5,
   "nonprocessed_reasons": {
    "sin_artista": 5
@@ -37,6 +37,10 @@
    "/untitledless/Josh Money/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/Ladytron/Witching Hour (Bonus Version)",
    "/untitledless/Molchat Doma/Belaya Polosa",
+   "/untitledless/Molchat Doma/Etazhi",
+   "/untitledless/Molchat Doma/Monument",
+   "/untitledless/Molchat Doma/S Krysh Nashikh Domov",
+   "/untitledless/Molchat Doma/Zvyozdy",
    "/untitledless/Nine Treasures/Wisdom Eyes",
    "/untitledless/Noir/Darkly Near",
    "/untitledless/Noisuf-X/Fuck the Mainstream",
