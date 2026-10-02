@@ -2,19 +2,19 @@
  "status": "active",
  "mega_source": "/MEGA/musica",
  "batch_size": 100,
- "runs": 8,
+ "runs": 9,
  "counts": {
-  "uploaded": 544,
-  "ya_completo": 514,
-  "sidecars": 92,
+  "uploaded": 564,
+  "ya_completo": 531,
+  "sidecars": 96,
   "retry": 59,
-  "con_album": 25,
-  "romanizados": 21,
+  "con_album": 27,
+  "romanizados": 23,
   "nonprocessed": 5,
   "nonprocessed_reasons": {
    "sin_artista": 5
   },
-  "sin_album": 5
+  "sin_album": 6
  },
  "attempts": {},
  "dir_dest": {
@@ -119,8 +119,11 @@
    "/untitledless/Virus Syndicate/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix",
    "/untitledless/Visions Of Atlantis/Cast Away",
    "/untitledless/Vnv Nation/Transnational",
+   "/untitledless/WAVESTORM/Untitled album",
    "/untitledless/WarCry/La Quinta Esenci",
    "/untitledless/Warcry/Donde el Silencio Se Rompió",
+   "/untitledless/XOVER/Aureola",
+   "/untitledless/Xerox/Return to the Sauce",
    "/untitledless/the GazettE/DIM",
    "/untitledless/Ｓｃｈｗａｒｚ　Ｓｔｅｉｎ/Ａｒｔｉｆｉｃｉａｌ　Ｈａｌｌｕｃｉｎａｔｉｏｎ",
    "NONPROC"
@@ -134,7 +137,7 @@
  "history": [],
  "last_action": "run",
  "started_at": "2026-10-01T18:18:37Z",
- "last_run": "2026-10-02T10:46:26Z",
+ "last_run": "2026-10-02T19:35:54Z",
  "pending": 61,
  "fix_dl_v2": true,
  "dl_fail": {},
