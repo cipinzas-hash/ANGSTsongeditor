@@ -1,5 +1,5 @@
 {
- "ts": "2026-10-01T18:15:16Z",
+ "ts": "2026-10-07T18:55:36Z",
  "gemini_model": "gemini-3.1-flash-lite",
  "gemini_key_present": true,
  "gemini_key_length": 53,
@@ -8,7 +8,7 @@
    "lang": "ja",
    "input": "古い心",
    "romanizacion": "furui kokoro",
-   "traduccion_es": "Viejo corazón",
+   "traduccion_es": "Corazón antiguo",
    "ok": true,
    "modelo_usado": "gemini-3.1-flash-lite"
   },
@@ -24,7 +24,7 @@
    "lang": "ja",
    "input": "ふるい心",
    "romanizacion": "furui kokoro",
-   "traduccion_es": "Corazón viejo",
+   "traduccion_es": "Corazón antiguo",
    "ok": true,
    "modelo_usado": "gemini-3.1-flash-lite"
   }
@@ -68,6 +68,7 @@
   "gemini-3.8-flash-tts",
   "gemini-flash-latest",
   "gemini-flash-lite-latest",
+  "gemini-nano-banana-2.1",
   "gemini-omni-1.1-flash",
   "gemini-omni-flash-preview",
   "gemini-pro-latest",
@@ -78,5 +79,27 @@
   "lyria-3-pro-preview",
   "lyria-3.5",
   "nano-banana-pro-preview"
+ ],
+ "grounding": [
+  {
+   "modelo": "gemini-3.1-flash-lite",
+   "ok": false,
+   "error": "HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error,"
+  },
+  {
+   "modelo": "gemini-3.5-flash",
+   "ok": false,
+   "error": "HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error,"
+  },
+  {
+   "modelo": "gemini-flash-latest",
+   "ok": false,
+   "error": "HTTP 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error,"
+  },
+  {
+   "modelo": "gemini-2.5-flash",
+   "ok": false,
+   "error": "HTTP 404 {\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/ge"
+  }
  ]
 }
