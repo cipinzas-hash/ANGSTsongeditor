@@ -28,6 +28,30 @@ try:
 except Exception as e:
     out["modelos_error"] = str(e).replace(T.GEMINI_API_KEY, "***")[:200]
 
+# Prueba de grounding (google_search), que es lo que usa narrateArchiveSummary de feeder
+import json as _j2, urllib.request as _u2, urllib.error as _e2
+out["grounding"] = []
+for _m in ("gemini-3.1-flash-lite", "gemini-3.5-flash", "gemini-flash-latest", "gemini-2.5-flash"):
+    _it = {"modelo": _m}
+    try:
+        _body = _j2.dumps({"contents": [{"role": "user", "parts": [{"text": "En una oracion: quien gano Super Smash Bros. Melee en CEO 2026? Si no podes confirmarlo, decilo."}]}],
+                           "tools": [{"google_search": {}}], "generationConfig": {"maxOutputTokens": 300}}).encode()
+        _req = _u2.Request(f"https://generativelanguage.googleapis.com/v1beta/models/{_m}:generateContent",
+                           data=_body, headers={"Content-Type": "application/json", "x-goog-api-key": T.GEMINI_API_KEY})
+        with _u2.urlopen(_req, timeout=60) as _r:
+            _d = _j2.loads(_r.read().decode("utf-8"))
+        _c = _d["candidates"][0]
+        _it["ok"] = True
+        _it["texto"] = "".join(p.get("text", "") for p in _c["content"]["parts"])[:200]
+        _it["con_grounding"] = bool(_c.get("groundingMetadata"))
+    except _e2.HTTPError as e:
+        _it["ok"] = False
+        _it["error"] = f"HTTP {e.code} " + e.read().decode("utf-8", "replace")[:160].replace(T.GEMINI_API_KEY, "***")
+    except Exception as e:
+        _it["ok"] = False
+        _it["error"] = str(e).replace(T.GEMINI_API_KEY, "***")[:160]
+    out["grounding"].append(_it)
+
 pruebas = [("ja", "古い心"), ("ko", "안녕하세요"), ("ja", "ふるい心")]
 for lang, texto in pruebas:
     item = {"lang": lang, "input": texto}
