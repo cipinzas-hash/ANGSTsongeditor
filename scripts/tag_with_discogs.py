@@ -50,23 +50,30 @@ class DiscogsError(Exception):
     pass
 
 
-NON_LATIN_RE = re.compile(
-    "["
-    "\u3040-\u30ff"   # hiragana + katakana
-    "\u4e00-\u9fff"   # CJK unificado (chino + kanji)
-    "\uac00-\ud7af"   # hangul (coreano)
-    "\u0400-\u04ff"   # cirílico
-    "\u0370-\u03ff"   # griego
-    "\u0600-\u06ff"   # árabe
-    "\u0590-\u05ff"   # hebreo
-    "\u0e00-\u0e7f"   # tailandés
-    "\u0900-\u097f"   # devanagari (hindi)
-    "]"
-)
+_NOT_SCRIPT = ("LATIN", "ORDINAL INDICATOR", "MICRO SIGN")
 
 
 def contains_non_latin_script(text):
-    return bool(text) and bool(NON_LATIN_RE.search(text))
+    """True si el texto tiene alguna LETRA de una escritura no latina (cirilico,
+    CJK, hangul, kana, arabe, hebreo, armenio, georgiano, indicas, tibetano,
+    mongol tradicional, jemer, etc.). Se decide por el nombre Unicode del
+    caracter, no por una lista de rangos, asi que cubre cualquier escritura.
+    No se activa con letras latinas con tildes, letras latinas de ancho
+    completo, simbolos, emoji, ni con 'º', 'ª', 'µ'."""
+    for c in text or "":
+        if unicodedata.category(c) in ("Lo", "Ll", "Lu", "Lt"):
+            n = unicodedata.name(c, "")
+            if n and not any(x in n for x in _NOT_SCRIPT):
+                return True
+    return False
+
+
+def strip_diacritics(text):
+    """Quita tildes/macrones/tonos (pinyin 'líng yǎn' -> 'ling yan', 'Ōsaka' ->
+    'Osaka'). Solo se aplica a la SALIDA de una romanizacion: para poder
+    buscar por teclado no conviene ninguna marca."""
+    d = unicodedata.normalize("NFKD", text or "")
+    return unicodedata.normalize("NFC", "".join(ch for ch in d if unicodedata.category(ch) != "Mn"))
 
 
 # ------------------------------------------------------------------- Gemini
@@ -135,17 +142,29 @@ def romanize_with_gemini(text):
         return text
     try:
         prompt = (
-            "Transcribi el siguiente texto a caracteres latinos (romaji si es "
-            "japones, romanizacion revisada si es coreano, pinyin si es "
-            "chino, o el sistema de romanizacion estandar que corresponda "
-            "segun el idioma real del texto), tal como se veria en un tag de "
-            "metadata de musica (nombre de artista, album o cancion). No "
-            "traduzcas el significado, solo transcribi la pronunciacion. "
-            "Devolve UNICAMENTE el texto transcripto, sin comillas, sin "
-            f"explicacion, sin texto adicional. Texto: {text}"
+            "Transcribi el siguiente texto a caracteres latinos para un tag de "
+            "metadata de musica (nombre de artista, album o cancion), de modo que "
+            "se pueda escribir y buscar con un teclado comun. Solo transcribi la "
+            "pronunciacion, NO traduzcas el significado. Reglas estrictas: "
+            "(1) usa UN solo sistema para todo el texto, segun el idioma real: "
+            "japones = Hepburn sin macrones (Osaka, Tokyo, Yuzo; vocales largas sin marca), "
+            "chino = pinyin SIN marcas de tono, con cada silaba separada por espacio "
+            "(Ni Hao, no Nihao ni Ni3 hao3), "
+            "coreano = romanizacion revisada, "
+            "ruso/ucraniano/bulgaro/serbio y mongol en cirilico = transliteracion simple tipo "
+            "BGN/PCGN, sin diacriticos (Kino, Tsoy, Yuliya), "
+            "mongol en escritura tradicional = romanizacion estandar sin diacriticos, "
+            "griego, arabe, hebreo, armenio, georgiano, hindi, tailandes y demas = la "
+            "romanizacion mas comun en medios, sin diacriticos; "
+            "(2) NINGUN caracter con tilde, macron, tono ni signo diacritico en la salida: solo letras A-Z, "
+            "numeros, espacios y la puntuacion original; "
+            "(3) conserva tal cual lo que ya este en letras latinas, numeros y signos; "
+            "(4) Devolve UNICAMENTE el texto transcripto, sin comillas, sin explicacion, "
+            f"sin texto adicional. Texto: {text}"
         )
         out = gemini_generate(prompt)
         time.sleep(1.5)
+        out = strip_diacritics(out) if out else out
         if not out or contains_non_latin_script(out):
             _gem_fail("respuesta vacia o aun en script no latino")
             return text

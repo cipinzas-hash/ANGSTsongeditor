@@ -67,6 +67,15 @@ for lang, texto in pruebas:
         item["error"] = str(e)[:300]
     out["gemini"].append(item)
 
+out["romanizacion_prod"] = []
+for _lang, _txt in (("ja", "宇多田ヒカル"), ("zh", "我的呼伦贝尔"), ("ko", "방탄소년단"), ("ru", "Кино - Группа крови"),
+                    ("mn-cyr", "Хөх Тэнгэр"), ("mn-trad", "ᠮᠣᠩᠭᠣᠯ"), ("mixto", "Beyoncé 中文 Remix")):
+    _n0 = T.STATS["gemini_fail"]
+    _res = T.romanize_with_gemini(_txt)
+    out["romanizacion_prod"].append({"lang": _lang, "entrada": _txt, "salida": _res,
+                                     "ok": T.STATS["gemini_fail"] == _n0 and not T.contains_non_latin_script(_res),
+                                     "tiene_diacriticos": _res != T.strip_diacritics(_res)})
+
 try:
     r = T.discogs_get("/database/search", {"q": "Boris Flood", "type": "release"})
     out["discogs"] = {"ok": True, "resultados": len(r.get("results") or [])}
