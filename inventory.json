@@ -1,5 +1,5 @@
 {
- "ts": "2026-10-09T01:32:01Z",
+ "ts": "2026-10-09T01:33:31Z",
  "source": "",
  "total_files": 2437,
  "subfolders": 609,
@@ -31,5 +31,13 @@
  "audio_soportado": 1900,
  "audio_no_soportado": 0,
  "canciones_con_acompanante": 406,
- "acompanantes_ambiguos": 0
+ "acompanantes_ambiguos": 0,
+ "por_carpeta": {
+  "/MEGA/musica": 2381,
+  "/angst data/Angstjson": 40,
+  "/saves": 6,
+  "/untitledless-nonprocessed": 5,
+  "/angst data": 4,
+  "/romhaks": 1
+ }
 }
