@@ -1,19 +1,11 @@
 {
- "ts": "2026-10-09T01:26:47Z",
+ "ts": "2026-10-09T01:31:03Z",
  "source": "/untitledless",
- "total_files": 2306,
- "subfolders": 485,
- "por_extension": {
-  ".mp3": 1844,
-  ".lrc": 407,
-  ".m4a": 51,
-  ".lrc (1)": 1,
-  ".lrc (2)": 1,
-  ".lrc (3)": 1,
-  ".lrc (4)": 1
- },
- "audio_soportado": 1895,
+ "total_files": 0,
+ "subfolders": 0,
+ "por_extension": {},
+ "audio_soportado": 0,
  "audio_no_soportado": 0,
- "canciones_con_acompanante": 406,
+ "canciones_con_acompanante": 0,
  "acompanantes_ambiguos": 0
 }
