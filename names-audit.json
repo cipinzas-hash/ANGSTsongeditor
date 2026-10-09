@@ -1,0 +1,20 @@
+{
+ "ts": "2026-10-09T01:28:01Z",
+ "source": "/untitledless",
+ "total": 0,
+ "chars_invalidos": [],
+ "ruta_larga": [],
+ "espacio_o_punto_final": [],
+ "choque_mayusculas": [],
+ "bytes_nombre_largo": [],
+ "ext_raras": {},
+ "resumen": {
+  "total": 0,
+  "chars_invalidos": 0,
+  "ruta_larga": 0,
+  "espacio_o_punto_final": 0,
+  "choque_mayusculas": 0,
+  "bytes_nombre_largo": 0,
+  "ext_raras": {}
+ }
+}
