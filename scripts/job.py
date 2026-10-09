@@ -621,6 +621,12 @@ def cmd_inventory(st):
            "audio_soportado": sum(1 for f in files if ext(f) in AUDIO_EXTS),
            "audio_no_soportado": sum(1 for f in files if ext(f) in UNSUPPORTED_AUDIO),
            "canciones_con_acompanante": with_sc, "acompanantes_ambiguos": ambiguous}
+    # reparto por carpeta de nivel 1 y 2 (para ver DONDE esta cada cosa)
+    lvl = Counter()
+    for f in files:
+        rel = f[len(source):].strip("/").split("/")
+        lvl["/" + "/".join(rel[:2]) if len(rel) > 2 else "/" + "/".join(rel[:1])] += 1
+    out["por_carpeta"] = dict(lvl.most_common(40))
     (STATE_DIR / "inventory.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     print(json.dumps(out, ensure_ascii=False, indent=1))
 
