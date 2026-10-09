@@ -652,6 +652,41 @@ def cmd_diagnose(st):
     print(json.dumps(out, ensure_ascii=False, indent=1))
 
 
+def cmd_audit(st):
+    """Auditoria de nombres (solo lectura) para entender por que un cliente de
+    sincronizacion no baja todo: caracteres que Windows/FAT/exFAT/Android no
+    aceptan, rutas largas, espacios/puntos al final, nombres que solo difieren
+    por mayusculas dentro de una carpeta y extensiones raras."""
+    source = (os.environ.get("MEGA_SOURCE") or st.get("mega_source") or "").rstrip("/")
+    files = list_files(source)
+    bad_re = re.compile(r'[<>:"\\|?*\x00-\x1f]')
+    out = {"ts": now(), "source": source, "total": len(files), "chars_invalidos": [], "ruta_larga": [],
+           "espacio_o_punto_final": [], "choque_mayusculas": [], "bytes_nombre_largo": [], "ext_raras": {}}
+    seen = {}
+    for f in files:
+        rel = f[len(source):].lstrip("/")
+        parts = rel.split("/")
+        if any(bad_re.search(x) for x in parts):
+            out["chars_invalidos"].append(rel)
+        if len(rel) > 200:
+            out["ruta_larga"].append({"largo": len(rel), "ruta": rel})
+        if any(x != x.rstrip(" .") for x in parts):
+            out["espacio_o_punto_final"].append(rel)
+        if any(len(x.encode("utf-8")) > 240 for x in parts):
+            out["bytes_nombre_largo"].append(rel)
+        seen.setdefault((os.path.dirname(rel).casefold(), os.path.basename(rel).casefold()), []).append(rel)
+        e = ext(f)
+        if e not in (".mp3", ".m4a", ".lrc", ".jpg", ".png"):
+            out["ext_raras"][e] = out["ext_raras"].get(e, 0) + 1
+    out["choque_mayusculas"] = [v for v in seen.values() if len(v) > 1]
+    resumen = {k: (len(v) if isinstance(v, list) else v) for k, v in out.items() if k not in ("ts", "source")}
+    out["resumen"] = resumen
+    for k in ("chars_invalidos", "ruta_larga", "espacio_o_punto_final", "choque_mayusculas", "bytes_nombre_largo"):
+        out[k] = out[k][:60]
+    (STATE_DIR / "names-audit.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(json.dumps(resumen, ensure_ascii=False, indent=1))
+
+
 def main():
     action = (os.environ.get("ACTION") or "run").strip()
     st = load_state()
@@ -665,6 +700,8 @@ def main():
         cmd_inventory(st)
     elif action == "diagnose":
         cmd_diagnose(st)
+    elif action == "audit":
+        cmd_audit(st)
     elif action in ("start", "run"):
         if action == "run" and st["status"] not in active:
             print(f"El trabajo no esta activo (estado: {st['status']}). No hay nada que hacer.")
