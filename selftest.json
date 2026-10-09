@@ -1,5 +1,5 @@
 {
- "ts": "2026-10-07T18:55:36Z",
+ "ts": "2026-10-09T01:58:49Z",
  "gemini_model": "gemini-3.1-flash-lite",
  "gemini_key_present": true,
  "gemini_key_length": 53,
@@ -8,7 +8,7 @@
    "lang": "ja",
    "input": "古い心",
    "romanizacion": "furui kokoro",
-   "traduccion_es": "Corazón antiguo",
+   "traduccion_es": "Corazón viejo",
    "ok": true,
    "modelo_usado": "gemini-3.1-flash-lite"
   },
@@ -100,6 +100,57 @@
    "modelo": "gemini-2.5-flash",
    "ok": false,
    "error": "HTTP 404 {\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/ge"
+  }
+ ],
+ "romanizacion_prod": [
+  {
+   "lang": "ja",
+   "entrada": "宇多田ヒカル",
+   "salida": "Utada Hikaru",
+   "ok": true,
+   "tiene_diacriticos": false
+  },
+  {
+   "lang": "zh",
+   "entrada": "我的呼伦贝尔",
+   "salida": "Wo De Hu Lun Bei Er",
+   "ok": true,
+   "tiene_diacriticos": false
+  },
+  {
+   "lang": "ko",
+   "entrada": "방탄소년단",
+   "salida": "Bangtan Sonyeondan",
+   "ok": true,
+   "tiene_diacriticos": false
+  },
+  {
+   "lang": "ru",
+   "entrada": "Кино - Группа крови",
+   "salida": "Kino - Gruppa krovi",
+   "ok": true,
+   "tiene_diacriticos": false
+  },
+  {
+   "lang": "mn-cyr",
+   "entrada": "Хөх Тэнгэр",
+   "salida": "Khokh Tenger",
+   "ok": true,
+   "tiene_diacriticos": false
+  },
+  {
+   "lang": "mn-trad",
+   "entrada": "ᠮᠣᠩᠭᠣᠯ",
+   "salida": "mongol",
+   "ok": true,
+   "tiene_diacriticos": false
+  },
+  {
+   "lang": "mixto",
+   "entrada": "Beyoncé 中文 Remix",
+   "salida": "Beyonce Zhong Wen Remix",
+   "ok": true,
+   "tiene_diacriticos": false
   }
  ]
 }
