@@ -15,7 +15,9 @@ track killer* → *Run workflow*, eliges una acción:
 | Acción | Qué hace |
 |---|---|
 | `selftest` | Prueba Gemini (romanizar/traducir japonés y coreano) y Discogs. No toca MEGA. Resultado en `selftest.json` |
-| `inventory` | Cuenta los archivos de la fuente por extensión. No descarga ni mueve nada. Resultado en `inventory.json` |
+| `inventory` | Cuenta los archivos de la fuente por extensión y por carpeta. No descarga ni mueve nada. Resultado en `inventory.json` (acepta `mega_source`, p. ej. `/` para ver dónde está todo) |
+| `audit` | Solo lectura: nombres que Windows/FAT/Android no aceptan (`: " < > \| ? *`), punto o espacio final, rutas largas, choques por mayúsculas. Resultado en `names-audit.json` |
+| `diagnose` | Cuenta, cuota y descarga de prueba de MEGA. Resultado en `diagnose.json` |
 | `start` | Inicia el trabajo (o ajusta `batch_size` si ya hay uno activo) y corre un lote ya. Primer arranque recomendado: `batch_size=5` |
 | `run` | Corre un lote (es lo que hace el cron) |
 | `stop` | Detiene el trabajo |
@@ -40,7 +42,7 @@ Todo vive en la rama `job-state`, sin tocar `main`:
 - Un tag con **valor real** nunca se pisa. Vacío o placeholder (`Unknown Artist`, `Unknown Disc`, `Track 01`, `Untitled album`, …) cuenta como ausente: se completa si hay match confiable, o se deja **vacío** (nunca se escribe "Unknown").
 - Un match de Discogs/iTunes solo se acepta si su artista coincide con el artista real (se ignora el sufijo `(2)` de Discogs).
 - Una carátula incrustada existente nunca se reemplaza.
-- **Excepción deliberada — script no latino:** si artista/álbum/título están en japonés, coreano, chino, cirílico, etc., se **romanizan** vía Gemini para poder encontrarlos al buscar. El valor original queda en el comentario del archivo (`Original -- …`) y en `report.jsonl`; el comentario también lleva la traducción al español de título y álbum (nunca del artista). Si Gemini falla, se reintenta una vez y después se sube con los tags originales intactos (queda contado en `no_latin_kept`).
+- **Excepción deliberada — script no latino:** si artista/álbum/título están en **cualquier escritura no latina** (japonés, chino, coreano, ruso, mongol, griego, árabe, hebreo, armenio, georgiano, hindi, tailandés, etc.; se detecta por el nombre Unicode del carácter, no por una lista de rangos), se **romanizan** vía Gemini para poder encontrarlos al buscar, **aunque el archivo ya tenga todos los tags**. Estándar fijo y **sin ningún diacrítico** (se quitan además por código): japonés Hepburn sin macrones, chino pinyin sin tonos, coreano romanización revisada, ruso/mongol cirílico tipo BGN/PCGN (`Кино` → `Kino`). El valor original queda en el comentario del archivo (`Original -- …`) y en `report.jsonl`; el comentario también lleva la traducción al español de título y álbum (nunca del artista). Si Gemini falla, se reintenta una vez y después se sube con los tags originales intactos (queda contado en `no_latin_kept`).
 - Se guardan en el informe los tags originales de cada archivo.
 
 ## Dónde termina cada archivo
