@@ -4,8 +4,6 @@
 - Iniciado: 2026-10-01T18:18:37Z  ·  ultima corrida: 2026-10-02T19:35:54Z  ·  corridas: 9
 - Pendientes en la fuente (ultimo conteo): 0
 
-> Terminado. Quedan 75 archivo(s) no audio sin acompañante (ver leftovers.json).
-
 ## Conteos acumulados
 
 - uploaded: 605

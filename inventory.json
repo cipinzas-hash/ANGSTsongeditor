@@ -1,23 +1,17 @@
 {
- "ts": "2026-10-01T18:17:21Z",
+ "ts": "2026-10-09T01:20:57Z",
  "source": "/MEGA/musica",
- "total_files": 1004,
+ "total_files": 75,
  "subfolders": 0,
  "por_extension": {
-  ".mp3": 559,
-  ".lrc": 317,
   ".jpg": 69,
-  ".m4a": 51,
   ".png": 2,
+  ".lrc": 2,
   ".torrent": 1,
-  ".pdf": 1,
-  ".lrc (1)": 1,
-  ".lrc (2)": 1,
-  ".lrc (3)": 1,
-  ".lrc (4)": 1
+  ".pdf": 1
  },
- "audio_soportado": 610,
+ "audio_soportado": 0,
  "audio_no_soportado": 0,
- "canciones_con_acompanante": 102,
+ "canciones_con_acompanante": 0,
  "acompanantes_ambiguos": 0
 }
