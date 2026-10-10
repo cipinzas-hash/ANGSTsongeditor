@@ -1,0 +1,638 @@
+{
+ "ts": "2026-10-10T12:03:04Z",
+ "source": "/MEGA/musica",
+ "pattern": "lacrimosa|code ?64",
+ "coinciden": 58,
+ "archivos": [
+  {
+   "ruta": "Code 64/Broken Rhythm/code-64-contract-and-expand.mp3",
+   "tags_actuales": {
+    "artist": "Code 64",
+    "album": "Broken Rhythm",
+    "title": "Contract And Expand",
+    "albumartist": "Code 64",
+    "track": "10/14",
+    "year": "2022",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "code-64-contract-and-expand"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Code 64/Broken Rhythm/code-64-reflections.mp3",
+   "tags_actuales": {
+    "artist": "Code 64",
+    "album": "Broken Rhythm",
+    "title": "Reflections",
+    "albumartist": "Code 64",
+    "track": "08/14",
+    "year": "2022",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "code-64-reflections"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Code 64/Broken Rhythm/code-64-soundwave-extended.mp3",
+   "tags_actuales": {
+    "artist": "Code 64",
+    "album": "Broken Rhythm",
+    "title": "Soundwave (Extended)",
+    "albumartist": "Code 64",
+    "track": "11/14",
+    "year": "2022",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "code-64-soundwave-extended"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Code 64/Broken Rhythm/code-64-spellbound.mp3",
+   "tags_actuales": {
+    "artist": "Code 64",
+    "album": "Broken Rhythm",
+    "title": "Spellbound",
+    "albumartist": "Code 64",
+    "track": "07/14",
+    "year": "2022",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "code-64-spellbound"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Code 64/Leaving Earth/code-64-leaving-earth-single-edit.mp3",
+   "tags_actuales": {
+    "artist": "Code 64",
+    "album": "Leaving Earth",
+    "title": "Leaving Earth [single edit]",
+    "albumartist": null,
+    "track": "3",
+    "year": "2005",
+    "has_cover": false
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "code-64-leaving-earth-single-edit"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Code 64/Leaving Earth/code-64-leaving-earth-thermostatic-remix.mp3",
+   "tags_actuales": {
+    "artist": "Code 64",
+    "album": "Leaving Earth",
+    "title": "Leaving Earth [thermostatic remix]",
+    "albumartist": null,
+    "track": "5",
+    "year": "2005",
+    "has_cover": false
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "code-64-leaving-earth-thermostatic-remix"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Code 64/Leaving Earth/code-64-leaving-earth-universal-poplab-radio-version.mp3",
+   "tags_actuales": {
+    "artist": "Code 64",
+    "album": "Leaving Earth",
+    "title": "Leaving Earth [universal poplab radio version]",
+    "albumartist": null,
+    "track": "1",
+    "year": "2005",
+    "has_cover": false
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "code-64-leaving-earth-universal-poplab-radio-version"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Code 64/Leaving Earth/code-64-saying-hello-pop-mix.mp3",
+   "tags_actuales": {
+    "artist": "Code 64",
+    "album": "Leaving Earth",
+    "title": "Saying Hello [pop mix]",
+    "albumartist": null,
+    "track": "4",
+    "year": "2005",
+    "has_cover": false
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "code-64-saying-hello-pop-mix"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Code 64/Leaving Earth/code-64-true-faith.mp3",
+   "tags_actuales": {
+    "artist": "Code 64",
+    "album": "Leaving Earth",
+    "title": "True Faith",
+    "albumartist": null,
+    "track": "2",
+    "year": "2005",
+    "has_cover": false
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "code-64-true-faith"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Cover-up/#3 YENZ LEONHARDT SCHAKAL (320  kbps).mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Cover-up",
+    "title": "Schakal",
+    "albumartist": null,
+    "track": "3",
+    "year": null,
+    "has_cover": false
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "#3 YENZ LEONHARDT SCHAKAL (320 kbps)"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Cover-up/#5 CANTERRA. No blind eyes can see (320  kbps).mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Cover-up",
+    "title": "No blind eyes can see",
+    "albumartist": null,
+    "track": "6",
+    "year": null,
+    "has_cover": false
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "#5 CANTERRA No blind eyes can see (320 kbps)"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Cover-up/#9 LORD OF THE LOST  Malina (320  kbps).mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Cover-up",
+    "title": "Malina",
+    "albumartist": null,
+    "track": "9",
+    "year": null,
+    "has_cover": false
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "#9 LORD OF THE LOST Malina (320 kbps)"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Elodia/lacrimosa-alleine-zu-zweit.mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Elodia",
+    "title": "Alleine Zu Zweit",
+    "albumartist": null,
+    "track": "2",
+    "year": "1999",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "lacrimosa-alleine-zu-zweit"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Elodia/lacrimosa-am-ende-der-stille.mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Elodia",
+    "title": "Am Ende Der Stille",
+    "albumartist": null,
+    "track": "1",
+    "year": "1999",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "lacrimosa-am-ende-der-stille"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Elodia/lacrimosa-am-ende-stehen-wir-zwei.mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Elodia",
+    "title": "Am Ende Stehen Wir Zwei",
+    "albumartist": null,
+    "track": "8",
+    "year": "1999",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "lacrimosa-am-ende-stehen-wir-zwei"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Elodia/lacrimosa-dich-zu-toten-fiel-mir-schwer.mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Elodia",
+    "title": "Dich Zu Toten Fiel Mir Schwer",
+    "albumartist": null,
+    "track": "6",
+    "year": "1999",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "lacrimosa-dich-zu-toten-fiel-mir-schwer"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Elodia/lacrimosa-halt-mich.mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Elodia",
+    "title": "Halt Mich",
+    "albumartist": null,
+    "track": "3",
+    "year": "1999",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "lacrimosa-halt-mich"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Elodia/lacrimosa-ich-verlasse-heut-dein-herz.mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Elodia",
+    "title": "Ich Verlasse Heut' Dein Herz",
+    "albumartist": null,
+    "track": "5",
+    "year": "1999",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "lacrimosa-ich-verlasse-heut-dein-herz"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Elodia/lacrimosa-mein-welt-japanese-bonus-track.mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Elodia",
+    "title": "Mein Welt (Japanese Bonus Track)",
+    "albumartist": "Lacrimosa",
+    "track": "10/10",
+    "year": "1999",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "lacrimosa-mein-welt-japanese-bonus-track"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Elodia/lacrimosa-sanctus.mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Elodia",
+    "title": "Sanctus",
+    "albumartist": null,
+    "track": "7",
+    "year": "1999",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "lacrimosa-sanctus"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Elodia/lacrimosa-the-turning-point.mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Elodia",
+    "title": "The Turning Point",
+    "albumartist": null,
+    "track": "4",
+    "year": "1999",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "lacrimosa-the-turning-point"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Elodia/lacrimosa-und-du-fallst-japanese-bonus-track.mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Elodia",
+    "title": "Und du fallst",
+    "albumartist": null,
+    "track": "9",
+    "year": "1999",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "lacrimosa-und-du-fallst-japanese-bonus-track"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Inferno/lacrimosa-copycat.mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Inferno",
+    "title": "Copycat",
+    "albumartist": null,
+    "track": "7",
+    "year": "1995",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "lacrimosa-copycat"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Inferno/lacrimosa-der-kelch-des-lebens.mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Inferno",
+    "title": "Der Kelch Des Lebens",
+    "albumartist": null,
+    "track": "8",
+    "year": "1995",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "lacrimosa-der-kelch-des-lebens"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Inferno/lacrimosa-kabinett-der-sinne.mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Inferno",
+    "title": "Kabinett Der Sinne",
+    "albumartist": null,
+    "track": "2",
+    "year": "1995",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "lacrimosa-kabinett-der-sinne"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Inferno/lacrimosa-no-blind-eyes-can-see.mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Inferno",
+    "title": "No Blind Eyes Can See",
+    "albumartist": null,
+    "track": "4",
+    "year": "1995",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "lacrimosa-no-blind-eyes-can-see"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Inferno/lacrimosa-schakal.mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Inferno",
+    "title": "Schakal",
+    "albumartist": null,
+    "track": "5",
+    "year": "1995",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "lacrimosa-schakal"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Inferno/lacrimosa-vermachtnis-der-sonne.mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Inferno",
+    "title": "Vermachtnis Der Sonne",
+    "albumartist": null,
+    "track": "6",
+    "year": "1995",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "lacrimosa-vermachtnis-der-sonne"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Inferno/lacrimosa-versiegelt-glanzumstromt.mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Inferno",
+    "title": "Versiegelt Glanzumstromt",
+    "albumartist": null,
+    "track": "3",
+    "year": "1995",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "lacrimosa-versiegelt-glanzumstromt"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  },
+  {
+   "ruta": "Lacrimosa/Lament/lacrimosa-avalon.mp3",
+   "tags_actuales": {
+    "artist": "Lacrimosa",
+    "album": "Lament",
+    "title": "Avalon",
+    "albumartist": null,
+    "track": "5",
+    "year": "2025",
+    "has_cover": true
+   },
+   "del_nombre_de_archivo": {
+    "artista": null,
+    "titulo": "lacrimosa-avalon"
+   },
+   "de_la_carpeta": {
+    "artista": null,
+    "album": null
+   },
+   "decision": "ya_completo (no se toca)"
+  }
+ ]
+}
