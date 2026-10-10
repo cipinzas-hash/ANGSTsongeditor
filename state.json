@@ -1,5 +1,5 @@
 {
- "status": "active",
+ "status": "stopped",
  "mega_source": "/MEGA/musica",
  "batch_size": 5,
  "runs": 1,
@@ -52,7 +52,7 @@
    }
   }
  ],
- "last_action": "start",
+ "last_action": "stop",
  "started_at": "2026-10-10T23:27:46Z",
  "last_run": "2026-10-10T23:27:46Z",
  "pending": 1890,
