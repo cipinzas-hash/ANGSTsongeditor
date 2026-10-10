@@ -1,23 +1,40 @@
 {
  "status": "active",
  "mega_source": "/MEGA/musica",
- "batch_size": 25,
- "runs": 4,
+ "batch_size": 150,
+ "runs": 5,
  "counts": {
   "sin_cambios": 5,
-  "moved": 3,
-  "uploaded": 39,
-  "sin_album": 15,
+  "moved": 21,
+  "uploaded": 40,
+  "sin_album": 16,
   "nonprocessed": 13,
   "nonprocessed_reasons": {
    "sin_artista": 13
   },
-  "sidecars": 2,
+  "sidecars": 7,
   "con_album": 24,
-  "requeued": 12
+  "requeued": 12,
+  "replaced": 1
  },
  "attempts": {},
- "dir_dest": {},
+ "dir_dest": {
+  "/MEGA/musica/Venjent/Unknown Disc": [
+   "/MEGA/musica/Venjent/Untitled album"
+  ],
+  "/MEGA/musica/WAVESTORM/Untitled album": [
+   "/MEGA/musica/WAVESTORM/Untitled album"
+  ],
+  "/MEGA/musica/untitledless/1200 Micrograms/1200 Micrograms": [
+   "/MEGA/musica/1200 Micrograms/1200 Micrograms"
+  ],
+  "/MEGA/musica/Aural Vampire/Aural Vampire III: Border of the Dead - Single": [
+   "/MEGA/musica/Aural Vampire/Aural Vampire III - Border of the Dead - Single"
+  ],
+  "/MEGA/musica/Dope Stars Inc./New Breed Of Digital Fuckers": [
+   "/MEGA/musica/Dope Stars Inc/New Breed Of Digital Fuckers"
+  ]
+ },
  "gemini": {
   "ok": 0,
   "fail": 0,
@@ -70,7 +87,7 @@
  ],
  "last_action": "run",
  "started_at": "2026-10-10T23:30:57Z",
- "last_run": "2026-10-10T23:45:41Z",
+ "last_run": "2026-10-10T23:48:31Z",
  "pending": 1847,
  "fix_dl_v2": true,
  "dl_fail": {},
