@@ -693,6 +693,53 @@ def cmd_audit(st):
     print(json.dumps(resumen, ensure_ascii=False, indent=1))
 
 
+def cmd_peek(st):
+    """Solo lectura: para los archivos de audio cuya ruta coincida con PATTERN
+    (regex, sin distinguir mayusculas), descarga hasta 30, lee sus tags y dice
+    que tomaria el bot (artista/album/titulo y en que rama caeria) SIN buscar
+    en Discogs ni escribir ni mover nada. Resultado en peek.json."""
+    import tag_with_discogs as T
+    from tagio import read_tags, effective, is_complete
+    source = (os.environ.get("MEGA_SOURCE") or st.get("mega_source") or "").rstrip("/")
+    pat = re.compile(os.environ.get("PATTERN") or ".", re.I)
+    files = [f for f in list_files(source) if ext(f) in AUDIO_EXTS and pat.search(f)]
+    out = {"ts": now(), "source": source, "pattern": pat.pattern, "coinciden": len(files), "archivos": []}
+    for f in files[:30]:
+        rel = f[len(source):].lstrip("/")
+        item = {"ruta": rel}
+        with tempfile.TemporaryDirectory() as tmp:
+            local = Path(tmp) / os.path.basename(f)
+            try:
+                mega(["mega-get", f, tmp + "/"], timeout=600,
+                     verify=lambda: local.exists() and local.stat().st_size > 0)
+            except RuntimeError as e:
+                item["error"] = str(e)[:150]
+                out["archivos"].append(item)
+                continue
+            t = read_tags(local)
+            fa, fb = T.parse_album_folder(os.path.basename(os.path.dirname(f)))
+            na, nt = T.parse_filename(local, fa)
+            artist = effective(t, "artist") or na or fa
+            album = effective(t, "album") or fb
+            title = effective(t, "title") or nt
+            item.update(tags_actuales={k: t.get(k) for k in ("artist", "album", "title", "albumartist", "track", "year", "has_cover")},
+                        del_nombre_de_archivo={"artista": na, "titulo": nt},
+                        de_la_carpeta={"artista": fa, "album": fb})
+            if not t["readable"]:
+                item["decision"] = "error_lectura"
+            elif is_complete(t):
+                item["decision"] = "ya_completo (no se toca" + ("; se romaniza si hay script no latino)" if any(T.contains_non_latin_script(t.get(k)) for k in ("artist", "album", "title")) else ")")
+            elif not artist:
+                item["decision"] = "sin_artista -> no procesado"
+            elif not title:
+                item["decision"] = "sin_titulo -> no procesado"
+            else:
+                item["decision"] = f"buscar en Discogs: artista={artist!r} album={album!r} titulo={title!r}"
+        out["archivos"].append(item)
+    (STATE_DIR / "peek.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(json.dumps({k: v for k, v in out.items() if k != "archivos"}, ensure_ascii=False))
+
+
 def main():
     action = (os.environ.get("ACTION") or "run").strip()
     st = load_state()
@@ -708,6 +755,8 @@ def main():
         cmd_diagnose(st)
     elif action == "audit":
         cmd_audit(st)
+    elif action == "peek":
+        cmd_peek(st)
     elif action in ("start", "run"):
         if action == "run" and st["status"] not in active:
             print(f"El trabajo no esta activo (estado: {st['status']}). No hay nada que hacer.")
