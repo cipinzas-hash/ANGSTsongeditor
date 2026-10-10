@@ -1,37 +1,56 @@
 {
- "status": "finished_with_leftovers",
+ "status": "active",
  "mega_source": "/MEGA/musica",
- "batch_size": 100,
- "runs": 9,
+ "batch_size": 5,
+ "runs": 1,
  "counts": {
-  "uploaded": 605,
-  "ya_completo": 547,
-  "sidecars": 102,
-  "retry": 59,
-  "con_album": 52,
-  "romanizados": 48,
-  "nonprocessed": 5,
-  "nonprocessed_reasons": {
-   "sin_artista": 5
-  },
-  "sin_album": 6,
-  "orphans_rescued": 217,
-  "dirs_removed": 0
+  "moved": 5
  },
  "attempts": {},
- "dir_dest": {},
+ "dir_dest": {
+  "/MEGA/musica/1200 Micrograms/1200 Micrograms": [
+   "/MEGA/musica/untitledless/1200 Micrograms/1200 Micrograms"
+  ]
+ },
  "gemini": {
-  "ok": 139,
+  "ok": 0,
   "fail": 0,
   "errors": []
  },
- "history": [],
- "last_action": "peek",
- "started_at": "2026-10-01T18:18:37Z",
- "last_run": "2026-10-02T19:35:54Z",
- "pending": 0,
+ "history": [
+  {
+   "source": "/MEGA/musica",
+   "dest": "/MEGA/musica/untitledless",
+   "started_at": "2026-10-01T18:18:37Z",
+   "finished_at": "2026-10-02T19:46:09Z",
+   "status": "finished_with_leftovers",
+   "counts": {
+    "uploaded": 605,
+    "ya_completo": 547,
+    "sidecars": 102,
+    "retry": 59,
+    "con_album": 52,
+    "romanizados": 48,
+    "nonprocessed": 5,
+    "nonprocessed_reasons": {
+     "sin_artista": 5
+    },
+    "sin_album": 6,
+    "orphans_rescued": 217,
+    "dirs_removed": 0
+   }
+  }
+ ],
+ "last_action": "start",
+ "started_at": "2026-10-10T17:10:25Z",
+ "last_run": "2026-10-10T17:10:25Z",
+ "pending": 1890,
  "fix_dl_v2": true,
  "dl_fail": {},
  "fix_dl_v3": true,
- "finished_at": "2026-10-02T19:46:09Z"
+ "mega_dest": "/MEGA/musica/untitledless",
+ "mega_nonproc": "/untitledless-nonprocessed",
+ "pending_rm": [],
+ "pending_rename": [],
+ "session_seq": 1
 }
