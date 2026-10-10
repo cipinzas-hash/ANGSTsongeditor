@@ -63,6 +63,23 @@ class Nombres(unittest.TestCase):
         self.assertEqual(R.sanitize_component("Normal Name"), "Normal Name")
 
 
+class CarpetasCanonicas(unittest.TestCase):
+    def test_no_crear_carpeta_que_solo_difiere_en_mayusculas(self):
+        # caso real: carpeta '2x' (muchos archivos) y tag de artista '2X'
+        files = lib("2x/Como Fenix/a.mp3", "2x/Como Fenix/b.mp3", "2x/Como Fenix/c.mp3", "2X/Como Fenix/d.mp3")
+        canon = R.build_dir_canon(files, DEST)
+        self.assertEqual(canon[("a", R.dirkey("2X"))], "2x")
+        self.assertEqual(canon[("b", R.dirkey("2x"), R.dirkey("Como Fenix"))], "Como Fenix")
+
+    def test_la_canonica_sale_sanitizada(self):
+        canon = R.build_dir_canon(lib("Dope Stars Inc./Neuromance/a.mp3"), DEST)
+        self.assertEqual(canon[("a", R.dirkey("Dope Stars Inc"))], "Dope Stars Inc")
+
+    def test_tildes_no_duplican(self):
+        canon = R.build_dir_canon(lib("Beyonce/Album/a.mp3"), DEST)
+        self.assertEqual(canon[("a", R.dirkey("Beyoncé"))], "Beyonce")
+
+
 class TituloCopiaDelArchivo(unittest.TestCase):
     def test_titulo_que_es_el_nombre_crudo(self):
         # casos reales: el tag de titulo era el nombre de archivo

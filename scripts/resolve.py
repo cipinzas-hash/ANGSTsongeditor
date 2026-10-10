@@ -123,6 +123,35 @@ def sanitize_filename(name: str) -> str:
     return sanitize_component(stem, "archivo") + "." + suffix
 
 
+# ------------------------------------------------- nombres de carpeta canonicos
+
+def dirkey(name) -> str:
+    """Clave para decidir si dos nombres de carpeta son 'el mismo': sin mayusculas, tildes
+    ni espacios repetidos ('2x' == '2X', 'Beyonce' == 'Beyoncé')."""
+    d = unicodedata.normalize("NFKD", name or "")
+    d = "".join(c for c in d if unicodedata.category(c) != "Mn")
+    return re.sub(r"\s+", " ", d.casefold()).strip()
+
+
+def build_dir_canon(files, dest_root):
+    """Para cada artista (y cada album dentro de un artista) la ortografia de carpeta que YA se
+    usa, la mas frecuente, ya sanitizada. Regla: nunca crear una carpeta que solo difiera en
+    mayusculas/tildes de una existente (en clientes de sincronizacion Windows/macOS chocan)."""
+    root = dest_root.rstrip("/") + "/"
+    counts = {}
+    for f in files:
+        if not f.startswith(root):
+            continue
+        parts = f[len(root):].split("/")
+        if len(parts) < 3:
+            continue
+        a = sanitize_component(parts[0])
+        b = sanitize_component(parts[1])
+        counts.setdefault(("a", dirkey(a)), Counter())[a] += 1
+        counts.setdefault(("b", dirkey(a), dirkey(b)), Counter())[b] += 1
+    return {k: c.most_common(1)[0][0] for k, c in counts.items()}
+
+
 # ------------------------------------------------------------- conocimiento
 
 def _real_folder(name: str) -> bool:

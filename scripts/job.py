@@ -32,8 +32,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from tagio import AUDIO_EXTS
-from resolve import (Knowledge, is_domain_like, readable_signature, resolve_hints,
-                     sanitize_component, sanitize_filename)
+from resolve import (Knowledge, build_dir_canon, dirkey, is_domain_like, readable_signature,
+                     resolve_hints, sanitize_component, sanitize_filename)
 from tag_with_discogs import contains_non_latin_script
 
 STATE_DIR = Path(os.environ.get("STATE_DIR", "state"))
@@ -250,6 +250,13 @@ class Ctx:
         self.done = set()
         self.knowledge = Knowledge()
         self.anomalies = []
+        self.dir_canon = {}
+
+    def canon_artist(self, name):
+        return self.dir_canon.setdefault(("a", dirkey(name)), name)
+
+    def canon_album(self, artist_dir, name):
+        return self.dir_canon.setdefault(("b", dirkey(artist_dir), dirkey(name)), name)
 
     def rel(self, remote):
         return remote[len(self.source):].lstrip("/")
@@ -394,8 +401,8 @@ def handle_audio(ctx, remote, raw_dir, processed_dir):
         entry.update(status="nonprocessed", reason="incompleto")
         append_report(entry)
         return
-    artist_dir = sanitize_component(v["artist"])
-    album_dir = sanitize_component(v["album"]) if v["album"] else UNTITLED_ALBUM
+    artist_dir = ctx.canon_artist(sanitize_component(v["artist"]))
+    album_dir = ctx.canon_album(artist_dir, sanitize_component(v["album"])) if v["album"] else UNTITLED_ALBUM
     remote_dir = f"{MEGA_DEST}/{artist_dir}/{album_dir}"
     name = sanitize_filename(dest.name)
     target = f"{remote_dir}/{name}"
@@ -740,6 +747,7 @@ def cmd_run(st):
     ctx = Ctx(st, source, files)
     ctx.done = done
     ctx.knowledge = Knowledge.from_paths(files, MEGA_DEST)
+    ctx.dir_canon = build_dir_canon(files, MEGA_DEST)
     print(f"Conocimiento de la biblioteca: {len(ctx.knowledge.artists)} artistas, {len(ctx.knowledge.tracks)} titulos")
     SESSION["ctx"] = ctx
     SESSION["pending_before"] = len(audio)
