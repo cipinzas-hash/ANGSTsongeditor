@@ -1,15 +1,15 @@
 # ANGSTsongeditor — estado del trabajo
 
-- Estado: **active**  ·  fuente: `/MEGA/musica`  ·  lote: 5
-- Iniciado: 2026-10-10T23:27:46Z  ·  ultima corrida: 2026-10-10T23:27:46Z  ·  corridas: 1
+- Estado: **stopped**  ·  fuente: `/MEGA/musica`  ·  lote: 5
+- Iniciado: 2026-10-10T17:10:25Z  ·  ultima corrida: 2026-10-10T17:10:25Z  ·  corridas: 1
 - Pendientes en la fuente (ultimo conteo): 1890
 
 ## Conteos acumulados
 
 - uploaded: 0
-- moved: 3
+- moved: 5
 - replaced: 0
-- sin_cambios: 2
+- sin_cambios: 0
 - romanizados: 0
 - ya_completo: 0
 - con_album: 0

@@ -1,15 +1,16 @@
 {
- "status": "stopped",
+ "status": "active",
  "mega_source": "/MEGA/musica",
  "batch_size": 5,
  "runs": 1,
  "counts": {
-  "moved": 5
+  "sin_cambios": 2,
+  "moved": 3
  },
  "attempts": {},
  "dir_dest": {
-  "/MEGA/musica/1200 Micrograms/1200 Micrograms": [
-   "/MEGA/musica/untitledless/1200 Micrograms/1200 Micrograms"
+  "/MEGA/musica/2x/Como Fenix": [
+   "/MEGA/musica/2X/Como Fenix"
   ]
  },
  "gemini": {
@@ -39,18 +40,28 @@
     "orphans_rescued": 217,
     "dirs_removed": 0
    }
+  },
+  {
+   "source": "/MEGA/musica",
+   "dest": "/MEGA/musica",
+   "started_at": "2026-10-10T17:10:25Z",
+   "finished_at": null,
+   "status": "stopped",
+   "counts": {
+    "moved": 5
+   }
   }
  ],
- "last_action": "inventory",
- "started_at": "2026-10-10T17:10:25Z",
- "last_run": "2026-10-10T17:10:25Z",
+ "last_action": "start",
+ "started_at": "2026-10-10T23:27:46Z",
+ "last_run": "2026-10-10T23:27:46Z",
  "pending": 1890,
  "fix_dl_v2": true,
  "dl_fail": {},
  "fix_dl_v3": true,
- "mega_dest": "/MEGA/musica/untitledless",
+ "mega_dest": "/MEGA/musica",
  "mega_nonproc": "/untitledless-nonprocessed",
  "pending_rm": [],
  "pending_rename": [],
- "session_seq": 1
+ "session_seq": 2
 }
