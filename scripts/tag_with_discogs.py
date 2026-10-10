@@ -438,9 +438,15 @@ def process_file_ex(f: Path, raw_dir: Path = None, processed_dir: Path = None, a
             info.update(status="error", note="archivo no legible")
             return None, info
 
+        title_tag_clean = None
         if existing.get("title") and title_is_raw_filename(existing["title"], f.stem):
             existing = dict(existing, title=None)       # el 'titulo' era el nombre de archivo crudo
             info["title_was_filename"] = True
+        elif existing.get("title") and clean_name_junk(existing["title"]) != existing["title"].strip():
+            # titulo real pero con basura pegada ('(www hotplayer ru)', '(320 kbps)'): se limpia
+            title_tag_clean = clean_name_junk(existing["title"])
+            existing = dict(existing, title=None)
+            info["title_cleaned"] = True
 
         if is_complete(existing):
             nl_fields = [k for k in ("artist", "album", "title") if contains_non_latin_script(existing.get(k))]
@@ -462,15 +468,15 @@ def process_file_ex(f: Path, raw_dir: Path = None, processed_dir: Path = None, a
         hint_src = None
         if effective(existing, "artist"):
             artist = effective(existing, "artist")
-            title = effective(existing, "title") or (file_title if has_sep else h.get("title")) or file_title
+            title = effective(existing, "title") or title_tag_clean or (file_title if has_sep else h.get("title")) or file_title
         elif has_sep and file_artist and not tagio.is_placeholder("artist", file_artist):
-            artist, title, hint_src = file_artist, effective(existing, "title") or file_title, "nombre"
+            artist, title, hint_src = file_artist, effective(existing, "title") or title_tag_clean or file_title, "nombre"
         elif h.get("artist"):
             artist, hint_src = h["artist"], h.get("source")
-            title = effective(existing, "title") or h.get("title") or file_title
+            title = effective(existing, "title") or title_tag_clean or h.get("title") or file_title
         else:
             artist = folder_artist
-            title = effective(existing, "title") or file_title
+            title = effective(existing, "title") or title_tag_clean or file_title
         album_known = effective(existing, "album") or (h.get("album") if hint_src == h.get("source") and h.get("artist") == artist else None) or folder_album
         performer = h.get("performer") if (h.get("artist") == artist and h.get("performer")) else None
         info["hint_source"] = hint_src

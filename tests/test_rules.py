@@ -42,6 +42,10 @@ class Nombres(unittest.TestCase):
         self.assertEqual(R.clean_name_junk("#4 LOVE LIKE BLOOD Copycat (320 kbps)"), "LOVE LIKE BLOOD Copycat")
         self.assertEqual(R.clean_name_junk("Die Antword - I Fink U Freeky (www.hotplayer.ru)"), "Die Antword - I Fink U Freeky")
 
+    def test_marca_de_sitio_sin_puntos(self):
+        # caso real: el flujo viejo dejo "(www hotplayer ru)" (puntos reemplazados por espacios) en el titulo
+        self.assertEqual(R.clean_name_junk("I Fink U Freeky (www hotplayer ru)"), "I Fink U Freeky")
+
     def test_separadores(self):
         a, t, sep = T.parse_filename_ex(Path("Die Antword - I Fink U Freeky (www.hotplayer.ru).mp3"), None)
         self.assertEqual((a, t, sep), ("Die Antword", "I Fink U Freeky", True))
