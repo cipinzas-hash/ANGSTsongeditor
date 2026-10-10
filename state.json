@@ -4,7 +4,7 @@
  "batch_size": 150,
  "runs": 5,
  "counts": {
-  "sin_cambios": 6,
+  "sin_cambios": 26,
   "moved": 47,
   "uploaded": 52,
   "sin_album": 16,
@@ -50,6 +50,12 @@
   ],
   "/MEGA/musica/Molchat Doma/Belaya Polosa": [
    "/MEGA/musica/Molchat Doma/Belaya Polosa"
+  ],
+  "/MEGA/musica/Molchat Doma/Etazhi": [
+   "/MEGA/musica/Molchat Doma/Etazhi"
+  ],
+  "/MEGA/musica/Molchat Doma/Monument": [
+   "/MEGA/musica/Molchat Doma/Monument"
   ]
  },
  "gemini": {
