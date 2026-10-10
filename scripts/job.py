@@ -597,19 +597,21 @@ def save_done(done):
 
 
 def priority(path):
-    """Orden de proceso (menor = antes): primero lo que mas probablemente necesita arreglo,
-    deducible solo de la ruta, asi un tope de cuota de MEGA corta lo menos valioso."""
+    """Orden de proceso (menor = antes), deducido solo de la ruta: primero lo que casi seguro
+    necesita arreglo (carpetas Unknown/Untitled/dominio), despues nombres no latinos o invalidos,
+    despues nombres-slug, despues tildes, al final lo demas. Si MEGA corta por cuota, lo que
+    queda sin procesar es lo menos valioso."""
     low = path.casefold()
     stem = os.path.splitext(os.path.basename(path))[0]
     if re.search(r"/(unknown|untitled|desconocid)[^/]*/", low) or is_domain_like(os.path.basename(os.path.dirname(path))):
         return 0
-    if re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)+", stem.lower()):
-        return 0
     if contains_non_latin_script(path) or re.search(r'[<>:"|?*]', path) or any(x != x.rstrip(" .") for x in path.split("/")):
         return 1
-    if any(ord(c) > 127 for c in path):
+    if re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)+", stem.lower()):
         return 2
-    return 3
+    if any(ord(c) > 127 for c in path):
+        return 3
+    return 4
 
 
 def write_session_report(st, note):
