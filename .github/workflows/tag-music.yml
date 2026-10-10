@@ -21,6 +21,14 @@ on:
         description: "Solo para peek: regex (sin distinguir mayusculas) que debe coincidir con la ruta"
         required: false
         default: ""
+      mega_dest:
+        description: "Solo para start: carpeta de destino (vacio = la guardada o /untitledless). Puede estar DENTRO del origen (modo refinar en el sitio)"
+        required: false
+        default: ""
+      mega_nonproc:
+        description: "Solo para start: carpeta de no procesados (vacio = la guardada o /untitledless-nonprocessed)"
+        required: false
+        default: ""
       batch_size:
         description: "Canciones por corrida (vacio = el valor guardado; el primer start usa 5)"
         required: false
@@ -48,8 +56,8 @@ jobs:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
       MEGA_SOURCE: ${{ github.event.inputs.mega_source || vars.MEGA_SOURCE_PATH }}
-      MEGA_DEST: "/untitledless"
-      MEGA_NONPROC: "/untitledless-nonprocessed"
+      MEGA_DEST: ${{ github.event.inputs.mega_dest }}
+      MEGA_NONPROC: ${{ github.event.inputs.mega_nonproc }}
       BATCH_SIZE: ${{ github.event.inputs.batch_size }}
       PATTERN: ${{ github.event.inputs.pattern }}
       STATE_DIR: ${{ github.workspace }}/state
@@ -92,6 +100,10 @@ jobs:
       - name: Instalar dependencias de Python
         if: steps.gate.outputs.go == 'yes'
         run: pip install -r requirements.txt
+
+      - name: Pruebas de las reglas (si fallan, no corre el trabajo)
+        if: steps.gate.outputs.go == 'yes' && (env.ACTION == 'start' || env.ACTION == 'run')
+        run: python -m unittest discover -s tests
 
       - name: Instalar MEGAcmd
         if: steps.gate.outputs.go == 'yes' && env.ACTION != 'selftest' && env.ACTION != 'stop'

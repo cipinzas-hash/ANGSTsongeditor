@@ -26,6 +26,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 import tagio
+from resolve import clean_name_junk, title_is_raw_filename
 from tagio import (AUDIO_EXTS, effective, is_complete, read_tags, same_name,
                    strip_discogs_suffix, write_tags)
 
@@ -233,19 +234,30 @@ def clean_token(s):
     s = unicodedata.normalize("NFKD", s)
     s = re.sub(r"[_\.]+", " ", s)
     s = re.sub(r"\s+", " ", s).strip()
-    return s
+    return unicodedata.normalize("NFC", s)     # sin dejar los acentos descompuestos en el tag
+
+
+def parse_filename_ex(path: Path, album_hint_artist):
+    """-> (artista, titulo, hubo_separador).
+    Quita marcas de bitrate/sitio/'#N' (rules.json), numeracion inicial
+    ('01.', '01 -', '01)'), y acepta ' - ', ' – ' y ' — ' como separador.
+    Sin separador: (album_hint_artist, titulo_limpio, False) -- NO se inventa artista."""
+    stem = clean_name_junk(path.stem)
+    stem = re.sub(r"^\d{1,3}\s*[.)]\s*", "", stem)
+    stem = re.sub(r"^\d{1,3}\s*-\s+", "", stem)
+    stem = re.sub(r"^\d{1,3}\s+(?=\S)", "", stem)
+    stem = re.sub(r"\s+[\u2013\u2014]\s+", " - ", stem)
+    stem = clean_token(stem.replace("_-_", " - "))
+    if " - " in stem:
+        artist, title = stem.split(" - ", 1)
+        return clean_token(artist), clean_token(title), True
+    return album_hint_artist, stem, False
 
 
 def parse_filename(path: Path, album_hint_artist):
-    """'NN.Artista - Titulo.mp3' | 'Artista - Titulo.mp3' -> (artista, titulo).
-    Sin separador ' - ' claro: (album_hint_artist, stem)."""
-    stem = path.stem
-    stem = re.sub(r"^\d{1,3}[.\s]+", "", stem)
-    stem = clean_token(stem)
-    if " - " in stem:
-        artist, title = stem.split(" - ", 1)
-        return clean_token(artist), clean_token(title)
-    return album_hint_artist, stem
+    """Compatibilidad: (artista, titulo)."""
+    a, t, _ = parse_filename_ex(path, album_hint_artist)
+    return a, t
 
 
 def parse_album_folder(folder_name: str):
@@ -353,6 +365,19 @@ def _snapshot(tags: dict) -> dict:
     return {k: tags.get(k) for k in ("artist", "album", "title", "albumartist", "track", "year", "genre", "has_cover")}
 
 
+def _normalize_romanized(f, dest, existing, info):
+    """Regla general: lo que el propio bot romanizo (comentario 'Original --') no debe
+    llevar tildes/tonos; se normalizan los campos que aun los tengan."""
+    proposed = {k: strip_diacritics(existing[k]) for k in ("artist", "album", "title")
+                if strip_diacritics(existing.get(k) or "") != (existing.get(k) or "")}
+    _ensure_moved(f, dest)
+    written = write_tags(dest, proposed, existing, None, None, overwrite=set(proposed))
+    after = read_tags(dest)
+    info.update(status="ok", source="normalizado_diacriticos", written=written, after=_snapshot(after), romanized=False)
+    print(f"    NORMALIZADO sin diacriticos: {after.get('artist')} - {after.get('album')} - {after.get('title')}")
+    return dest, info
+
+
 def _romanize_complete(f, dest, existing, nl_fields, info, attempt, g0):
     """Archivo con tags completos pero en script no latino: se romanizan SOLO
     los campos no latinos para poder encontrarlos al buscar. El valor original
@@ -386,7 +411,7 @@ def _romanize_complete(f, dest, existing, nl_fields, info, attempt, g0):
     return dest, info
 
 
-def process_file_ex(f: Path, raw_dir: Path = None, processed_dir: Path = None, attempt: int = 1):
+def process_file_ex(f: Path, raw_dir: Path = None, processed_dir: Path = None, attempt: int = 1, hints: dict = None):
     """Procesa un archivo. Devuelve (dest, info).
 
     info["status"]:
@@ -413,8 +438,15 @@ def process_file_ex(f: Path, raw_dir: Path = None, processed_dir: Path = None, a
             info.update(status="error", note="archivo no legible")
             return None, info
 
+        if existing.get("title") and title_is_raw_filename(existing["title"], f.stem):
+            existing = dict(existing, title=None)       # el 'titulo' era el nombre de archivo crudo
+            info["title_was_filename"] = True
+
         if is_complete(existing):
             nl_fields = [k for k in ("artist", "album", "title") if contains_non_latin_script(existing.get(k))]
+            if not nl_fields and "Original --" in (existing.get("comment") or "") and any(
+                    strip_diacritics(existing.get(k) or "") != (existing.get(k) or "") for k in ("artist", "album", "title")):
+                return _normalize_romanized(f, dest, existing, info)
             if not nl_fields:
                 print("    ya tenia tags reales completos, se deja tal cual")
                 _ensure_moved(f, dest)
@@ -423,10 +455,25 @@ def process_file_ex(f: Path, raw_dir: Path = None, processed_dir: Path = None, a
             return _romanize_complete(f, dest, existing, nl_fields, info, attempt, g0)
 
         folder_artist, folder_album = parse_album_folder(f.parent.name)
-        file_artist, file_title = parse_filename(f, folder_artist)
-        artist = effective(existing, "artist") or file_artist or folder_artist
-        album_known = effective(existing, "album") or folder_album
-        title = effective(existing, "title") or file_title
+        file_artist, file_title, has_sep = parse_filename_ex(f, folder_artist)
+        h = hints or {}
+        # Orden de evidencia: tag real > nombre 'Artista - Titulo' > pista deducida de la
+        # biblioteca (resolve.py) > carpeta 'Artista - Album'. Se informa la fuente.
+        hint_src = None
+        if effective(existing, "artist"):
+            artist = effective(existing, "artist")
+            title = effective(existing, "title") or (file_title if has_sep else h.get("title")) or file_title
+        elif has_sep and file_artist and not tagio.is_placeholder("artist", file_artist):
+            artist, title, hint_src = file_artist, effective(existing, "title") or file_title, "nombre"
+        elif h.get("artist"):
+            artist, hint_src = h["artist"], h.get("source")
+            title = effective(existing, "title") or h.get("title") or file_title
+        else:
+            artist = folder_artist
+            title = effective(existing, "title") or file_title
+        album_known = effective(existing, "album") or (h.get("album") if hint_src == h.get("source") and h.get("artist") == artist else None) or folder_album
+        performer = h.get("performer") if (h.get("artist") == artist and h.get("performer")) else None
+        info["hint_source"] = hint_src
 
         if not artist:
             info.update(status="sin_artista", note="no hay artista confiable (ni en tags ni en el nombre)")
@@ -509,6 +556,8 @@ def process_file_ex(f: Path, raw_dir: Path = None, processed_dir: Path = None, a
         for field in ("artist", "album", "title"):
             if proposed.get(field):
                 proposed[field] = romanize_with_gemini(proposed[field])
+        if performer:
+            comment = (comment + "\n" if comment else "") + f"Intérprete -- {performer}"
 
         info["gemini_fail"] = STATS["gemini_fail"] - g0
         if info["gemini_fail"] and attempt < 2:

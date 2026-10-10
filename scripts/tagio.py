@@ -11,6 +11,7 @@ Lectura/escritura de tags para mp3 y m4a, con las reglas de proteccion:
     pisa un comentario existente.
 """
 import re
+import sys
 import unicodedata
 from difflib import SequenceMatcher
 from pathlib import Path
@@ -21,6 +22,9 @@ from mutagen.easymp4 import EasyMP4
 from mutagen.id3 import ID3, APIC, COMM, ID3NoHeaderError
 from mutagen.mp3 import MP3
 from mutagen.mp4 import MP4Cover
+
+sys.path.insert(0, str(Path(__file__).parent))
+from resolve import is_domain_like  # noqa: E402
 
 AUDIO_EXTS = {".mp3", ".m4a"}
 TRANSLATION_DESC = "Traduccion"
@@ -48,6 +52,8 @@ def is_placeholder(field: str, value) -> bool:
     """True si el valor esta vacio o es un placeholder conocido para ese campo."""
     if value is None:
         return True
+    if field in ("artist", "album", "title") and is_domain_like(str(value)):
+        return True      # un tag que es solo un dominio (SonidosMp3Gratis.com) es basura
     v = _norm_placeholder(str(value))
     if v in PLACEHOLDER_SETS.get(field, _COMMON):
         return True
@@ -109,6 +115,13 @@ def read_tags(path: Path) -> dict:
     out["genre"] = _first(audio, "genre")
     if kind(path) == "m4a":
         out["comment"] = _first(audio, "comment")
+    else:
+        try:
+            for fr in ID3(path).getall("COMM"):
+                if fr.desc == TRANSLATION_DESC and fr.text:
+                    out["comment"] = str(fr.text[0])
+        except Exception:
+            pass
     out["has_cover"] = has_cover(path)
     return out
 

@@ -2,8 +2,6 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-export MEGA_DEST="${MEGA_DEST:-/untitledless}"
-export MEGA_NONPROC="${MEGA_NONPROC:-/untitledless-nonprocessed}"
 ACTION="${ACTION:-run}"
 export ACTION
 

@@ -1,0 +1,16 @@
+{
+  "_comentario": "Reglas editables sin tocar codigo. junk_patterns: regex (sin distinguir mayusculas) que se borran de los nombres de archivo antes de interpretarlos. domain_tlds: un tag que es solo un dominio (algo.com) cuenta como placeholder. Agregar un caso nuevo = una linea aca + un test en tests/.",
+  "junk_patterns": [
+    "\\(\\s*\\d{2,3}\\s*kbps\\s*\\)",
+    "\\[\\s*\\d{2,3}\\s*kbps\\s*\\]",
+    "\\b\\d{2,3}\\s*kbps\\b",
+    "\\(\\s*www\\.[^)]*\\)",
+    "\\[\\s*www\\.[^\\]]*\\]",
+    "\\bwww\\.[\\w.-]+\\.[a-z]{2,}\\b",
+    "\\bhttps?://\\S+",
+    "^#\\s*\\d{1,3}\\s+"
+  ],
+  "domain_tlds": ["com", "net", "org", "ru", "info", "biz", "me", "fm", "to", "cc", "tv", "us", "es", "mx", "cl", "ar", "de", "fr", "it", "br", "pl", "ua", "su", "xyz", "io", "co", "ws", "tk"],
+  "min_artist_slug_len": 3,
+  "min_siblings": 2
+}

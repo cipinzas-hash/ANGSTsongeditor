@@ -32,6 +32,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from tagio import AUDIO_EXTS
+from resolve import (Knowledge, is_domain_like, readable_signature, resolve_hints,
+                     sanitize_component, sanitize_filename)
+from tag_with_discogs import contains_non_latin_script
 
 STATE_DIR = Path(os.environ.get("STATE_DIR", "state"))
 MEGA_DEST = os.environ.get("MEGA_DEST", "/untitledless").rstrip("/")
@@ -45,6 +48,9 @@ AUDIOISH = AUDIO_EXTS | UNSUPPORTED_AUDIO
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp"}
 FOLDER_IMAGE_RE = re.compile(r"^(album|albumart.*|cover|folder|front|art|artwork)$", re.I)
 CHECKPOINT_EVERY = 20
+SESSION_ENTRIES = []      # entradas del informe de ESTA corrida (sesion)
+ACCEPTED_EXIT1 = [0]      # veces que MEGAcmd dio exit != 0 con el resultado confirmado
+SESSION = {}
 
 
 def now():
@@ -72,6 +78,7 @@ def save_state(st):
 
 
 def append_report(entry):
+    SESSION_ENTRIES.append(entry)
     STATE_DIR.mkdir(parents=True, exist_ok=True)
     with open(STATE_DIR / "report.jsonl", "a", encoding="utf-8") as fh:
         fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
@@ -109,7 +116,7 @@ def write_summary(st, note=None):
     if note:
         lines += [f"> {note}", ""]
     lines += ["## Conteos acumulados", ""]
-    for k in ("uploaded", "romanizados", "ya_completo", "con_album", "sin_album", "nonprocessed", "retry", "sidecars", "orphans_rescued", "folder_images",
+    for k in ("uploaded", "moved", "replaced", "sin_cambios", "romanizados", "ya_completo", "con_album", "sin_album", "nonprocessed", "retry", "sidecars", "orphans_rescued", "folder_images",
               "no_latin_kept", "dup_renamed", "dirs_removed"):
         lines.append(f"- {k}: {c.get(k, 0)}")
     reasons = c.get("nonprocessed_reasons", {})
@@ -146,6 +153,7 @@ def mega(args, timeout=300, check=True, verify=None):
         except Exception:
             confirmed = False
         if confirmed:
+            ACCEPTED_EXIT1[0] += 1
             print(f"    (aviso: {args[0]} devolvio exit {r.returncode} pero el resultado esta confirmado)")
             return r
         raise RuntimeError(f"{' '.join(args[:2])} fallo (exit {r.returncode}): {clean_err(r)}")
@@ -178,7 +186,7 @@ def remote_exists(path):
 
 
 def sanitize_folder_name(name):
-    return (name or "").replace("/", "-").strip().rstrip(".") or "Desconocido"
+    return sanitize_component(name)
 
 
 def unique_name(remote_dir, name):
@@ -239,9 +247,21 @@ class Ctx:
         self.t0 = time.time()
         self.since_checkpoint = 0
         self.dl_streak = 0
+        self.done = set()
+        self.knowledge = Knowledge()
+        self.anomalies = []
 
     def rel(self, remote):
         return remote[len(self.source):].lstrip("/")
+
+    def folder_parts(self, remote):
+        """(artista, album) segun la carpeta <MEGA_DEST>/<Artista>/<Album>/ donde esta el archivo."""
+        root = MEGA_DEST.rstrip("/") + "/"
+        if remote.startswith(root):
+            parts = remote[len(root):].split("/")
+            if len(parts) == 3:
+                return parts[0], parts[1]
+        return None, None
 
     def count(self, key, n=1):
         c = self.st["counts"]
@@ -343,9 +363,15 @@ def handle_audio(ctx, remote, raw_dir, processed_dir):
     ctx.dl_streak = 0
     st.get("dl_fail", {}).pop(remote, None)
 
-    dest, info = T.process_file_ex(local, raw_dir, processed_dir, attempt=n)
+    stem0 = os.path.splitext(os.path.basename(remote))[0]
+    fa, fb = ctx.folder_parts(remote)
+    hints = resolve_hints(stem0, ctx.knowledge, fa, fb)
+    dest, info = T.process_file_ex(local, raw_dir, processed_dir, attempt=n, hints=hints)
     status = info["status"]
-    entry.update({k: info.get(k) for k in ("before", "after", "source", "written", "note", "gemini_fail", "no_latin")})
+    entry.update({k: info.get(k) for k in ("before", "after", "source", "written", "note", "gemini_fail", "no_latin", "hint_source")})
+    if hints and info.get("hint_source") in (hints.get("source"), "nombre"):
+        entry["hints"] = {k: hints.get(k) for k in ("artist", "album", "title", "performer", "source")}
+    entry["firma"] = readable_signature(stem0)
 
     if status == "reintentar":
         st["attempts"][remote] = n
@@ -361,61 +387,109 @@ def handle_audio(ctx, remote, raw_dir, processed_dir):
         append_report(entry)
         return
 
-    # ---- ok / ya_completo: subir ----
+    # ---- ok / ya_completo ----
     v = check_file(dest)
     if not v["ok"]:
         to_nonprocessed(ctx, remote, "incompleto")
         entry.update(status="nonprocessed", reason="incompleto")
         append_report(entry)
         return
-    artist_dir = sanitize_folder_name(v["artist"])
-    album_dir = sanitize_folder_name(v["album"]) if v["album"] else UNTITLED_ALBUM
+    artist_dir = sanitize_component(v["artist"])
+    album_dir = sanitize_component(v["album"]) if v["album"] else UNTITLED_ALBUM
     remote_dir = f"{MEGA_DEST}/{artist_dir}/{album_dir}"
-    name = dest.name
+    name = sanitize_filename(dest.name)
+    target = f"{remote_dir}/{name}"
+    changed_tags = status == "ok" and bool(info.get("written"))
+    old_stem = os.path.splitext(os.path.basename(remote))[0]
 
-    if f"{remote_dir}/{name}" == remote:
-        print("    ya esta en su lugar, sin cambios")
-        entry.update(status="sin_cambios", dest=remote_dir)
-        append_report(entry)
+    def learn(final_name):
+        if v["album"]:
+            ctx.knowledge.learn(v["artist"], v["album"], os.path.splitext(final_name)[0])
+
+    def finish(action, final_path, moved, ambiguous=False):
         ctx.handled.add(remote)
-        return
+        ctx.done.add(final_path)
+        st["attempts"].pop(remote, None)
+        ctx.track_dir(remote, os.path.dirname(final_path))
+        learn(os.path.basename(final_path))
+        entry.update(status="uploaded" if action in ("subida", "mv", "reemplazo") else "sin_cambios", accion=action, dest=final_path,
+                     sidecars=moved, ambiguous_sidecars=ambiguous)
+        append_report(entry)
+        print(f"    OK ({action}): {final_path}" + (f" (+{len(moved)} acompañante/s)" if moved else ""))
 
+    # 1) misma ruta
+    if target == remote:
+        if not changed_tags:
+            ctx.count("sin_cambios")
+            return finish("sin_cambios", remote, [])
+        # reemplazo en el sitio: sube con nombre temporal, borra el original, renombra
+        tmp_name = name + ".tmp"
+        tmp_remote = f"{remote_dir}/{tmp_name}"
+        try:
+            up = dest.with_name(tmp_name)
+            dest.rename(up)
+            mega(["mega-put", "-c", str(up), remote_dir + "/"], timeout=900, verify=lambda: remote_exists(tmp_remote))
+            if not remote_exists(tmp_remote):
+                raise RuntimeError("la subida temporal no se pudo confirmar")
+        except RuntimeError as e:
+            print(f"    ERROR subiendo (reemplazo), el original NO se toca: {e}")
+            return retry_or_giveup("error_subida", str(e)[:120])
+        try:
+            mega(["mega-rm", "-f", remote], verify=lambda: not remote_exists(remote))
+        except RuntimeError as e:
+            try:
+                mega(["mega-rm", "-f", tmp_remote], check=False)
+            except RuntimeError:
+                pass
+            print(f"    ERROR reemplazando, original intacto: {e}")
+            return retry_or_giveup("error_reemplazo", str(e)[:120])
+        try:
+            mega(["mega-mv", tmp_remote, target], verify=lambda: remote_exists(target) and not remote_exists(tmp_remote))
+        except RuntimeError as e:
+            st.setdefault("pending_rename", []).append([tmp_remote, target])
+            ctx.anomalies.append(f"renombre pendiente: {tmp_remote} -> {target} ({str(e)[:80]})")
+        ctx.count("replaced")
+        ctx.count("romanizados") if info.get("romanized") else None
+        return finish("reemplazo", target, [])
+
+    # 2) otra ruta, tags sin cambios: movimiento del lado del servidor (sin subir nada)
     try:
         mega(["mega-mkdir", "-p", remote_dir], check=False)
         final = unique_name(remote_dir, name)
-        upload = dest
         if final != name:
+            ctx.count("dup_renamed")
+        if not changed_tags:
+            move_remote(remote, remote_dir, final)
+            moved, ambiguous = move_sidecars(ctx, remote, remote_dir, old_stem, os.path.splitext(final)[0])
+            ctx.count("moved")
+            return finish("mv", f"{remote_dir}/{final}", moved, ambiguous)
+        # 3) otra ruta y tags nuevos: subir y borrar el original
+        upload = dest
+        if final != dest.name:
             upload = dest.with_name(final)
             dest.rename(upload)
-            ctx.count("dup_renamed")
         mega(["mega-put", "-c", str(upload), remote_dir + "/"], timeout=900,
              verify=lambda: remote_exists(f"{remote_dir}/{final}"))
         if not remote_exists(f"{remote_dir}/{final}"):
             raise RuntimeError("la subida no se pudo confirmar")
     except RuntimeError as e:
-        print(f"    ERROR subiendo, el original NO se borra: {e}")
+        print(f"    ERROR moviendo/subiendo, el original NO se borra: {e}")
         return retry_or_giveup("error_subida", str(e)[:120])
 
-    moved, ambiguous = move_sidecars(ctx, remote, remote_dir, os.path.splitext(name)[0], os.path.splitext(final)[0])
+    moved, ambiguous = move_sidecars(ctx, remote, remote_dir, old_stem, os.path.splitext(final)[0])
     try:
         mega(["mega-rm", "-f", remote], verify=lambda: not remote_exists(remote))
-        ctx.handled.add(remote)
     except RuntimeError as e:
         # Ya esta subido: NO se reprocesa (duplicaria). El borrado queda pendiente.
         print(f"    AVISO: subido OK pero no se pudo borrar el original ({e}); borrado pendiente")
         st.setdefault("pending_rm", []).append(remote)
-        ctx.handled.add(remote)
     ctx.count("uploaded")
-    ctx.count("ya_completo" if status == "ya_completo" else ("con_album" if v["album"] else "sin_album"))
+    ctx.count("con_album" if v["album"] else "sin_album")
     if info.get("romanized"):
         ctx.count("romanizados")
     if info.get("no_latin"):
         ctx.count("no_latin_kept")
-    ctx.track_dir(remote, remote_dir)
-    st["attempts"].pop(remote, None)
-    entry.update(status="uploaded", dest=f"{remote_dir}/{final}", sidecars=moved, ambiguous_sidecars=ambiguous)
-    append_report(entry)
-    print(f"    OK: {remote_dir}/{final}" + (f" (+{len(moved)} acompañante/s)" if moved else ""))
+    return finish("subida", f"{remote_dir}/{final}", moved, ambiguous)
 
 
 def handle_folder_images(ctx, remaining_audio):
@@ -428,7 +502,7 @@ def handle_folder_images(ctx, remaining_audio):
             continue
         imgs = [f for f in ctx.files if os.path.dirname(f) == d and f not in ctx.handled and ext(f) in IMAGE_EXTS
                 and FOLDER_IMAGE_RE.match(os.path.splitext(os.path.basename(f))[0])]
-        if len(dests) == 1 and dests[0] != "NONPROC" and imgs:
+        if len(dests) == 1 and dests[0] not in ("NONPROC", d) and imgs:
             for img in imgs:
                 try:
                     final = unique_name(dests[0], os.path.basename(img))
@@ -465,6 +539,8 @@ def rescue_orphans(ctx):
         if len(cands) != 1:
             continue
         dest_dir = os.path.dirname(cands[0])
+        if os.path.dirname(f) == dest_dir:
+            continue      # ya esta junto a su cancion
         try:
             final = unique_name(dest_dir, os.path.basename(f))
             move_remote(f, dest_dir, None if final == os.path.basename(f) else final)
@@ -501,6 +577,118 @@ def sweep_empty_dirs(ctx):
     return removed, True
 
 
+# ---------------------------------------------------------- done / prioridad
+
+def load_done():
+    p = STATE_DIR / "done.json"
+    return set(json.loads(p.read_text(encoding="utf-8"))) if p.exists() else set()
+
+
+def save_done(done):
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    (STATE_DIR / "done.json").write_text(json.dumps(sorted(done), ensure_ascii=False), encoding="utf-8")
+
+
+def priority(path):
+    """Orden de proceso (menor = antes): primero lo que mas probablemente necesita arreglo,
+    deducible solo de la ruta, asi un tope de cuota de MEGA corta lo menos valioso."""
+    low = path.casefold()
+    stem = os.path.splitext(os.path.basename(path))[0]
+    if re.search(r"/(unknown|untitled|desconocid)[^/]*/", low) or is_domain_like(os.path.basename(os.path.dirname(path))):
+        return 0
+    if re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)+", stem.lower()):
+        return 0
+    if contains_non_latin_script(path) or re.search(r'[<>:"|?*]', path) or any(x != x.rstrip(" .") for x in path.split("/")):
+        return 1
+    if any(ord(c) > 127 for c in path):
+        return 2
+    return 3
+
+
+def write_session_report(st, note):
+    """sessions/NNN-<fecha>.md (detalle de ESTA corrida) + sessions/INDEX.md (una linea por sesion)."""
+    sess = SESSION
+    if not sess:
+        return
+    import tag_with_discogs as T
+    seq = st["session_seq"] = st.get("session_seq", 0) + 1
+    d = STATE_DIR / "sessions"
+    d.mkdir(parents=True, exist_ok=True)
+    entries = list(SESSION_ENTRIES)
+    c1, c0 = st.get("counts", {}), sess.get("counts_before", {})
+    delta = {k: v - c0.get(k, 0) for k, v in c1.items() if isinstance(v, int) and v - c0.get(k, 0)}
+    by_status = Counter(e.get("status") for e in entries if e.get("path") and e.get("status"))
+    by_action = Counter(e.get("accion") for e in entries if e.get("accion"))
+    by_src = Counter((e.get("hint_source") or e.get("source")) for e in entries if e.get("status") in ("uploaded", "sin_cambios"))
+    ctx = sess.get("ctx")
+    lines = [f"# Sesión {seq:03d} — {sess['t0']}", "",
+             f"- Acción: **{os.environ.get('ACTION', 'run')}** · trabajo: corrida {st.get('runs')} · estado final: **{st.get('status')}**",
+             f"- Inicio {sess['t0']} · fin {now()} · duración {int(time.time() - sess['t0_epoch'])} s · lote {st.get('batch_size')}",
+             f"- Fuente `{st.get('mega_source')}` · destino `{MEGA_DEST}` · no procesados `{MEGA_NONPROC}`",
+             f"- Pendientes antes: {sess.get('pending_before')} · después: {st.get('pending')}"]
+    if note:
+        lines.append(f"- Nota: {note}")
+    lines += ["", "## Resultado de la sesión", ""]
+    lines.append("- Archivos tocados: " + (", ".join(f"{k}: {v}" for k, v in by_status.most_common()) or "ninguno"))
+    lines.append("- Acciones: " + (", ".join(f"{k}: {v}" for k, v in by_action.most_common()) or "ninguna"))
+    lines.append("- Fuente del dato: " + (", ".join(f"{k}: {v}" for k, v in by_src.most_common()) or "-"))
+    lines.append("- Conteos de la sesión: " + (", ".join(f"{k}: +{v}" for k, v in sorted(delta.items())) or "sin cambios"))
+    lines += ["", "## Gemini (esta sesión)", "",
+              f"- ok: {T.STATS['gemini_ok']} · fallos: {T.STATS['gemini_fail']}" + (f" · modelo: {T.LAST_MODEL.get('name')}" if T.LAST_MODEL.get('name') else "")]
+    for e in T.STATS["gemini_errors"]:
+        lines.append(f"- error: `{e}`")
+    anomalies = list(ctx.anomalies) if ctx else []
+    if ACCEPTED_EXIT1[0]:
+        anomalies.append(f"{ACCEPTED_EXIT1[0]} comandos de MEGAcmd dieron exit != 0 pero el resultado estaba confirmado (aceptados)")
+    for e in entries:
+        if e.get("status") == "retry":
+            anomalies.append(f"reintento: {e.get('path')} ({e.get('reason')})")
+    if note and "abort" in note.lower():
+        anomalies.append(note)
+    lines += ["", "## Anomalías", ""] + ([f"- {a}" for a in anomalies[:40]] or ["- ninguna"])
+    # casos no resueltos agrupados por patron (alimenta la siguiente vuelta)
+    groups = defaultdict_list()
+    for e in entries:
+        if e.get("status") == "nonprocessed":
+            groups[(e.get("reason"), e.get("firma") or "?")].append(e.get("path"))
+    lines += ["", "## Casos no resueltos, por patrón", ""]
+    if groups:
+        for (reason, sig), paths in sorted(groups.items(), key=lambda kv: -len(kv[1])):
+            lines.append(f"- **{reason}** · patrón `{sig}` · {len(paths)} archivo(s) · ej.: `{paths[0]}`")
+    else:
+        lines.append("- ninguno")
+    lines += ["", "## Detalle por archivo", "", "| Ruta | Estado | Acción | Fuente | Antes → Después | Destino |", "|---|---|---|---|---|---|"]
+
+    def tg(t):
+        t = t or {}
+        return " / ".join(str(t.get(k) or "·") for k in ("artist", "album", "title"))
+
+    def cell(x):
+        return str(x if x is not None else "").replace("|", "/").replace("\n", " ")[:90]
+    shown = [e for e in entries if e.get("path") and e.get("status")]
+    for e in shown[:400]:
+        lines.append(f"| {cell(e['path'])} | {cell(e.get('status'))}{' (' + cell(e.get('reason')) + ')' if e.get('reason') else ''} | "
+                     f"{cell(e.get('accion'))} | {cell(e.get('hint_source') or e.get('source'))} | "
+                     f"{cell(tg(e.get('before')))} → {cell(tg(e.get('after')))} | {cell(e.get('dest'))} |")
+    if len(shown) > 400:
+        lines.append(f"| … {len(shown) - 400} más en report.jsonl | | | | | |")
+    stamp = sess["t0"].replace(":", "").replace("-", "")
+    fname = f"{seq:03d}-{stamp}.md"
+    (d / fname).write_text("\n".join(lines) + "\n", encoding="utf-8")
+    idx = d / "INDEX.md"
+    if not idx.exists():
+        idx.write_text("# Sesiones del bot\n\n", encoding="utf-8")
+    with open(idx, "a", encoding="utf-8") as fh:
+        fh.write(f"- [{seq:03d}]({fname}) · {sess['t0']} · {os.environ.get('ACTION', 'run')} · tocados {sum(by_status.values())} "
+                 f"(subida/mv/reemplazo {sum(by_action.get(a, 0) for a in ('subida', 'mv', 'reemplazo'))}, "
+                 f"no procesados {by_status.get('nonprocessed', 0)}, reintentos {by_status.get('retry', 0)}) · pendientes {st.get('pending')} · {st.get('status')}\n")
+
+
+def defaultdict_list():
+    from collections import defaultdict
+    return defaultdict(list)
+
+
 # ------------------------------------------------------------------ acciones
 
 def cmd_run(st):
@@ -515,7 +703,22 @@ def cmd_run(st):
     st["batch_size"] = batch
     st["runs"] = st.get("runs", 0) + 1
     st["last_run"] = now()
-    print(f"== Corrida {st['runs']}: fuente {source}, lote {batch} ==")
+    import copy
+    SESSION.clear()
+    SESSION.update(t0=now(), t0_epoch=time.time(), counts_before=copy.deepcopy(st.get("counts", {})))
+    SESSION_ENTRIES.clear()
+    print(f"== Corrida {st['runs']}: fuente {source}, destino {MEGA_DEST}, lote {batch} ==")
+
+    # renombres pendientes de corridas anteriores (reemplazo en el sitio que quedo a medias)
+    for tmp, target in list(st.get("pending_rename", [])):
+        try:
+            if remote_exists(tmp) and not remote_exists(target):
+                mega(["mega-mv", tmp, target], verify=lambda: remote_exists(target) and not remote_exists(tmp))
+            elif remote_exists(tmp) and remote_exists(target):
+                mega(["mega-rm", "-f", tmp])
+            st["pending_rename"].remove([tmp, target])
+        except RuntimeError as e:
+            print(f"AVISO: renombre pendiente sigue fallando {tmp}: {e}")
 
     # borrados pendientes de corridas anteriores (ya subidos, falto el rm)
     for p in list(st.get("pending_rm", [])):
@@ -527,11 +730,19 @@ def cmd_run(st):
             print(f"AVISO: borrado pendiente sigue fallando para {p}: {e}")
     pending_rm = set(st.get("pending_rm", []))
 
-    files = [f for f in list_files(source) if f not in pending_rm]
-    audio = sorted(f for f in files if ext(f) in AUDIO_EXTS)
+    nonproc_prefix = MEGA_NONPROC.rstrip("/") + "/"
+    files = [f for f in list_files(source) if f not in pending_rm and not f.startswith(nonproc_prefix)]
+    done = load_done()
+    audio_all = [f for f in files if ext(f) in AUDIO_EXTS]
+    audio = sorted((f for f in audio_all if f not in done), key=lambda f: (priority(f), f))
     unsupported = sorted(f for f in files if ext(f) in UNSUPPORTED_AUDIO)
-    print(f"Fuente: {len(files)} archivo(s) ({len(audio)} mp3/m4a, {len(unsupported)} audio no soportado)")
+    print(f"Fuente: {len(files)} archivo(s) ({len(audio_all)} mp3/m4a, {len(audio)} pendientes, {len(unsupported)} audio no soportado)")
     ctx = Ctx(st, source, files)
+    ctx.done = done
+    ctx.knowledge = Knowledge.from_paths(files, MEGA_DEST)
+    print(f"Conocimiento de la biblioteca: {len(ctx.knowledge.artists)} artistas, {len(ctx.knowledge.tracks)} titulos")
+    SESSION["ctx"] = ctx
+    SESSION["pending_before"] = len(audio)
 
     try:
         # 1) formatos de audio no soportados -> no procesados
@@ -568,6 +779,7 @@ def cmd_run(st):
                 ctx.since_checkpoint += 1
                 if ctx.since_checkpoint >= CHECKPOINT_EVERY:
                     ctx.since_checkpoint = 0
+                    save_done(ctx.done)
                     save_state(st)
                     push_state(f"checkpoint corrida {st['runs']}")
     finally:
@@ -578,7 +790,8 @@ def cmd_run(st):
             if e not in g["errors"] and len(g["errors"]) < 5:
                 g["errors"].append(e)
 
-    remaining = [f for f in audio + unsupported if f not in ctx.handled]
+    save_done(ctx.done)
+    remaining = [f for f in audio + unsupported if f not in ctx.handled and f not in ctx.done]
     handle_folder_images(ctx, remaining)
     st["pending"] = len(remaining)
     print(f"\n== Lote terminado: quedan {len(remaining)} archivo(s) de audio por procesar ==")
@@ -596,7 +809,16 @@ def cmd_run(st):
     if not done:
         st["status"] = "sweeping"
         return "El barrido de carpetas vacias continua en la proxima corrida."
-    left = list_files(source)
+    fresh = list_files(source)
+    fidx = build_index(fresh)
+    left = []
+    for f in fresh:
+        if ext(f) in AUDIOISH:
+            continue                                  # las canciones ya procesadas siguen en el arbol
+        grp = fidx.get((os.path.dirname(f), os.path.splitext(os.path.basename(f))[0].casefold()), [])
+        if any(ext(x) in AUDIOISH for x in grp):
+            continue                                  # acompañante junto a su cancion: esta bien
+        left.append(f)
     (STATE_DIR / "leftovers.json").write_text(json.dumps(left[:500], ensure_ascii=False, indent=1), encoding="utf-8")
     st["pending"] = 0
     st["finished_at"] = now()
@@ -741,10 +963,18 @@ def cmd_peek(st):
 
 
 def main():
+    global MEGA_DEST, MEGA_NONPROC
     action = (os.environ.get("ACTION") or "run").strip()
     st = load_state()
     note = None
     active = ("active", "sweeping")
+    env_dest = os.environ.get("MEGA_DEST", "").strip().rstrip("/")
+    env_np = os.environ.get("MEGA_NONPROC", "").strip().rstrip("/")
+    if action == "start" and st["status"] not in active:
+        st["mega_dest"] = env_dest or st.get("mega_dest") or "/untitledless"
+        st["mega_nonproc"] = env_np or st.get("mega_nonproc") or "/untitledless-nonprocessed"
+    MEGA_DEST = (st.get("mega_dest") or env_dest or "/untitledless").rstrip("/")
+    MEGA_NONPROC = (st.get("mega_nonproc") or env_np or "/untitledless-nonprocessed").rstrip("/")
 
     if action == "stop":
         st["status"] = "stopped"
@@ -769,21 +999,34 @@ def main():
                     print(f"ERROR: hay un trabajo activo sobre {st.get('mega_source')}; detenelo antes de cambiar la fuente.")
                     sys.exit(1)
             else:
-                if not source:
-                    print("ERROR: falta mega_source para iniciar un trabajo.")
+                if not source.strip("/"):
+                    print("ERROR: falta mega_source (o es la raiz de MEGA: no se acepta, procesaria toda la cuenta).")
+                    sys.exit(1)
+                if MEGA_DEST == MEGA_NONPROC or MEGA_NONPROC == source:
+                    print("ERROR: destino, no procesados y origen no pueden coincidir.")
                     sys.exit(1)
                 if st.get("started_at"):
-                    st.setdefault("history", []).append({"source": st.get("mega_source"), "started_at": st.get("started_at"),
+                    st.setdefault("history", []).append({"source": st.get("mega_source"), "dest": st.get("mega_dest"),
+                                                         "started_at": st.get("started_at"), "finished_at": st.get("finished_at"),
                                                          "status": st["status"], "counts": st.get("counts")})
+                    # el informe del trabajo anterior se ARCHIVA, no se borra
+                    arch = STATE_DIR / "archive"
+                    arch.mkdir(parents=True, exist_ok=True)
+                    n_job = len(st["history"])
+                    for f in ("report.jsonl", "leftovers.json", "summary.md", "done.json"):
+                        if (STATE_DIR / f).exists():
+                            shutil.move(str(STATE_DIR / f), str(arch / f"job-{n_job:02d}-{f}"))
+                if MEGA_DEST.startswith(source.rstrip("/") + "/"):
+                    print(f"Modo refinar en el sitio: el destino {MEGA_DEST} esta dentro del origen {source}.")
                 st.update(status="active", mega_source=source, started_at=now(), runs=0, counts={}, attempts={}, dir_dest={},
-                          gemini={"ok": 0, "fail": 0, "errors": []})
-                for f in ("report.jsonl", "leftovers.json"):
-                    (STATE_DIR / f).unlink(missing_ok=True)
+                          gemini={"ok": 0, "fail": 0, "errors": []}, pending_rm=[], pending_rename=[], dl_fail={})
+                st.pop("finished_at", None)
         try:
             note = cmd_run(st)
         except AbortRun as e:
             note = f"Corrida abortada: {e}. Se reintenta en la proxima."
             print(note)
+        write_session_report(st, note)
     st["last_action"] = action
     save_state(st)
     write_summary(st, note)
