@@ -1,22 +1,20 @@
 # ANGSTsongeditor — estado del trabajo
 
 - Estado: **active**  ·  fuente: `/MEGA/musica`  ·  lote: 25
-- Iniciado: 2026-10-10T23:30:57Z  ·  ultima corrida: 2026-10-10T23:37:01Z  ·  corridas: 3
-- Pendientes en la fuente (ultimo conteo): 1860
-
-> Reencolados 12 archivo(s) desde /untitledless-nonprocessed hacia /MEGA/musica.
+- Iniciado: 2026-10-10T23:30:57Z  ·  ultima corrida: 2026-10-10T23:45:41Z  ·  corridas: 4
+- Pendientes en la fuente (ultimo conteo): 1847
 
 ## Conteos acumulados
 
-- uploaded: 20
+- uploaded: 39
 - moved: 3
 - replaced: 0
 - sin_cambios: 5
 - romanizados: 0
 - ya_completo: 0
-- con_album: 6
-- sin_album: 14
-- nonprocessed: 7
+- con_album: 24
+- sin_album: 15
+- nonprocessed: 13
 - retry: 0
 - sidecars: 2
 - orphans_rescued: 0
@@ -27,7 +25,7 @@
 
 ## No procesados por motivo
 
-- sin_artista: 7
+- sin_artista: 13
 
 ## Gemini
 
