@@ -1,20 +1,31 @@
 {
  "status": "active",
  "mega_source": "/MEGA/musica",
- "batch_size": 5,
- "runs": 2,
+ "batch_size": 25,
+ "runs": 3,
  "counts": {
-  "sin_cambios": 4,
+  "sin_cambios": 5,
   "moved": 3,
-  "uploaded": 1,
-  "sin_album": 1,
-  "nonprocessed": 2,
+  "uploaded": 15,
+  "sin_album": 14,
+  "nonprocessed": 7,
   "nonprocessed_reasons": {
-   "sin_artista": 2
-  }
+   "sin_artista": 7
+  },
+  "sidecars": 2,
+  "con_album": 1
  },
  "attempts": {},
- "dir_dest": {},
+ "dir_dest": {
+  "/MEGA/musica/TECHNIQUE x PORTWAVE/Untitled album": [
+   "/MEGA/musica/TECHNIQUE x PORTWAVE/Untitled album"
+  ],
+  "/MEGA/musica/Unknown Artist/Unknown Disc": [
+   "/MEGA/musica/1200 Micrograms/Untitled album",
+   "/MEGA/musica/Blutengel/The Devil",
+   "NONPROC"
+  ]
+ },
  "gemini": {
   "ok": 0,
   "fail": 0,
@@ -67,7 +78,7 @@
  ],
  "last_action": "start",
  "started_at": "2026-10-10T23:30:57Z",
- "last_run": "2026-10-10T23:33:15Z",
+ "last_run": "2026-10-10T23:37:01Z",
  "pending": 1885,
  "fix_dl_v2": true,
  "dl_fail": {},
