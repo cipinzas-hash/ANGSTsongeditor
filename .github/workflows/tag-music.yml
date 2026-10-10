@@ -8,11 +8,11 @@ on:
   workflow_dispatch:
     inputs:
       action:
-        description: "start = iniciar/ajustar trabajo y correr un lote | run = correr un lote | stop = detener | inventory = contar por extension | diagnose = probar descargas y cuota | audit = revisar nombres problematicos para sincronizar | peek = ver que haria el bot con los archivos cuya ruta coincida con el input pattern (solo lectura) | selftest = probar Gemini y Discogs"
+        description: "start = iniciar/ajustar trabajo y correr un lote | run = correr un lote | stop = detener | inventory = contar por extension | diagnose = probar descargas y cuota | audit = revisar nombres problematicos para sincronizar | find = listar rutas que coincidan con pattern, sin descargar | peek = ver que haria el bot con los archivos cuya ruta coincida con el input pattern (solo lectura) | selftest = probar Gemini y Discogs"
         required: true
         default: "selftest"
         type: choice
-        options: [selftest, inventory, audit, peek, diagnose, start, run, stop]
+        options: [selftest, inventory, audit, peek, find, diagnose, start, run, stop]
       mega_source:
         description: "Ruta INTERNA de MEGA (solo para start/inventory; vacio = variable MEGA_SOURCE_PATH)"
         required: false
@@ -114,7 +114,7 @@ jobs:
           sudo apt-get install -y ./megacmd-xUbuntu_24.04_amd64.deb
 
       - name: Verificar MEGA_SOURCE
-        if: steps.gate.outputs.go == 'yes' && (env.ACTION == 'start' || env.ACTION == 'inventory' || env.ACTION == 'diagnose' || env.ACTION == 'audit' || env.ACTION == 'peek')
+        if: steps.gate.outputs.go == 'yes' && (env.ACTION == 'start' || env.ACTION == 'inventory' || env.ACTION == 'diagnose' || env.ACTION == 'audit' || env.ACTION == 'peek' || env.ACTION == 'find')
         run: |
           if [ -z "$MEGA_SOURCE" ]; then
             echo "ERROR: falta MEGA_SOURCE (input mega_source o variable de repo MEGA_SOURCE_PATH)."
@@ -126,7 +126,7 @@ jobs:
         run: bash scripts/run.sh
 
       - name: Guardar estado (selftest / inventory / stop)
-        if: always() && steps.gate.outputs.go == 'yes' && (env.ACTION == 'selftest' || env.ACTION == 'inventory' || env.ACTION == 'diagnose' || env.ACTION == 'audit' || env.ACTION == 'peek' || env.ACTION == 'stop')
+        if: always() && steps.gate.outputs.go == 'yes' && (env.ACTION == 'selftest' || env.ACTION == 'inventory' || env.ACTION == 'diagnose' || env.ACTION == 'audit' || env.ACTION == 'peek' || env.ACTION == 'find' || env.ACTION == 'stop')
         run: |
           cd state
           git add -A

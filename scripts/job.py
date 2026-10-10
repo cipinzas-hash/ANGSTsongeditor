@@ -972,6 +972,16 @@ def cmd_peek(st):
     print(json.dumps({k: v for k, v in out.items() if k != "archivos"}, ensure_ascii=False))
 
 
+def cmd_find(st):
+    """Solo lectura, sin descargar: lista hasta 200 rutas (cualquier extension) cuya ruta coincida con PATTERN."""
+    source = (os.environ.get("MEGA_SOURCE") or st.get("mega_source") or "").rstrip("/")
+    pat = re.compile(os.environ.get("PATTERN") or ".", re.I)
+    hits = [f[len(source):].lstrip("/") for f in list_files(source) if pat.search(f)]
+    out = {"ts": now(), "source": source, "pattern": pat.pattern, "coinciden": len(hits), "rutas": hits[:200]}
+    (STATE_DIR / "find.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(json.dumps({k: v for k, v in out.items() if k != "rutas"}, ensure_ascii=False))
+
+
 def main():
     global MEGA_DEST, MEGA_NONPROC
     action = (os.environ.get("ACTION") or "run").strip()
@@ -997,6 +1007,8 @@ def main():
         cmd_audit(st)
     elif action == "peek":
         cmd_peek(st)
+    elif action == "find":
+        cmd_find(st)
     elif action in ("start", "run"):
         if action == "run" and st["status"] not in active:
             print(f"El trabajo no esta activo (estado: {st['status']}). No hay nada que hacer.")
