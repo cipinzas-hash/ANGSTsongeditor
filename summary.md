@@ -4,8 +4,6 @@
 - Iniciado: 2026-10-10T17:10:25Z  ·  ultima corrida: 2026-10-10T17:10:25Z  ·  corridas: 1
 - Pendientes en la fuente (ultimo conteo): 1890
 
-> Detenido a mano.
-
 ## Conteos acumulados
 
 - uploaded: 0

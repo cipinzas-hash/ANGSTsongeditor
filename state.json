@@ -41,7 +41,7 @@
    }
   }
  ],
- "last_action": "stop",
+ "last_action": "inventory",
  "started_at": "2026-10-10T17:10:25Z",
  "last_run": "2026-10-10T17:10:25Z",
  "pending": 1890,
