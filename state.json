@@ -13,7 +13,8 @@
    "sin_artista": 7
   },
   "sidecars": 2,
-  "con_album": 6
+  "con_album": 6,
+  "requeued": 12
  },
  "attempts": {},
  "dir_dest": {
@@ -75,7 +76,7 @@
    }
   }
  ],
- "last_action": "find",
+ "last_action": "requeue",
  "started_at": "2026-10-10T23:30:57Z",
  "last_run": "2026-10-10T23:37:01Z",
  "pending": 1860,
@@ -86,5 +87,6 @@
  "mega_nonproc": "/untitledless-nonprocessed",
  "pending_rm": [],
  "pending_rename": [],
- "session_seq": 5
+ "session_seq": 5,
+ "finished_at": null
 }
