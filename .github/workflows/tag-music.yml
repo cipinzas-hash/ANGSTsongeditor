@@ -8,11 +8,11 @@ on:
   workflow_dispatch:
     inputs:
       action:
-        description: "start = iniciar/ajustar trabajo y correr un lote | run = correr un lote | stop = detener | inventory = contar por extension | diagnose = probar descargas y cuota | audit = revisar nombres problematicos para sincronizar | find = listar rutas que coincidan con pattern, sin descargar | peek = ver que haria el bot con los archivos cuya ruta coincida con el input pattern (solo lectura) | selftest = probar Gemini y Discogs"
+        description: "start = iniciar/ajustar trabajo y correr un lote | run = correr un lote | stop = detener | inventory = contar por extension | diagnose = probar descargas y cuota | audit = revisar nombres problematicos para sincronizar | requeue = devolver los no procesados a su ruta original para reintentarlos | find = listar rutas que coincidan con pattern, sin descargar | peek = ver que haria el bot con los archivos cuya ruta coincida con el input pattern (solo lectura) | selftest = probar Gemini y Discogs"
         required: true
         default: "selftest"
         type: choice
-        options: [selftest, inventory, audit, peek, find, diagnose, start, run, stop]
+        options: [selftest, inventory, audit, peek, find, requeue, diagnose, start, run, stop]
       mega_source:
         description: "Ruta INTERNA de MEGA (solo para start/inventory; vacio = variable MEGA_SOURCE_PATH)"
         required: false

@@ -982,6 +982,32 @@ def cmd_find(st):
     print(json.dumps({k: v for k, v in out.items() if k != "rutas"}, ensure_ascii=False))
 
 
+def cmd_requeue(st):
+    """Devuelve los archivos de la carpeta de no procesados a su ruta relativa original dentro del
+    origen, para que la proxima corrida los reintente con las reglas nuevas. Mueve del lado del
+    servidor (nada se descarga) y reactiva el trabajo."""
+    source = (st.get("mega_source") or "").rstrip("/")
+    if not source.strip("/"):
+        return "No hay trabajo configurado: falta mega_source."
+    files = list_files(MEGA_NONPROC)
+    moved = 0
+    for f in files[:400]:
+        rel = f[len(MEGA_NONPROC):].lstrip("/")
+        target_dir = f"{source}/{os.path.dirname(rel)}".rstrip("/")
+        name = os.path.basename(rel)
+        try:
+            final = unique_name(target_dir, name) if remote_exists(target_dir) else name
+            move_remote(f, target_dir, None if final == name else final)
+            moved += 1
+        except RuntimeError as e:
+            print(f"    AVISO: no se pudo reencolar {rel}: {e}")
+    if moved:
+        st["status"] = "active"
+        st["finished_at"] = None
+    st.setdefault("counts", {})["requeued"] = st.get("counts", {}).get("requeued", 0) + moved
+    return f"Reencolados {moved} archivo(s) desde {MEGA_NONPROC} hacia {source}."
+
+
 def main():
     global MEGA_DEST, MEGA_NONPROC
     action = (os.environ.get("ACTION") or "run").strip()
@@ -1009,6 +1035,8 @@ def main():
         cmd_peek(st)
     elif action == "find":
         cmd_find(st)
+    elif action == "requeue":
+        note = cmd_requeue(st)
     elif action in ("start", "run"):
         if action == "run" and st["status"] not in active:
             print(f"El trabajo no esta activo (estado: {st['status']}). No hay nada que hacer.")

@@ -136,6 +136,27 @@ class Conocimiento(unittest.TestCase):
         self.assertEqual(h["title"], "Copycat")
         self.assertEqual(h["performer"], "LOVE LIKE BLOOD")
 
+    def test_disco_tributo_cada_tema_otra_banda(self):
+        # caso real: el disco 'Cover-up' tiene un artista distinto por tema; los faltantes se
+        # resuelven por el album comun y porque el titulo es una cancion conocida
+        k = R.Knowledge.from_paths(lib(
+            "Lacrimosa/Inferno/lacrimosa-copycat.mp3",
+            "Lacrimosa/Stille/lacrimosa-siehst-du-mich-im-licht.mp3",
+            "Lacrimosa/Elodia/lacrimosa-ich-verlasse-heut-dein-herz.mp3",
+            "Black moon secret/Cover-up/#2 BLACK MOON SECRET  SATURA (320  kbps).mp3",
+            "Kartagon/Cover-up/#14 KARTAGON After the storm (320  kbps).mp3",
+            "Mono inc./Cover-up/#10 MONO INC. Lichtgestalt (320  kbps).mp3",
+            "Lacrimosa/Cover-up/#3 YENZ LEONHARDT SCHAKAL (320  kbps).mp3"), DEST)
+        h = R.resolve_hints("#4 LOVE LIKE BLOOD Copycat (320  kbps)", k)
+        self.assertEqual((h["artist"], h["album"], h["title"], h["source"]),
+                         ("Love Like Blood", "Cover-up", "Copycat", "hermanos_album+titulo"))
+        h = R.resolve_hints("#6 ATROCITY Siehst du mich im licht_ (320  kbps)", k)
+        self.assertEqual((h["artist"], h["album"]), ("Atrocity", "Cover-up"))
+        h = R.resolve_hints("#7 GLEIS 8 Ich verlasse heut Dein herz (320  kbps)", k)
+        self.assertEqual(h["artist"], "Gleis 8")
+        # sin cancion conocida no se puede separar interprete de titulo: no se adivina
+        self.assertIsNone(R.resolve_hints("#8 J.P FEAT. ISABEL SOARES Senses (320  kbps)", k))
+
     def test_no_adivina_si_los_hermanos_no_son_unanimes(self):
         k = R.Knowledge.from_paths(lib(
             "A/Uno/#1 X Foo (320 kbps).mp3", "A/Uno/#2 Y Bar (320 kbps).mp3",

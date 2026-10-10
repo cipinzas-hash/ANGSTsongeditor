@@ -55,6 +55,11 @@ def title_is_raw_filename(title, stem) -> bool:
             or " - " in st)
 
 
+def caps_to_title(s: str) -> str:
+    """'LOVE LIKE BLOOD' -> 'Love Like Blood'; si ya trae minusculas se respeta."""
+    return s.title() if s and s == s.upper() and any(c.isalpha() for c in s) else s
+
+
 def smart_title(token: str) -> str:
     """Palabra en minusculas (de un slug) -> Capitalizada; si ya trae mayusculas se respeta."""
     return token if token != token.lower() else token[:1].upper() + token[1:]
@@ -166,6 +171,7 @@ class Knowledge:
         self.artists = {}                      # slug -> nombre
         self.tracks = defaultdict(set)         # slug de titulo -> {artistas}
         self.sigs = defaultdict(Counter)       # firma -> {(artista, album): n}
+        self.sig_albums = defaultdict(Counter)  # firma -> {album: n}  (sin importar el artista)
 
     @classmethod
     def from_paths(cls, files, dest_root):
@@ -195,6 +201,7 @@ class Knowledge:
         sig = filename_signature(stem)
         if nontrivial_signature(sig) and _real_folder(album):
             self.sigs[sig][(artist, album)] += 1
+            self.sig_albums[sig][album] += 1
 
 
 def _strip_artist_prefix(cleaned: str, aslug: str):
@@ -257,6 +264,20 @@ def resolve_hints(stem: str, k: Knowledge, folder_artist=None, folder_album=None
             if fuerte:
                 return {"artist": artist, "title": title or cleaned, "album": album,
                         "performer": performer, "source": "hermanos_patron+titulo" if title else "hermanos_patron"}
+
+    # 2b) mismo patron de nombre y el MISMO album en todos los hermanos, aunque cada hermano tenga
+    #     un artista distinto (disco tributo/compilado: cada tema lo toca otra banda). El artista es
+    #     el interprete, que se separa del titulo porque el titulo coincide con una cancion que la
+    #     biblioteca ya conoce.
+    albums = k.sig_albums.get(sig) if nontrivial_signature(sig) else None
+    if albums and sum(albums.values()) >= RULES["min_siblings"] and len({dirkey(a) for a in albums}) == 1:
+        album = albums.most_common(1)[0][0]
+        ctoks = _tokens(cleaned)
+        for i in range(1, len(ctoks)):                 # el interprete no puede ser vacio
+            tail = slug("-".join(ctoks[i:]))
+            if len(tail) >= 6 and tail in k.tracks:
+                return {"artist": caps_to_title(" ".join(ctoks[:i])), "title": title_from_tokens(ctoks[i:]),
+                        "album": album, "performer": None, "source": "hermanos_album+titulo"}
 
     # 3) carpeta real
     if _real_folder(folder_artist or ""):
