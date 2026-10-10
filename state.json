@@ -4,19 +4,19 @@
  "batch_size": 150,
  "runs": 5,
  "counts": {
-  "sin_cambios": 26,
-  "moved": 47,
-  "uploaded": 52,
-  "sin_album": 16,
+  "sin_cambios": 38,
+  "moved": 53,
+  "uploaded": 54,
+  "sin_album": 17,
   "nonprocessed": 13,
   "nonprocessed_reasons": {
    "sin_artista": 13
   },
-  "sidecars": 19,
-  "con_album": 36,
+  "sidecars": 21,
+  "con_album": 37,
   "requeued": 12,
   "replaced": 2,
-  "romanizados": 11
+  "romanizados": 12
  },
  "attempts": {},
  "dir_dest": {
@@ -56,6 +56,30 @@
   ],
   "/MEGA/musica/Molchat Doma/Monument": [
    "/MEGA/musica/Molchat Doma/Monument"
+  ],
+  "/MEGA/musica/Molchat Doma/S Krysh Nashikh Domov": [
+   "/MEGA/musica/Molchat Doma/S Krysh Nashikh Domov"
+  ],
+  "/MEGA/musica/Molchat Doma/Zvyozdy": [
+   "/MEGA/musica/Molchat Doma/Zvyozdy"
+  ],
+  "/MEGA/musica/Mono inc./Cover-up": [
+   "/MEGA/musica/Mono inc/Cover-up"
+  ],
+  "/MEGA/musica/Punto Omega/Nostalgias Del Origen": [
+   "/MEGA/musica/Punto Omega/Nostalgias Del Origen"
+  ],
+  "/MEGA/musica/Red Hot Chili Peppers/Red Hot Chili Peppers: Greatest Hits": [
+   "/MEGA/musica/Red Hot Chili Peppers/Red Hot Chili Peppers - Greatest Hits"
+  ],
+  "/MEGA/musica/Syrian/Kosmonauta CD2: Re-Synchronized": [
+   "/MEGA/musica/Syrian/Kosmonauta CD2 - Re-Synchronized"
+  ],
+  "/MEGA/musica": [
+   "/MEGA/musica/PORTWAVE/Untitled album"
+  ],
+  "/MEGA/musica/きゃりーぱみゅぱみゅ/CANDY CANDY": [
+   "/MEGA/musica/Kyary Pamyu Pamyu/CANDY CANDY"
   ]
  },
  "gemini": {
