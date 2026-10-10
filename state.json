@@ -4,18 +4,19 @@
  "batch_size": 150,
  "runs": 5,
  "counts": {
-  "sin_cambios": 5,
-  "moved": 40,
-  "uploaded": 41,
+  "sin_cambios": 6,
+  "moved": 47,
+  "uploaded": 52,
   "sin_album": 16,
   "nonprocessed": 13,
   "nonprocessed_reasons": {
    "sin_artista": 13
   },
-  "sidecars": 14,
-  "con_album": 25,
+  "sidecars": 19,
+  "con_album": 36,
   "requeued": 12,
-  "replaced": 1
+  "replaced": 2,
+  "romanizados": 11
  },
  "attempts": {},
  "dir_dest": {
@@ -36,6 +37,19 @@
   ],
   "/MEGA/musica/HEALTH/DISCO4 :: PART II": [
    "/MEGA/musica/HEALTH/DISCO4 - PART II"
+  ],
+  "/MEGA/musica/Infected Mushroom/Converting Vegetarians: The Other Side": [
+   "/MEGA/musica/Infected Mushroom/Converting Vegetarians - The Other Side"
+  ],
+  "/MEGA/musica/Lareine/Vampire Scream (бlbum)": [
+   "/MEGA/musica/Lareine/Vampire Scream (albom)",
+   "/MEGA/musica/Lareine/Vampire Scream (album)"
+  ],
+  "/MEGA/musica/Lord of the lost/Blood & Glitter": [
+   "/MEGA/musica/Lord of the lost/Blood & Glitter"
+  ],
+  "/MEGA/musica/Molchat Doma/Belaya Polosa": [
+   "/MEGA/musica/Molchat Doma/Belaya Polosa"
   ]
  },
  "gemini": {
