@@ -2,10 +2,16 @@
  "status": "active",
  "mega_source": "/MEGA/musica",
  "batch_size": 5,
- "runs": 1,
+ "runs": 2,
  "counts": {
-  "sin_cambios": 2,
-  "moved": 3
+  "sin_cambios": 4,
+  "moved": 3,
+  "uploaded": 1,
+  "sin_album": 1,
+  "nonprocessed": 2,
+  "nonprocessed_reasons": {
+   "sin_artista": 2
+  }
  },
  "attempts": {},
  "dir_dest": {},
@@ -61,8 +67,8 @@
  ],
  "last_action": "start",
  "started_at": "2026-10-10T23:30:57Z",
- "last_run": "2026-10-10T23:30:57Z",
- "pending": 1890,
+ "last_run": "2026-10-10T23:33:15Z",
+ "pending": 1885,
  "fix_dl_v2": true,
  "dl_fail": {},
  "fix_dl_v3": true,
@@ -70,5 +76,5 @@
  "mega_nonproc": "/untitledless-nonprocessed",
  "pending_rm": [],
  "pending_rename": [],
- "session_seq": 3
+ "session_seq": 4
 }
