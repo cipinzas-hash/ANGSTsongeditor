@@ -2,27 +2,38 @@
  "status": "active",
  "mega_source": "/MEGA/musica",
  "batch_size": 25,
- "runs": 3,
+ "runs": 4,
  "counts": {
   "sin_cambios": 5,
   "moved": 3,
-  "uploaded": 20,
-  "sin_album": 14,
-  "nonprocessed": 7,
+  "uploaded": 34,
+  "sin_album": 15,
+  "nonprocessed": 13,
   "nonprocessed_reasons": {
-   "sin_artista": 7
+   "sin_artista": 13
   },
   "sidecars": 2,
-  "con_album": 6,
+  "con_album": 19,
   "requeued": 12
  },
  "attempts": {},
  "dir_dest": {
   "/MEGA/musica/Unknown Artist/Unknown Disc": [
    "/MEGA/musica/1200 Micrograms/Untitled album",
+   "/MEGA/musica/Atrocity/Cover-up",
    "/MEGA/musica/Blutengel/The Devil",
    "/MEGA/musica/Code 64/Code 64",
    "/MEGA/musica/Code 64/Storm",
+   "/MEGA/musica/Combichrist/Making Monsters",
+   "/MEGA/musica/Crystal Castles/Untitled album",
+   "/MEGA/musica/Front 242/Animal",
+   "/MEGA/musica/Front 242/Happiness (More Angels) - Speed Angels",
+   "/MEGA/musica/Gleis 8/Cover-up",
+   "/MEGA/musica/Love Like Blood/Cover-up",
+   "/MEGA/musica/Neuroticfish/The Demystification Of The Human Heart",
+   "NONPROC"
+  ],
+  "/MEGA/musica/SonidosMp3Gratis.com/Untitled album": [
    "NONPROC"
   ]
  },
@@ -78,7 +89,7 @@
  ],
  "last_action": "requeue",
  "started_at": "2026-10-10T23:30:57Z",
- "last_run": "2026-10-10T23:37:01Z",
+ "last_run": "2026-10-10T23:45:41Z",
  "pending": 1860,
  "fix_dl_v2": true,
  "dl_fail": {},
