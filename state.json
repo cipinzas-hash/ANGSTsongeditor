@@ -1,5 +1,5 @@
 {
- "status": "stopped",
+ "status": "active",
  "mega_source": "/MEGA/musica",
  "batch_size": 5,
  "runs": 1,
@@ -8,11 +8,7 @@
   "moved": 3
  },
  "attempts": {},
- "dir_dest": {
-  "/MEGA/musica/2x/Como Fenix": [
-   "/MEGA/musica/2X/Como Fenix"
-  ]
- },
+ "dir_dest": {},
  "gemini": {
   "ok": 0,
   "fail": 0,
@@ -50,11 +46,22 @@
    "counts": {
     "moved": 5
    }
+  },
+  {
+   "source": "/MEGA/musica",
+   "dest": "/MEGA/musica",
+   "started_at": "2026-10-10T23:27:46Z",
+   "finished_at": null,
+   "status": "stopped",
+   "counts": {
+    "sin_cambios": 2,
+    "moved": 3
+   }
   }
  ],
- "last_action": "stop",
- "started_at": "2026-10-10T23:27:46Z",
- "last_run": "2026-10-10T23:27:46Z",
+ "last_action": "start",
+ "started_at": "2026-10-10T23:30:57Z",
+ "last_run": "2026-10-10T23:30:57Z",
  "pending": 1890,
  "fix_dl_v2": true,
  "dl_fail": {},
@@ -63,5 +70,5 @@
  "mega_nonproc": "/untitledless-nonprocessed",
  "pending_rm": [],
  "pending_rename": [],
- "session_seq": 2
+ "session_seq": 3
 }
