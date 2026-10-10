@@ -6,23 +6,22 @@
  "counts": {
   "sin_cambios": 5,
   "moved": 3,
-  "uploaded": 15,
+  "uploaded": 20,
   "sin_album": 14,
   "nonprocessed": 7,
   "nonprocessed_reasons": {
    "sin_artista": 7
   },
   "sidecars": 2,
-  "con_album": 1
+  "con_album": 6
  },
  "attempts": {},
  "dir_dest": {
-  "/MEGA/musica/TECHNIQUE x PORTWAVE/Untitled album": [
-   "/MEGA/musica/TECHNIQUE x PORTWAVE/Untitled album"
-  ],
   "/MEGA/musica/Unknown Artist/Unknown Disc": [
    "/MEGA/musica/1200 Micrograms/Untitled album",
    "/MEGA/musica/Blutengel/The Devil",
+   "/MEGA/musica/Code 64/Code 64",
+   "/MEGA/musica/Code 64/Storm",
    "NONPROC"
   ]
  },
@@ -79,7 +78,7 @@
  "last_action": "start",
  "started_at": "2026-10-10T23:30:57Z",
  "last_run": "2026-10-10T23:37:01Z",
- "pending": 1885,
+ "pending": 1860,
  "fix_dl_v2": true,
  "dl_fail": {},
  "fix_dl_v3": true,
@@ -87,5 +86,5 @@
  "mega_nonproc": "/untitledless-nonprocessed",
  "pending_rm": [],
  "pending_rename": [],
- "session_seq": 4
+ "session_seq": 5
 }
