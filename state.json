@@ -4,7 +4,7 @@
  "batch_size": 150,
  "runs": 6,
  "counts": {
-  "sin_cambios": 156,
+  "sin_cambios": 176,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -67,6 +67,30 @@
   ],
   "/MEGA/musica/Beborn Beton/Nightfall": [
    "/MEGA/musica/Beborn Beton/Nightfall"
+  ],
+  "/MEGA/musica/Beborn Beton/Truth": [
+   "/MEGA/musica/Beborn Beton/Truth"
+  ],
+  "/MEGA/musica/Blutengel & Massive Ego/Nothing But a Void": [
+   "/MEGA/musica/Blutengel & Massive Ego/Nothing But a Void"
+  ],
+  "/MEGA/musica/Blutengel & Solar Fake/Nothing Left": [
+   "/MEGA/musica/Blutengel & Solar Fake/Nothing Left"
+  ],
+  "/MEGA/musica/Blutengel/Black": [
+   "/MEGA/musica/Blutengel/Black"
+  ],
+  "/MEGA/musica/Blutengel/Surrender To The Darkness (Single)": [
+   "/MEGA/musica/Blutengel/Surrender To The Darkness (Single)"
+  ],
+  "/MEGA/musica/Blutengel/Vampire": [
+   "/MEGA/musica/Blutengel/Vampire"
+  ],
+  "/MEGA/musica/Buffalo Daughter feat. Cibo Matto/I": [
+   "/MEGA/musica/Buffalo Daughter feat. Cibo Matto/I"
+  ],
+  "/MEGA/musica/Buffalo Daughter/I": [
+   "/MEGA/musica/Buffalo Daughter/I"
   ]
  },
  "gemini": {
