@@ -2,9 +2,9 @@
  "status": "active",
  "mega_source": "/MEGA/musica",
  "batch_size": 400,
- "runs": 10,
+ "runs": 11,
  "counts": {
-  "sin_cambios": 1348,
+  "sin_cambios": 1368,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -62,6 +62,21 @@
   ],
   "/MEGA/musica/Tristania/World of Glass": [
    "/MEGA/musica/Tristania/World of Glass"
+  ],
+  "/MEGA/musica/VII-Sense/Black Bird": [
+   "/MEGA/musica/VII-Sense/Black Bird"
+  ],
+  "/MEGA/musica/VII-Sense/Cell division": [
+   "/MEGA/musica/VII-Sense/Cell division"
+  ],
+  "/MEGA/musica/VII-Sense/Silent Assassin": [
+   "/MEGA/musica/VII-Sense/Silent Assassin"
+  ],
+  "/MEGA/musica/VII-Sense/The Reminiscence Of War": [
+   "/MEGA/musica/VII-Sense/The Reminiscence Of War"
+  ],
+  "/MEGA/musica/VNV Nation/Automatic": [
+   "/MEGA/musica/VNV Nation/Automatic"
   ]
  },
  "gemini": {
@@ -116,12 +131,10 @@
  ],
  "last_action": "run",
  "started_at": "2026-10-10T23:30:57Z",
- "last_run": "2026-10-11T12:02:00Z",
+ "last_run": "2026-10-11T19:14:02Z",
  "pending": 398,
  "fix_dl_v2": true,
- "dl_fail": {
-  "/MEGA/musica/Nine Treasures/Wisdom Eyes/nine-treasures.mp3": 1
- },
+ "dl_fail": {},
  "fix_dl_v3": true,
  "mega_dest": "/MEGA/musica",
  "mega_nonproc": "/untitledless-nonprocessed",
