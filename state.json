@@ -4,7 +4,7 @@
  "batch_size": 150,
  "runs": 6,
  "counts": {
-  "sin_cambios": 117,
+  "sin_cambios": 137,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -58,6 +58,12 @@
   ],
   "/MEGA/musica/Ashbury Heights/Morningstar in a Black Car EP": [
    "/MEGA/musica/Ashbury Heights/Morningstar in a Black Car EP"
+  ],
+  "/MEGA/musica/Ashbury Heights/The Looking Glass Society": [
+   "/MEGA/musica/Ashbury Heights/The Looking Glass Society"
+  ],
+  "/MEGA/musica/Aural Vampire/Vampire Ecstasy": [
+   "/MEGA/musica/Aural Vampire/Vampire Ecstasy"
   ]
  },
  "gemini": {
