@@ -4,7 +4,7 @@
  "batch_size": 300,
  "runs": 8,
  "counts": {
-  "sin_cambios": 569,
+  "sin_cambios": 589,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -145,6 +145,21 @@
   ],
   "/MEGA/musica/Hizaki Grace Project/Curse of Virgo": [
    "/MEGA/musica/Hizaki Grace Project/Curse of Virgo"
+  ],
+  "/MEGA/musica/Hizaki Grace Project/Dignity of crest": [
+   "/MEGA/musica/Hizaki Grace Project/Dignity of crest"
+  ],
+  "/MEGA/musica/Hizaki Grace Project/Ruined Kingdom": [
+   "/MEGA/musica/Hizaki Grace Project/Ruined Kingdom"
+  ],
+  "/MEGA/musica/Hocico/Artificial Extinction": [
+   "/MEGA/musica/Hocico/Artificial Extinction"
+  ],
+  "/MEGA/musica/Hocico/Broken Empires": [
+   "/MEGA/musica/Hocico/Broken Empires"
+  ],
+  "/MEGA/musica/Hocico/HyperViolent": [
+   "/MEGA/musica/Hocico/HyperViolent"
   ]
  },
  "gemini": {
