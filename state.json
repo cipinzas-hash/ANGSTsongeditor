@@ -4,7 +4,7 @@
  "batch_size": 300,
  "runs": 8,
  "counts": {
-  "sin_cambios": 609,
+  "sin_cambios": 629,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -178,6 +178,12 @@
   ],
   "/MEGA/musica/Hora Zulu/Beatus Ille [Single]": [
    "/MEGA/musica/Hora Zulu/Beatus Ille [Single]"
+  ],
+  "/MEGA/musica/Hora Zulu/Creer Querer, Querer Creer": [
+   "/MEGA/musica/Hora Zulu/Creer Querer, Querer Creer"
+  ],
+  "/MEGA/musica/Hora Zulu/Crisis de Claridad": [
+   "/MEGA/musica/Hora Zulu/Crisis de Claridad"
   ]
  },
  "gemini": {
