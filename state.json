@@ -4,7 +4,7 @@
  "batch_size": 300,
  "runs": 9,
  "counts": {
-  "sin_cambios": 669,
+  "sin_cambios": 689,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -58,6 +58,15 @@
   ],
   "/MEGA/musica/Hora Zulu/Siempre Soñé Saber Sobre Nadie Negó Nunca Nada": [
    "/MEGA/musica/Hora Zulu/Siempre Soñé Saber Sobre Nadie Negó Nunca Nada"
+  ],
+  "/MEGA/musica/Hora Zulu/Y Si Acaso (Con R de Rumba) [Single]": [
+   "/MEGA/musica/Hora Zulu/Y Si Acaso (Con R de Rumba) [Single]"
+  ],
+  "/MEGA/musica/Icon Of Coil/Fucked Up Music For Fucked Up People (Remixes by Combichrist)": [
+   "/MEGA/musica/Icon Of Coil/Fucked Up Music For Fucked Up People (Remixes by Combichrist)"
+  ],
+  "/MEGA/musica/Icon Of Coil/Machine Are Us": [
+   "/MEGA/musica/Icon Of Coil/Machine Are Us"
   ]
  },
  "gemini": {
