@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 11,
  "counts": {
-  "sin_cambios": 1368,
+  "sin_cambios": 1388,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -77,6 +77,18 @@
   ],
   "/MEGA/musica/VNV Nation/Automatic": [
    "/MEGA/musica/VNV Nation/Automatic"
+  ],
+  "/MEGA/musica/VNV Nation/Electric Sun": [
+   "/MEGA/musica/VNV Nation/Electric Sun"
+  ],
+  "/MEGA/musica/VNV Nation/Transnational": [
+   "/MEGA/musica/VNV Nation/Transnational"
+  ],
+  "/MEGA/musica/Velvet Eden/Witch On Flames": [
+   "/MEGA/musica/Velvet Eden/Witch On Flames"
+  ],
+  "/MEGA/musica/Versailles -Philharmonic Quintet-/JUBILEE": [
+   "/MEGA/musica/Versailles -Philharmonic Quintet-/JUBILEE"
   ]
  },
  "gemini": {
