@@ -4,8 +4,8 @@
  "batch_size": 400,
  "runs": 11,
  "counts": {
-  "sin_cambios": 1475,
-  "moved": 62,
+  "sin_cambios": 1493,
+  "moved": 63,
   "uploaded": 88,
   "sin_album": 20,
   "nonprocessed": 13,
@@ -15,7 +15,7 @@
   "sidecars": 26,
   "con_album": 68,
   "requeued": 12,
-  "replaced": 11,
+  "replaced": 12,
   "romanizados": 42,
   "retry": 1
  },
@@ -135,6 +135,33 @@
   ],
   "/MEGA/musica/the GazettE/DISORDER": [
    "/MEGA/musica/the GazettE/DISORDER"
+  ],
+  "/MEGA/musica/the GazettE/Ninth": [
+   "/MEGA/musica/the GazettE/Ninth"
+  ],
+  "/MEGA/musica/Ｓｃｈｗａｒｚ　Ｓｔｅｉｎ/Ａｒｔｉｆｉｃｉａｌ　Ｈａｌｌｕｃｉｎａｔｉｏｎ": [
+   "/MEGA/musica/Schwarz Stein/Artificial Hallucination"
+  ],
+  "/MEGA/musica/AKB48/Ralph el Demoledor (Música Original Compuesta)": [
+   "/MEGA/musica/AKB48/Ralph el Demoledor (Música Original Compuesta)"
+  ],
+  "/MEGA/musica/AfroWhitey/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
+   "/MEGA/musica/AfroWhitey/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
+  ],
+  "/MEGA/musica/Bar9/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
+   "/MEGA/musica/Bar9/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
+  ],
+  "/MEGA/musica/Blame/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
+   "/MEGA/musica/Blame/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
+  ],
+  "/MEGA/musica/Deekline & Ed Solo/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
+   "/MEGA/musica/Deekline & Ed Solo/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
+  ],
+  "/MEGA/musica/Dodge & Fuski & Sandro Silva/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
+   "/MEGA/musica/Dodge & Fuski & Sandro Silva/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
+  ],
+  "/MEGA/musica/Drumsound & Bassline Smith/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
+   "/MEGA/musica/Drumsound & Bassline Smith/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
   ]
  },
  "gemini": {
