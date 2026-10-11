@@ -4,7 +4,7 @@
  "batch_size": 300,
  "runs": 9,
  "counts": {
-  "sin_cambios": 689,
+  "sin_cambios": 709,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -67,6 +67,33 @@
   ],
   "/MEGA/musica/Icon Of Coil/Machine Are Us": [
    "/MEGA/musica/Icon Of Coil/Machine Are Us"
+  ],
+  "/MEGA/musica/Impura realidad/Demo odioso y rabioso": [
+   "/MEGA/musica/Impura realidad/Demo odioso y rabioso"
+  ],
+  "/MEGA/musica/Infected Mushroom & Bliss/Bliss On Mushrooms": [
+   "/MEGA/musica/Infected Mushroom & Bliss/Bliss On Mushrooms"
+  ],
+  "/MEGA/musica/Infected Mushroom,Bliss/More than Just a Name": [
+   "/MEGA/musica/Infected Mushroom,Bliss/More than Just a Name"
+  ],
+  "/MEGA/musica/Infected Mushroom,Freedom Fighters,Mr. Bill/More than Just a Name": [
+   "/MEGA/musica/Infected Mushroom,Freedom Fighters,Mr. Bill/More than Just a Name"
+  ],
+  "/MEGA/musica/Infected Mushroom,WHITENO1SE/More than Just a Name": [
+   "/MEGA/musica/Infected Mushroom,WHITENO1SE/More than Just a Name"
+  ],
+  "/MEGA/musica/Infected Mushroom/B.P. Empire": [
+   "/MEGA/musica/Infected Mushroom/B.P. Empire"
+  ],
+  "/MEGA/musica/Infected Mushroom/Becoming Insane": [
+   "/MEGA/musica/Infected Mushroom/Becoming Insane"
+  ],
+  "/MEGA/musica/Infected Mushroom/Classical Mushroom": [
+   "/MEGA/musica/Infected Mushroom/Classical Mushroom"
+  ],
+  "/MEGA/musica/Infected Mushroom/Converting Vegetarians II": [
+   "/MEGA/musica/Infected Mushroom/Converting Vegetarians II"
   ]
  },
  "gemini": {
