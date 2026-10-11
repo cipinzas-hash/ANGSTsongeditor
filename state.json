@@ -4,7 +4,7 @@
  "batch_size": 150,
  "runs": 7,
  "counts": {
-  "sin_cambios": 326,
+  "sin_cambios": 346,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -82,6 +82,12 @@
   ],
   "/MEGA/musica/Culture Kultur/Reborn": [
    "/MEGA/musica/Culture Kultur/Reborn"
+  ],
+  "/MEGA/musica/Dark Moor/Dark Moor": [
+   "/MEGA/musica/Dark Moor/Dark Moor"
+  ],
+  "/MEGA/musica/Dark Moor/The Gates Of Oblivion": [
+   "/MEGA/musica/Dark Moor/The Gates Of Oblivion"
   ]
  },
  "gemini": {
