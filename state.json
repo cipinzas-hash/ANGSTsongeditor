@@ -1,10 +1,10 @@
 {
  "status": "active",
  "mega_source": "/MEGA/musica",
- "batch_size": 300,
- "runs": 9,
+ "batch_size": 400,
+ "runs": 10,
  "counts": {
-  "sin_cambios": 949,
+  "sin_cambios": 969,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -49,6 +49,15 @@
   ],
   "/MEGA/musica/Moi dix Mois/Dix Infernal": [
    "/MEGA/musica/Moi dix Mois/Dix Infernal"
+  ],
+  "/MEGA/musica/Moi dix Mois/Dixanadu": [
+   "/MEGA/musica/Moi dix Mois/Dixanadu"
+  ],
+  "/MEGA/musica/Moi dix Mois/Nocturnal Opera": [
+   "/MEGA/musica/Moi dix Mois/Nocturnal Opera"
+  ],
+  "/MEGA/musica/Mägo de Oz/Jesús de Chamberí": [
+   "/MEGA/musica/Mägo de Oz/Jesús de Chamberí"
   ]
  },
  "gemini": {
@@ -103,7 +112,7 @@
  ],
  "last_action": "run",
  "started_at": "2026-10-10T23:30:57Z",
- "last_run": "2026-10-11T11:50:08Z",
+ "last_run": "2026-10-11T12:02:00Z",
  "pending": 797,
  "fix_dl_v2": true,
  "dl_fail": {},
