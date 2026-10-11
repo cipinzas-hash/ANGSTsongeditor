@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 10,
  "counts": {
-  "sin_cambios": 1028,
+  "sin_cambios": 1048,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -92,6 +92,12 @@
   ],
   "/MEGA/musica/Paradise Lost/Icon": [
    "/MEGA/musica/Paradise Lost/Icon"
+  ],
+  "/MEGA/musica/Paradise Lost/Medusa": [
+   "/MEGA/musica/Paradise Lost/Medusa"
+  ],
+  "/MEGA/musica/Proyecto Crisis/Made In Chile": [
+   "/MEGA/musica/Proyecto Crisis/Made In Chile"
   ]
  },
  "gemini": {
