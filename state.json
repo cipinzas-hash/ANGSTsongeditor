@@ -4,8 +4,8 @@
  "batch_size": 400,
  "runs": 11,
  "counts": {
-  "sin_cambios": 1601,
-  "moved": 66,
+  "sin_cambios": 1616,
+  "moved": 71,
   "uploaded": 97,
   "sin_album": 29,
   "nonprocessed": 13,
@@ -258,6 +258,24 @@
   ],
   "/MEGA/musica/Evil masquerade/Cover-up": [
    "/MEGA/musica/Evil masquerade/Cover-up"
+  ],
+  "/MEGA/musica/Hocico/Vile Whispers - EP": [
+   "/MEGA/musica/Hocico/Vile Whispers - EP"
+  ],
+  "/MEGA/musica/In Strict Confidence/Tunning Blaster": [
+   "/MEGA/musica/In Strict Confidence/Tunning Blaster"
+  ],
+  "/MEGA/musica/Infected Mushroom/Tunning Blaster": [
+   "/MEGA/musica/Infected Mushroom/Tunning Blaster"
+  ],
+  "/MEGA/musica/Kartagon/Cover-up": [
+   "/MEGA/musica/Kartagon/Cover-up"
+  ],
+  "/MEGA/musica/Lacrimas profundere/Cover-up": [
+   "/MEGA/musica/Lacrimas profundere/Cover-up"
+  ],
+  "/MEGA/musica/Lacrimosa/Cover-up": [
+   "/MEGA/musica/Lacrimosa/Cover-up"
   ]
  },
  "gemini": {
