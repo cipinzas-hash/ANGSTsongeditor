@@ -1,10 +1,10 @@
 # ANGSTsongeditor — estado del trabajo
 
-- Estado: **stopped**  ·  fuente: `/MEGA/musica`  ·  lote: 300
+- Estado: **active**  ·  fuente: `/MEGA/musica`  ·  lote: 300
 - Iniciado: 2026-10-10T23:30:57Z  ·  ultima corrida: 2026-10-11T11:34:07Z  ·  corridas: 8
 - Pendientes en la fuente (ultimo conteo): 1097
 
-> Retag: 5 corregido(s), 0 sin cambios o con error (ver retag.json).
+> Trabajo reanudado (done y conteos intactos); la proxima corrida sigue donde quedo.
 
 ## Conteos acumulados
 
