@@ -4,7 +4,7 @@
  "batch_size": 150,
  "runs": 6,
  "counts": {
-  "sin_cambios": 176,
+  "sin_cambios": 196,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -91,6 +91,15 @@
   ],
   "/MEGA/musica/Buffalo Daughter/I": [
    "/MEGA/musica/Buffalo Daughter/I"
+  ],
+  "/MEGA/musica/Children Of Bodom/Downfall (Single)": [
+   "/MEGA/musica/Children Of Bodom/Downfall (Single)"
+  ],
+  "/MEGA/musica/Children Of Bodom/Follow The Reaper (RELOADED Edition)": [
+   "/MEGA/musica/Children Of Bodom/Follow The Reaper (RELOADED Edition)"
+  ],
+  "/MEGA/musica/Children Of Bodom/Hatebreeder (RELOADED Edition)": [
+   "/MEGA/musica/Children Of Bodom/Hatebreeder (RELOADED Edition)"
   ]
  },
  "gemini": {
