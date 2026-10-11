@@ -6,17 +6,17 @@
  "counts": {
   "sin_cambios": 38,
   "moved": 53,
-  "uploaded": 54,
+  "uploaded": 74,
   "sin_album": 17,
   "nonprocessed": 13,
   "nonprocessed_reasons": {
    "sin_artista": 13
   },
-  "sidecars": 21,
-  "con_album": 37,
+  "sidecars": 25,
+  "con_album": 57,
   "requeued": 12,
   "replaced": 2,
-  "romanizados": 12
+  "romanizados": 32
  },
  "attempts": {},
  "dir_dest": {
@@ -80,6 +80,12 @@
   ],
   "/MEGA/musica/きゃりーぱみゅぱみゅ/CANDY CANDY": [
    "/MEGA/musica/Kyary Pamyu Pamyu/CANDY CANDY"
+  ],
+  "/MEGA/musica/きゃりーぱみゅぱみゅ/ぱみゅぱみゅレボリューション": [
+   "/MEGA/musica/Kyary Pamyu Pamyu/pamyu pamyu reboryushon"
+  ],
+  "/MEGA/musica/きゃりーぱみゅぱみゅ/もしもし原宿": [
+   "/MEGA/musica/Kyary Pamyu Pamyu/Moshi Moshi Harajuku"
   ]
  },
  "gemini": {
