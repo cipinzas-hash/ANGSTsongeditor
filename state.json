@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 10,
  "counts": {
-  "sin_cambios": 1268,
+  "sin_cambios": 1288,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -200,6 +200,15 @@
   ],
   "/MEGA/musica/Therion/Sitra Ahra": [
    "/MEGA/musica/Therion/Sitra Ahra"
+  ],
+  "/MEGA/musica/Therion/Vovin (Japan, TFCK-87160)": [
+   "/MEGA/musica/Therion/Vovin (Japan, TFCK-87160)"
+  ],
+  "/MEGA/musica/Till Lindemann/Entre dos tierras - Single": [
+   "/MEGA/musica/Till Lindemann/Entre dos tierras - Single"
+  ],
+  "/MEGA/musica/Tristania/Ashes": [
+   "/MEGA/musica/Tristania/Ashes"
   ]
  },
  "gemini": {
