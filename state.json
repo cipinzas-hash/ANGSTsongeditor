@@ -4,7 +4,7 @@
  "batch_size": 150,
  "runs": 7,
  "counts": {
-  "sin_cambios": 306,
+  "sin_cambios": 326,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -76,6 +76,12 @@
   ],
   "/MEGA/musica/Covenant/Skyshaper": [
    "/MEGA/musica/Covenant/Skyshaper"
+  ],
+  "/MEGA/musica/Crystal Castles/Crystal Castles": [
+   "/MEGA/musica/Crystal Castles/Crystal Castles"
+  ],
+  "/MEGA/musica/Culture Kultur/Reborn": [
+   "/MEGA/musica/Culture Kultur/Reborn"
   ]
  },
  "gemini": {
