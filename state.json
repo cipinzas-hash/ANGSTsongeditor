@@ -4,7 +4,7 @@
  "batch_size": 300,
  "runs": 8,
  "counts": {
-  "sin_cambios": 473,
+  "sin_cambios": 493,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -85,6 +85,15 @@
   ],
   "/MEGA/musica/Editors/Violence": [
    "/MEGA/musica/Editors/Violence"
+  ],
+  "/MEGA/musica/Elend/Winds Devouring Men": [
+   "/MEGA/musica/Elend/Winds Devouring Men"
+  ],
+  "/MEGA/musica/Fleshgod Apocalypse/King": [
+   "/MEGA/musica/Fleshgod Apocalypse/King"
+  ],
+  "/MEGA/musica/Fleshgod Apocalypse/Opera": [
+   "/MEGA/musica/Fleshgod Apocalypse/Opera"
   ]
  },
  "gemini": {
