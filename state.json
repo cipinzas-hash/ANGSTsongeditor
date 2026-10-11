@@ -4,19 +4,19 @@
  "batch_size": 150,
  "runs": 5,
  "counts": {
-  "sin_cambios": 38,
+  "sin_cambios": 47,
   "moved": 53,
-  "uploaded": 74,
+  "uploaded": 84,
   "sin_album": 17,
   "nonprocessed": 13,
   "nonprocessed_reasons": {
    "sin_artista": 13
   },
   "sidecars": 25,
-  "con_album": 57,
+  "con_album": 67,
   "requeued": 12,
-  "replaced": 2,
-  "romanizados": 32
+  "replaced": 3,
+  "romanizados": 42
  },
  "attempts": {},
  "dir_dest": {
@@ -86,6 +86,21 @@
   ],
   "/MEGA/musica/きゃりーぱみゅぱみゅ/もしもし原宿": [
    "/MEGA/musica/Kyary Pamyu Pamyu/Moshi Moshi Harajuku"
+  ],
+  "/MEGA/musica/オーラルヴァンパイア/Wani - EP": [
+   "/MEGA/musica/O-raru Vanpaia/Wani - EP",
+   "/MEGA/musica/Ooral Vanpaia/Wani - EP",
+   "/MEGA/musica/Ooralu Vanpaia/Wani - EP",
+   "/MEGA/musica/Ooraru Vanpaia/Wani - EP"
+  ],
+  "/MEGA/musica/摩天楼オペラ/Chronos - EP": [
+   "/MEGA/musica/Matenro Opera/Chronos - EP"
+  ],
+  "/MEGA/musica/2x/Como Fenix": [
+   "/MEGA/musica/2x/Como Fenix"
+  ],
+  "/MEGA/musica/2x/Lucha Eterna": [
+   "/MEGA/musica/2x/Lucha Eterna"
   ]
  },
  "gemini": {
