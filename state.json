@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 10,
  "counts": {
-  "sin_cambios": 988,
+  "sin_cambios": 1008,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -68,6 +68,27 @@
   ],
   "/MEGA/musica/Noir/Darkly Near": [
    "/MEGA/musica/Noir/Darkly Near"
+  ],
+  "/MEGA/musica/Noisuf-X/Fuck the Mainstream": [
+   "/MEGA/musica/Noisuf-X/Fuck the Mainstream"
+  ],
+  "/MEGA/musica/Normoria/Normoria Essentials (EP)": [
+   "/MEGA/musica/Normoria/Normoria Essentials (EP)"
+  ],
+  "/MEGA/musica/Normoria/Origin": [
+   "/MEGA/musica/Normoria/Origin"
+  ],
+  "/MEGA/musica/Normoria/Voyage": [
+   "/MEGA/musica/Normoria/Voyage"
+  ],
+  "/MEGA/musica/PORTWAVE/NEVERENDING LP (01.02.2014)": [
+   "/MEGA/musica/PORTWAVE/NEVERENDING LP (01.02.2014)"
+  ],
+  "/MEGA/musica/PORTWAVE/NEVERENDING": [
+   "/MEGA/musica/PORTWAVE/NEVERENDING"
+  ],
+  "/MEGA/musica/Paradise Lost/Draconian Times": [
+   "/MEGA/musica/Paradise Lost/Draconian Times"
   ]
  },
  "gemini": {
