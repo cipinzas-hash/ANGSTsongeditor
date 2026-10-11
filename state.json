@@ -4,7 +4,7 @@
  "batch_size": 300,
  "runs": 8,
  "counts": {
-  "sin_cambios": 493,
+  "sin_cambios": 513,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -94,6 +94,18 @@
   ],
   "/MEGA/musica/Fleshgod Apocalypse/Opera": [
    "/MEGA/musica/Fleshgod Apocalypse/Opera"
+  ],
+  "/MEGA/musica/Front 242/Angels vs. Animals": [
+   "/MEGA/musica/Front 242/Angels vs. Animals"
+  ],
+  "/MEGA/musica/Front 242/Animal": [
+   "/MEGA/musica/Front 242/Animal"
+  ],
+  "/MEGA/musica/Front 242/Catch The Men (Live)": [
+   "/MEGA/musica/Front 242/Catch The Men (Live)"
+  ],
+  "/MEGA/musica/Front 242/Catch The Men": [
+   "/MEGA/musica/Front 242/Catch The Men"
   ]
  },
  "gemini": {
