@@ -4,8 +4,8 @@
  "batch_size": 400,
  "runs": 11,
  "counts": {
-  "sin_cambios": 1408,
-  "moved": 54,
+  "sin_cambios": 1420,
+  "moved": 62,
   "uploaded": 84,
   "sin_album": 17,
   "nonprocessed": 13,
@@ -98,6 +98,12 @@
   ],
   "/MEGA/musica/Visions Of Atlantis/Cast Away": [
    "/MEGA/musica/Visions Of Atlantis/Cast Away"
+  ],
+  "/MEGA/musica/WarCry/La Quinta Esenci": [
+   "/MEGA/musica/Warcry/La Quinta Esenci"
+  ],
+  "/MEGA/musica/Warcry/Donde el Silencio Se Rompió": [
+   "/MEGA/musica/Warcry/Donde el Silencio Se Rompió"
   ]
  },
  "gemini": {
