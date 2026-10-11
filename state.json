@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 11,
  "counts": {
-  "sin_cambios": 1420,
+  "sin_cambios": 1440,
   "moved": 62,
   "uploaded": 84,
   "sin_album": 17,
@@ -104,6 +104,24 @@
   ],
   "/MEGA/musica/Warcry/Donde el Silencio Se Rompió": [
    "/MEGA/musica/Warcry/Donde el Silencio Se Rompió"
+  ],
+  "/MEGA/musica/Warcry/La Quinta Esenci": [
+   "/MEGA/musica/Warcry/La Quinta Esenci"
+  ],
+  "/MEGA/musica/XOVER/Aureola": [
+   "/MEGA/musica/XOVER/Aureola"
+  ],
+  "/MEGA/musica/XOVER/XGATE": [
+   "/MEGA/musica/XOVER/XGATE"
+  ],
+  "/MEGA/musica/Xerox/Return to the Sauce": [
+   "/MEGA/musica/Xerox/Return to the Sauce"
+  ],
+  "/MEGA/musica/grandson/INERTIA": [
+   "/MEGA/musica/grandson/INERTIA"
+  ],
+  "/MEGA/musica/grandson/a modern tragedy vol. 1": [
+   "/MEGA/musica/grandson/a modern tragedy vol. 1"
   ]
  },
  "gemini": {
