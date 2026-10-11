@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 10,
  "counts": {
-  "sin_cambios": 1208,
+  "sin_cambios": 1228,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -173,6 +173,15 @@
   ],
   "/MEGA/musica/Stravaganzza/Requiem": [
    "/MEGA/musica/Stravaganzza/Requiem"
+  ],
+  "/MEGA/musica/Suicide Commando/Fucked Up Music For Fucked Up People (Remixes by Combichrist)": [
+   "/MEGA/musica/Suicide Commando/Fucked Up Music For Fucked Up People (Remixes by Combichrist)"
+  ],
+  "/MEGA/musica/Symphony X/The Damnation Game": [
+   "/MEGA/musica/Symphony X/The Damnation Game"
+  ],
+  "/MEGA/musica/Symphony X/The Divine Wings of Tragedy": [
+   "/MEGA/musica/Symphony X/The Divine Wings of Tragedy"
   ]
  },
  "gemini": {
