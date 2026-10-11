@@ -4,15 +4,15 @@
  "batch_size": 400,
  "runs": 11,
  "counts": {
-  "sin_cambios": 1532,
+  "sin_cambios": 1543,
   "moved": 64,
-  "uploaded": 88,
-  "sin_album": 20,
+  "uploaded": 97,
+  "sin_album": 29,
   "nonprocessed": 13,
   "nonprocessed_reasons": {
    "sin_artista": 13
   },
-  "sidecars": 27,
+  "sidecars": 30,
   "con_album": 68,
   "requeued": 12,
   "replaced": 12,
@@ -213,6 +213,21 @@
   ],
   "/MEGA/musica/Ashbury Heights/Three Cheers For The Newlydeads": [
    "/MEGA/musica/Ashbury Heights/Three Cheers For The Newlydeads"
+  ],
+  "/MEGA/musica/Assemblage 23/Disappoint": [
+   "/MEGA/musica/Assemblage 23/Disappoint"
+  ],
+  "/MEGA/musica/Assemblage 23/Null": [
+   "/MEGA/musica/Assemblage 23/Untitled album"
+  ],
+  "/MEGA/musica/Aural Vampire/Aural Vampir II - EP": [
+   "/MEGA/musica/Aural Vampire/Aural Vampir II - EP"
+  ],
+  "/MEGA/musica/Aural Vampire/Freeeeze!! - Single": [
+   "/MEGA/musica/Aural Vampire/Freeeeze!! - Single"
+  ],
+  "/MEGA/musica/Aural Vampire/Kerguelen Vortex": [
+   "/MEGA/musica/Aural Vampire/Kerguelen Vortex"
   ]
  },
  "gemini": {
