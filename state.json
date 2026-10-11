@@ -2,9 +2,9 @@
  "status": "active",
  "mega_source": "/MEGA/musica",
  "batch_size": 150,
- "runs": 5,
+ "runs": 6,
  "counts": {
-  "sin_cambios": 57,
+  "sin_cambios": 77,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -31,6 +31,12 @@
   ],
   "/MEGA/musica/2x/pateando craneos": [
    "/MEGA/musica/2x/pateando craneos"
+  ],
+  "/MEGA/musica/Anabantha/Letanias Capitulo Prohibido": [
+   "/MEGA/musica/Anabantha/Letanias Capitulo Prohibido"
+  ],
+  "/MEGA/musica/Anabantha/Llanto De Libertd [Remasterizado]": [
+   "/MEGA/musica/Anabantha/Llanto De Libertd [Remasterizado]"
   ]
  },
  "gemini": {
@@ -85,7 +91,7 @@
  ],
  "last_action": "start",
  "started_at": "2026-10-10T23:30:57Z",
- "last_run": "2026-10-10T23:48:31Z",
+ "last_run": "2026-10-11T02:22:54Z",
  "pending": 1697,
  "fix_dl_v2": true,
  "dl_fail": {},
