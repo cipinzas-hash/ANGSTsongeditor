@@ -4,7 +4,7 @@
  "batch_size": 300,
  "runs": 9,
  "counts": {
-  "sin_cambios": 909,
+  "sin_cambios": 929,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -187,6 +187,12 @@
   ],
   "/MEGA/musica/Malice Mizer/merveilles": [
    "/MEGA/musica/Malice Mizer/merveilles"
+  ],
+  "/MEGA/musica/Matenrou Opera/MUTSU NO HANA": [
+   "/MEGA/musica/Matenrou Opera/MUTSU NO HANA"
+  ],
+  "/MEGA/musica/Matenrou Opera/Yami wo hamu": [
+   "/MEGA/musica/Matenrou Opera/Yami wo hamu"
   ]
  },
  "gemini": {
