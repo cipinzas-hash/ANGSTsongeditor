@@ -4,7 +4,7 @@
  "batch_size": 300,
  "runs": 8,
  "counts": {
-  "sin_cambios": 629,
+  "sin_cambios": 649,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -184,6 +184,15 @@
   ],
   "/MEGA/musica/Hora Zulu/Crisis de Claridad": [
    "/MEGA/musica/Hora Zulu/Crisis de Claridad"
+  ],
+  "/MEGA/musica/Hora Zulu/El Más Solo del Cementerio": [
+   "/MEGA/musica/Hora Zulu/El Más Solo del Cementerio"
+  ],
+  "/MEGA/musica/Hora Zulu/El Que la Lleva la Entiende": [
+   "/MEGA/musica/Hora Zulu/El Que la Lleva la Entiende"
+  ],
+  "/MEGA/musica/Hora Zulu/El veneno de la serpiente": [
+   "/MEGA/musica/Hora Zulu/El veneno de la serpiente"
   ]
  },
  "gemini": {
