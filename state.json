@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 10,
  "counts": {
-  "sin_cambios": 1008,
+  "sin_cambios": 1028,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -89,6 +89,9 @@
   ],
   "/MEGA/musica/Paradise Lost/Draconian Times": [
    "/MEGA/musica/Paradise Lost/Draconian Times"
+  ],
+  "/MEGA/musica/Paradise Lost/Icon": [
+   "/MEGA/musica/Paradise Lost/Icon"
   ]
  },
  "gemini": {
