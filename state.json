@@ -4,7 +4,7 @@
  "batch_size": 150,
  "runs": 6,
  "counts": {
-  "sin_cambios": 137,
+  "sin_cambios": 156,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -15,7 +15,7 @@
   "sidecars": 25,
   "con_album": 67,
   "requeued": 12,
-  "replaced": 3,
+  "replaced": 4,
   "romanizados": 42
  },
  "attempts": {},
@@ -64,6 +64,9 @@
   ],
   "/MEGA/musica/Aural Vampire/Vampire Ecstasy": [
    "/MEGA/musica/Aural Vampire/Vampire Ecstasy"
+  ],
+  "/MEGA/musica/Beborn Beton/Nightfall": [
+   "/MEGA/musica/Beborn Beton/Nightfall"
   ]
  },
  "gemini": {
