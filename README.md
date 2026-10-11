@@ -18,6 +18,11 @@ track killer* → *Run workflow*, eliges una acción:
 | `inventory` | Cuenta los archivos de la fuente por extensión y por carpeta. No descarga ni mueve nada. Resultado en `inventory.json` (acepta `mega_source`, p. ej. `/` para ver dónde está todo) |
 | `audit` | Solo lectura: nombres que Windows/FAT/Android no aceptan (`: " < > \| ? *`), punto o espacio final, rutas largas, choques por mayúsculas. Resultado en `names-audit.json` |
 | `diagnose` | Cuenta, cuota y descarga de prueba de MEGA. Resultado en `diagnose.json` |
+| `peek` | Solo lectura: para los archivos cuya ruta coincida con el input `pattern`, descarga hasta 30 y dice qué haría el bot (sin buscar ni escribir). Resultado en `peek.json` |
+| `find` | Solo lectura, sin descargar: lista hasta 200 rutas que coincidan con `pattern`. Resultado en `find.json` |
+| `requeue` | Devuelve los archivos de la carpeta de no procesados a su ruta original para que la próxima corrida los reintente con las reglas nuevas |
+| `retag` | Aplica correcciones puntuales de tags desde `repairs.json` (rama `job-state`) reemplazando el archivo en el sitio |
+| `resume` | Reanuda un trabajo detenido (`stop`) sin reiniciarlo: `done` y conteos intactos |
 | `start` | Inicia el trabajo (o ajusta `batch_size` si ya hay uno activo) y corre un lote ya. Primer arranque recomendado: `batch_size=5` |
 | `run` | Corre un lote (es lo que hace el cron) |
 | `stop` | Detiene el trabajo |
@@ -28,11 +33,29 @@ trabajo rescata los acompañantes huérfanos, barre las carpetas vacías y pasa
 solo a `finished` (o `finished_with_leftovers` si quedan archivos no audio
 sin canción). Para rehacerlo, otro `start`.
 
+## Segunda pasada: refinar en el sitio
+
+`start` con `mega_source=/MEGA/musica` y `mega_dest=/MEGA/musica` procesa **toda la biblioteca ya ubicada** (layout `<destino>/<Artista>/<Álbum>/<archivo>`) y los archivos nuevos que haya en la raíz. Cada archivo se descarga, se evalúa y termina en una de estas acciones: `sin_cambios`, `mv` (movimiento del lado del servidor: no sube nada), `reemplazo` (tags nuevos con la misma ruta: sube con nombre temporal, borra el original y renombra) o `subida` (tags nuevos y ruta nueva). El orden de proceso se decide por la ruta: primero carpetas `Unknown`/`Untitled`, luego nombres no latinos o inválidos, luego nombres-slug, al final lo demás; así un tope de cuota de MEGA deja sin procesar lo menos valioso. `start` se niega si el origen es la raíz de MEGA.
+
+**Reglas generales (sin nombres propios; las prueba `tests/`, que corre el workflow antes de cada `start`/`run`):**
+- Un tag que es una **copia del nombre de archivo** crudo (slug, marcas de bitrate o sitio, `Artista - Título`) no es un título real; un título real con basura pegada (`(320 kbps)`, `(www.sitio.com)`, también `(www sitio com)`) se limpia. Los bordes de un título legítimo (`Maou -Satan-`, `Self Destructive Corp.`) nunca se recortan.
+- Un artista que es solo un **dominio** (`SonidosMp3Gratis.com`) cuenta como placeholder.
+- **Artista conocido por prefijo** (`slug_biblioteca`): `code-64-dawn` empieza con un artista que la biblioteca ya tiene → Code 64 / Dawn.
+- **Hermanos por patrón de nombre** (`hermanos_patron`, `hermanos_album+titulo`): nombres con la misma firma (`#N … (N kbps)`) que archivos ya ubicados en el mismo álbum; si cada hermano tiene un artista distinto (disco tributo), el álbum se hereda y el intérprete se separa del título porque el título coincide con una canción que la biblioteca ya conoce.
+- Si algo es ambiguo **no se adivina**: va a no procesados con el motivo y la firma del nombre.
+- **Carpetas canónicas:** nunca se crea una carpeta que solo difiera en mayúsculas o tildes de una existente (`2x` vs `2X`); se reusa la ortografía más frecuente, ya sanitizada.
+- **Nombres sanitizados:** `:` → ` - `, se quitan `? *`, `" < > | \` se reemplazan, y se quitan puntos y espacios finales en carpetas y archivos (Windows/FAT/Android).
+- **Romanización determinista:** temperatura 0 y caché persistente (`gemini-cache.json`): la misma entrada da siempre la misma salida, para que un álbum no se parta en dos carpetas.
+- Lo que el propio bot romanizó (comentario `Original --`) y aún tenga tildes/tonos se normaliza sin diacríticos.
+- Reglas editables sin tocar código en `scripts/rules.json` (patrones de basura, dominios).
+
 ## Estado e informe (rama `job-state`)
 
 Todo vive en la rama `job-state`, sin tocar `main`:
 
-- `summary.md` — estado, conteos y fallos de Gemini. **Empieza por acá.**
+- `sessions/NNN-<fecha>.md` + `sessions/INDEX.md` — **un informe detallado por sesión** (una corrida): tiempos, pendientes antes/después, acciones, fuente del dato de cada archivo, Gemini de la sesión, anomalías, **posibles álbumes duplicados** (mismo artista, nombres casi iguales; se listan, no se fusionan) y **casos no resueltos agrupados por patrón de nombre**, que alimentan la siguiente vuelta.
+- `archive/` — informes y `done` de trabajos anteriores (un `start` nuevo archiva, no borra).
+- `summary.md` — estado, conteos y fallos de Gemini acumulados del trabajo en curso.
 - `report.jsonl` — una línea por archivo: tags **originales** antes de tocarlo, tags finales, fuente del dato (existente / discogs / itunes / nombre / romanizado), destino, acompañantes y motivo si no se procesó.
 - `state.json` — estado del trabajo, intentos por archivo.
 - `leftovers.json`, `inventory.json`, `selftest.json`.
