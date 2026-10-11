@@ -4,7 +4,7 @@
  "batch_size": 150,
  "runs": 6,
  "counts": {
-  "sin_cambios": 77,
+  "sin_cambios": 97,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -37,6 +37,12 @@
   ],
   "/MEGA/musica/Anabantha/Llanto De Libertd [Remasterizado]": [
    "/MEGA/musica/Anabantha/Llanto De Libertd [Remasterizado]"
+  ],
+  "/MEGA/musica/And One/Anguish": [
+   "/MEGA/musica/And One/Anguish"
+  ],
+  "/MEGA/musica/And One/Bodypop": [
+   "/MEGA/musica/And One/Bodypop"
   ]
  },
  "gemini": {
