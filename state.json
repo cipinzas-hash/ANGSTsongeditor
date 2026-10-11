@@ -4,7 +4,7 @@
  "batch_size": 300,
  "runs": 9,
  "counts": {
-  "sin_cambios": 809,
+  "sin_cambios": 829,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -142,6 +142,21 @@
   ],
   "/MEGA/musica/Kamelot/The Awakening": [
    "/MEGA/musica/Kamelot/The Awakening"
+  ],
+  "/MEGA/musica/Kaya/Kaleidoscope": [
+   "/MEGA/musica/Kaya/Kaleidoscope"
+  ],
+  "/MEGA/musica/Kaya/Masquerade": [
+   "/MEGA/musica/Kaya/Masquerade"
+  ],
+  "/MEGA/musica/Kyary Pamyu Pamyu/Tsukema Tsukeru": [
+   "/MEGA/musica/Kyary Pamyu Pamyu/Tsukema Tsukeru"
+  ],
+  "/MEGA/musica/Lacrimosa/Elodia": [
+   "/MEGA/musica/Lacrimosa/Elodia"
+  ],
+  "/MEGA/musica/Lacrimosa/Inferno": [
+   "/MEGA/musica/Lacrimosa/Inferno"
   ]
  },
  "gemini": {
