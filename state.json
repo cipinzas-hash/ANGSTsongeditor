@@ -2,9 +2,9 @@
  "status": "active",
  "mega_source": "/MEGA/musica",
  "batch_size": 150,
- "runs": 6,
+ "runs": 7,
  "counts": {
-  "sin_cambios": 206,
+  "sin_cambios": 226,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -34,6 +34,12 @@
   ],
   "/MEGA/musica/Children Of Bodom/Hexed (Deluxe Version)": [
    "/MEGA/musica/Children Of Bodom/Hexed (Deluxe Version)"
+  ],
+  "/MEGA/musica/Children Of Bodom/Something Wild (vinyl rip)": [
+   "/MEGA/musica/Children Of Bodom/Something Wild (vinyl rip)"
+  ],
+  "/MEGA/musica/Cibo Matto/Hotel Valentine (Clean)": [
+   "/MEGA/musica/Cibo Matto/Hotel Valentine (Clean)"
   ]
  },
  "gemini": {
@@ -88,7 +94,7 @@
  ],
  "last_action": "run",
  "started_at": "2026-10-10T23:30:57Z",
- "last_run": "2026-10-11T02:22:54Z",
+ "last_run": "2026-10-11T11:03:41Z",
  "pending": 1547,
  "fix_dl_v2": true,
  "dl_fail": {},
