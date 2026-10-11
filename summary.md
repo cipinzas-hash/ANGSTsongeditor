@@ -4,7 +4,7 @@
 - Iniciado: 2026-10-10T23:30:57Z  ·  ultima corrida: 2026-10-11T11:34:07Z  ·  corridas: 8
 - Pendientes en la fuente (ultimo conteo): 1097
 
-> Detenido a mano.
+> Retag: 5 corregido(s), 0 sin cambios o con error (ver retag.json).
 
 ## Conteos acumulados
 

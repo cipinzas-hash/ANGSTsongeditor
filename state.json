@@ -98,7 +98,7 @@
    }
   }
  ],
- "last_action": "stop",
+ "last_action": "retag",
  "started_at": "2026-10-10T23:30:57Z",
  "last_run": "2026-10-11T11:34:07Z",
  "pending": 1097,
