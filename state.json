@@ -4,7 +4,7 @@
  "batch_size": 300,
  "runs": 8,
  "counts": {
-  "sin_cambios": 414,
+  "sin_cambios": 434,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -55,6 +55,15 @@
   ],
   "/MEGA/musica/Diorama/Cubed Bonus_Disc": [
    "/MEGA/musica/Diorama/Cubed Bonus_Disc"
+  ],
+  "/MEGA/musica/Diorama/Cubed": [
+   "/MEGA/musica/Diorama/Cubed"
+  ],
+  "/MEGA/musica/Diorama/Fuck the Mainstream": [
+   "/MEGA/musica/Diorama/Fuck the Mainstream"
+  ],
+  "/MEGA/musica/Diorama/Tiny Missing Fragments": [
+   "/MEGA/musica/Diorama/Tiny Missing Fragments"
   ]
  },
  "gemini": {
