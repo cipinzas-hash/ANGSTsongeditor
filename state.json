@@ -4,7 +4,7 @@
  "batch_size": 150,
  "runs": 6,
  "counts": {
-  "sin_cambios": 97,
+  "sin_cambios": 117,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -43,6 +43,21 @@
   ],
   "/MEGA/musica/And One/Bodypop": [
    "/MEGA/musica/And One/Bodypop"
+  ],
+  "/MEGA/musica/Angine de Poitrine/Fabienk": [
+   "/MEGA/musica/Angine de Poitrine/Fabienk"
+  ],
+  "/MEGA/musica/Angine de Poitrine/MATA ZYKLEK": [
+   "/MEGA/musica/Angine de Poitrine/MATA ZYKLEK"
+  ],
+  "/MEGA/musica/Angine de Poitrine/Vol.1": [
+   "/MEGA/musica/Angine de Poitrine/Vol.1"
+  ],
+  "/MEGA/musica/Angine de Poitrine/Vol.II": [
+   "/MEGA/musica/Angine de Poitrine/Vol.II"
+  ],
+  "/MEGA/musica/Ashbury Heights/Morningstar in a Black Car EP": [
+   "/MEGA/musica/Ashbury Heights/Morningstar in a Black Car EP"
   ]
  },
  "gemini": {
