@@ -4,7 +4,7 @@
  "batch_size": 300,
  "runs": 8,
  "counts": {
-  "sin_cambios": 549,
+  "sin_cambios": 569,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -124,6 +124,27 @@
   ],
   "/MEGA/musica/GUITAR VADER/Jet Set Radio Future Sound Tracks": [
    "/MEGA/musica/GUITAR VADER/Jet Set Radio Future Sound Tracks"
+  ],
+  "/MEGA/musica/Ganja White Night,Infected Mushroom/Kill to Feel": [
+   "/MEGA/musica/Ganja White Night,Infected Mushroom/Kill to Feel"
+  ],
+  "/MEGA/musica/HIDEKI NAGANUMA remixed by B.B.RIGHTS & MIC HARRISON/Jet Set Radio Future Sound Tracks": [
+   "/MEGA/musica/HIDEKI NAGANUMA remixed by B.B.RIGHTS & MIC HARRISON/Jet Set Radio Future Sound Tracks"
+  ],
+  "/MEGA/musica/HIDEKI NAGANUMA remixed by B.B.RIGHTS/Jet Set Radio Future Sound Tracks": [
+   "/MEGA/musica/HIDEKI NAGANUMA remixed by B.B.RIGHTS/Jet Set Radio Future Sound Tracks"
+  ],
+  "/MEGA/musica/HIDEKI NAGANUMA remixed by RICHARD JACQUES/Jet Set Radio Future Sound Tracks": [
+   "/MEGA/musica/HIDEKI NAGANUMA remixed by RICHARD JACQUES/Jet Set Radio Future Sound Tracks"
+  ],
+  "/MEGA/musica/HIDEKI NAGANUMA/Jet Set Radio Future Sound Tracks": [
+   "/MEGA/musica/HIDEKI NAGANUMA/Jet Set Radio Future Sound Tracks"
+  ],
+  "/MEGA/musica/Hamatom/Nein": [
+   "/MEGA/musica/Hamatom/Nein"
+  ],
+  "/MEGA/musica/Hizaki Grace Project/Curse of Virgo": [
+   "/MEGA/musica/Hizaki Grace Project/Curse of Virgo"
   ]
  },
  "gemini": {
