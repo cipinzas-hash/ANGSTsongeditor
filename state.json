@@ -1,10 +1,10 @@
 {
  "status": "active",
  "mega_source": "/MEGA/musica",
- "batch_size": 150,
- "runs": 7,
+ "batch_size": 300,
+ "runs": 8,
  "counts": {
-  "sin_cambios": 356,
+  "sin_cambios": 376,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -34,6 +34,12 @@
   ],
   "/MEGA/musica/Dark Moor/The Gates Of Oblivion": [
    "/MEGA/musica/Dark Moor/The Gates Of Oblivion"
+  ],
+  "/MEGA/musica/Dead Astronauts/Dead Astronauts": [
+   "/MEGA/musica/Dead Astronauts/Dead Astronauts"
+  ],
+  "/MEGA/musica/Dead Hand Projekt/Control": [
+   "/MEGA/musica/Dead Hand Projekt/Control"
   ]
  },
  "gemini": {
@@ -88,7 +94,7 @@
  ],
  "last_action": "run",
  "started_at": "2026-10-10T23:30:57Z",
- "last_run": "2026-10-11T11:03:41Z",
+ "last_run": "2026-10-11T11:34:07Z",
  "pending": 1397,
  "fix_dl_v2": true,
  "dl_fail": {},
