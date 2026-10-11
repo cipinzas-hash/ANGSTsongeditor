@@ -586,6 +586,48 @@ def sweep_empty_dirs(ctx):
 
 # ---------------------------------------------------------- done / prioridad
 
+def load_gemini_cache():
+    import tag_with_discogs as T
+    p = STATE_DIR / "gemini-cache.json"
+    if p.exists():
+        d = json.loads(p.read_text(encoding="utf-8"))
+        T.ROMAN_CACHE.update(d.get("roman", {}))
+        T.TRANS_CACHE.update(d.get("trans", {}))
+
+
+def save_gemini_cache():
+    import tag_with_discogs as T
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    (STATE_DIR / "gemini-cache.json").write_text(
+        json.dumps({"roman": T.ROMAN_CACHE, "trans": T.TRANS_CACHE}, ensure_ascii=False, indent=0), encoding="utf-8")
+
+
+def possible_duplicate_albums(files, entries, dest_root):
+    """Pares de albumes del MISMO artista casi iguales (ej. 'Vampire Scream (album)' y '(albom)'): suelen
+    ser el mismo disco partido por una romanizacion distinta. No se fusionan solos (podrian ser discos
+    distintos); se listan para revisar. Se ignoran los pares que difieren en digitos (Vol. 1 / Vol. 2)."""
+    from difflib import SequenceMatcher
+    root = dest_root.rstrip("/") + "/"
+    albums = {}
+    paths = [f for f in files] + [e.get("dest") for e in entries if e.get("dest")]
+    for f in paths:
+        if f and f.startswith(root):
+            parts = f[len(root):].split("/")
+            if len(parts) >= 3:
+                albums.setdefault(parts[0], set()).add(parts[1])
+    out = []
+    for artist, al in albums.items():
+        al = sorted(al)
+        for i in range(len(al)):
+            for j in range(i + 1, len(al)):
+                a, b = al[i], al[j]
+                if dirkey(a) == dirkey(b) or re.findall(r"\d+", a) != re.findall(r"\d+", b):
+                    continue
+                if SequenceMatcher(None, dirkey(a), dirkey(b)).ratio() >= 0.9:
+                    out.append((artist, a, b))
+    return out
+
+
 def load_done():
     p = STATE_DIR / "done.json"
     return set(json.loads(p.read_text(encoding="utf-8"))) if p.exists() else set()
@@ -660,6 +702,9 @@ def write_session_report(st, note):
     for e in entries:
         if e.get("status") == "nonprocessed":
             groups[(e.get("reason"), e.get("firma") or "?")].append(e.get("path"))
+    dups = possible_duplicate_albums(ctx.files if ctx else [], entries, MEGA_DEST)
+    lines += ["", "## Posibles álbumes duplicados (revisar a mano)", ""]
+    lines += [f"- **{a}**: `{x}` ≈ `{y}`" for a, x, y in dups[:30]] or ["- ninguno"]
     lines += ["", "## Casos no resueltos, por patrón", ""]
     if groups:
         for (reason, sig), paths in sorted(groups.items(), key=lambda kv: -len(kv[1])):
@@ -742,6 +787,7 @@ def cmd_run(st):
     nonproc_prefix = MEGA_NONPROC.rstrip("/") + "/"
     files = [f for f in list_files(source) if f not in pending_rm and not f.startswith(nonproc_prefix)]
     done = load_done()
+    load_gemini_cache()
     audio_all = [f for f in files if ext(f) in AUDIO_EXTS]
     audio = sorted((f for f in audio_all if f not in done), key=lambda f: (priority(f), f))
     unsupported = sorted(f for f in files if ext(f) in UNSUPPORTED_AUDIO)
@@ -790,6 +836,7 @@ def cmd_run(st):
                 if ctx.since_checkpoint >= CHECKPOINT_EVERY:
                     ctx.since_checkpoint = 0
                     save_done(ctx.done)
+                    save_gemini_cache()
                     save_state(st)
                     push_state(f"checkpoint corrida {st['runs']}")
     finally:
@@ -801,6 +848,7 @@ def cmd_run(st):
                 g["errors"].append(e)
 
     save_done(ctx.done)
+    save_gemini_cache()
     remaining = [f for f in audio + unsupported if f not in ctx.handled and f not in ctx.done]
     handle_folder_images(ctx, remaining)
     st["pending"] = len(remaining)

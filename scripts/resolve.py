@@ -60,6 +60,16 @@ def caps_to_title(s: str) -> str:
     return s.title() if s and s == s.upper() and any(c.isalpha() for c in s) else s
 
 
+def deslug_title(title, artist=None) -> str:
+    """'wavestorm-wavestorm-ft-portwave' (titulo derivado de un nombre-slug) -> 'Wavestorm Ft Portwave'
+    (se quita el prefijo del artista si esta). Un titulo que no es slug se devuelve igual."""
+    t = (title or "").strip()
+    if not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)+", t):
+        return title
+    rest = _strip_artist_prefix(t, slug(artist or "")) if artist else None
+    return title_from_tokens(rest or _tokens(t))
+
+
 def smart_title(token: str) -> str:
     """Palabra en minusculas (de un slug) -> Capitalizada; si ya trae mayusculas se respeta."""
     return token if token != token.lower() else token[:1].upper() + token[1:]

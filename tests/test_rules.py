@@ -67,6 +67,29 @@ class Nombres(unittest.TestCase):
         self.assertEqual(R.sanitize_component("Normal Name"), "Normal Name")
 
 
+class TitulosSlug(unittest.TestCase):
+    def test_deslug(self):
+        self.assertEqual(R.deslug_title("wavestorm-wavestorm-ft-portwave", "WAVESTORM"), "Wavestorm Ft Portwave")
+        self.assertEqual(R.deslug_title("code-64-dawn", "Code 64"), "Dawn")
+        self.assertEqual(R.deslug_title("Furui Kokoro", "Boris"), "Furui Kokoro")
+        self.assertEqual(R.deslug_title("x-ray", None), "X Ray")
+
+
+class RomanizacionDeterminista(unittest.TestCase):
+    def test_misma_entrada_misma_salida(self):
+        # caso real: el mismo album salio 'album' en una cancion y 'albom' en otra
+        calls = []
+        T.ROMAN_CACHE.clear()
+        T.GEMINI_API_KEY = "x"
+        T.time.sleep = lambda s: None
+        outs = iter(["Vampire Scream (album)", "Vampire Scream (albom)"])
+        T.gemini_generate = lambda p: (calls.append(p) or next(outs))
+        a = T.romanize_with_gemini("Vampire Scream (бlbum)")
+        b = T.romanize_with_gemini("Vampire Scream (бlbum)")
+        self.assertEqual(a, b)
+        self.assertEqual(len(calls), 1)
+
+
 class CarpetasCanonicas(unittest.TestCase):
     def test_no_crear_carpeta_que_solo_difiere_en_mayusculas(self):
         # caso real: carpeta '2x' (muchos archivos) y tag de artista '2X'

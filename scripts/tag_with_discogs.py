@@ -26,7 +26,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 import tagio
-from resolve import clean_name_junk, title_is_raw_filename
+from resolve import clean_name_junk, deslug_title, title_is_raw_filename
 from tagio import (AUDIO_EXTS, effective, is_complete, read_tags, same_name,
                    strip_discogs_suffix, write_tags)
 
@@ -45,6 +45,18 @@ PROCESSED_DIR = Path(os.environ.get("PROCESSED_DIR", "/tmp/musica_procesada"))
 # Contadores de la corrida (los lee job.py para el informe). Un fallo de
 # Gemini ya no es silencioso: se cuenta y se guarda el motivo.
 STATS = {"gemini_ok": 0, "gemini_fail": 0, "gemini_errors": []}
+
+# Cache de romanizaciones y traducciones: la MISMA entrada da SIEMPRE la misma salida, dentro de una
+# corrida y entre corridas (job.py la guarda en el estado). Sin esto, un mismo album salia 'album' en
+# una cancion y 'albom' en otra y el disco quedaba partido en dos carpetas.
+ROMAN_CACHE = {}
+TRANS_CACHE = {}
+
+# Cache de romanizaciones/traducciones: la MISMA entrada da SIEMPRE la misma salida, dentro de una
+# corrida y entre corridas (job.py la guarda en el estado). Sin esto, un mismo album salia
+# 'album' en una cancion y 'albom' en otra y el disco quedaba partido en dos carpetas.
+ROMAN_CACHE = {}
+TRANS_CACHE = {}
 
 
 class DiscogsError(Exception):
@@ -93,7 +105,8 @@ LAST_MODEL = {"name": None}
 
 def _gemini_call(model: str, prompt: str, timeout: int):
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={GEMINI_API_KEY}"
-    payload = json.dumps({"contents": [{"parts": [{"text": prompt}]}]}).encode("utf-8")
+    payload = json.dumps({"contents": [{"parts": [{"text": prompt}]}],
+                          "generationConfig": {"temperature": 0}}).encode("utf-8")
     req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         data = json.loads(resp.read().decode("utf-8"))
@@ -138,6 +151,8 @@ def romanize_with_gemini(text):
     lo muestre."""
     if not contains_non_latin_script(text):
         return text
+    if text in ROMAN_CACHE:
+        return ROMAN_CACHE[text]
     if not GEMINI_API_KEY:
         _gem_fail("falta GEMINI_API_KEY")
         return text
@@ -170,6 +185,7 @@ def romanize_with_gemini(text):
             _gem_fail("respuesta vacia o aun en script no latino")
             return text
         STATS["gemini_ok"] += 1
+        ROMAN_CACHE[text] = out
         return out
     except Exception as e:
         _gem_fail(str(e))
@@ -181,6 +197,8 @@ def translate_with_gemini(text):
     tag). Nunca sobre nombres de artista. None si falla (se cuenta)."""
     if not contains_non_latin_script(text):
         return None
+    if text in TRANS_CACHE:
+        return TRANS_CACHE[text]
     if not GEMINI_API_KEY:
         _gem_fail("falta GEMINI_API_KEY")
         return None
@@ -199,6 +217,7 @@ def translate_with_gemini(text):
             _gem_fail("traduccion vacia")
             return None
         STATS["gemini_ok"] += 1
+        TRANS_CACHE[text] = out
         return out
     except Exception as e:
         _gem_fail(str(e))
@@ -480,6 +499,8 @@ def process_file_ex(f: Path, raw_dir: Path = None, processed_dir: Path = None, a
         album_known = effective(existing, "album") or (h.get("album") if hint_src == h.get("source") and h.get("artist") == artist else None) or folder_album
         performer = h.get("performer") if (h.get("artist") == artist and h.get("performer")) else None
         info["hint_source"] = hint_src
+        if title and artist and not effective(existing, "title"):
+            title = deslug_title(title, artist)     # titulo derivado de un nombre-slug -> legible
 
         if not artist:
             info.update(status="sin_artista", note="no hay artista confiable (ni en tags ni en el nombre)")
