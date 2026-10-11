@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 10,
  "counts": {
-  "sin_cambios": 1188,
+  "sin_cambios": 1208,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -167,6 +167,12 @@
   ],
   "/MEGA/musica/Sonata Arctica/Winterheart's Guild": [
    "/MEGA/musica/Sonata Arctica/Winterheart's Guild"
+  ],
+  "/MEGA/musica/State Of The Union/Evol Love Industry": [
+   "/MEGA/musica/State Of The Union/Evol Love Industry"
+  ],
+  "/MEGA/musica/Stravaganzza/Requiem": [
+   "/MEGA/musica/Stravaganzza/Requiem"
   ]
  },
  "gemini": {
