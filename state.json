@@ -4,8 +4,8 @@
  "batch_size": 400,
  "runs": 11,
  "counts": {
-  "sin_cambios": 1582,
-  "moved": 65,
+  "sin_cambios": 1601,
+  "moved": 66,
   "uploaded": 97,
   "sin_album": 29,
   "nonprocessed": 13,
@@ -252,6 +252,12 @@
   ],
   "/MEGA/musica/Crystal Castles/Crystal Castles ( II )": [
    "/MEGA/musica/Crystal Castles/Crystal Castles ( II )"
+  ],
+  "/MEGA/musica/Dying Wish/Dying Wish - Serration": [
+   "/MEGA/musica/Dying Wish/Dying Wish - Serration"
+  ],
+  "/MEGA/musica/Evil masquerade/Cover-up": [
+   "/MEGA/musica/Evil masquerade/Cover-up"
   ]
  },
  "gemini": {
