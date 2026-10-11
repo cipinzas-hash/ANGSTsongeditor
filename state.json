@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 10,
  "counts": {
-  "sin_cambios": 1248,
+  "sin_cambios": 1268,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -191,6 +191,15 @@
   ],
   "/MEGA/musica/Syrian/Kosmonauta (CD 1)": [
    "/MEGA/musica/Syrian/Kosmonauta (CD 1)"
+  ],
+  "/MEGA/musica/Therion/Lepaca Kliffoth": [
+   "/MEGA/musica/Therion/Lepaca Kliffoth"
+  ],
+  "/MEGA/musica/Therion/Secret Of The Runes": [
+   "/MEGA/musica/Therion/Secret Of The Runes"
+  ],
+  "/MEGA/musica/Therion/Sitra Ahra": [
+   "/MEGA/musica/Therion/Sitra Ahra"
   ]
  },
  "gemini": {
