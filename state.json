@@ -4,8 +4,8 @@
  "batch_size": 400,
  "runs": 11,
  "counts": {
-  "sin_cambios": 1668,
-  "moved": 74,
+  "sin_cambios": 1687,
+  "moved": 75,
   "uploaded": 97,
   "sin_album": 29,
   "nonprocessed": 13,
@@ -297,6 +297,21 @@
   ],
   "/MEGA/musica/Rammstein/Sehnsucht (Anniversary Edition - Remastered)": [
    "/MEGA/musica/Rammstein/Sehnsucht (Anniversary Edition - Remastered)"
+  ],
+  "/MEGA/musica/Semblant/Cover-up": [
+   "/MEGA/musica/Semblant/Cover-up"
+  ],
+  "/MEGA/musica/Serration/Dying Wish - Serration": [
+   "/MEGA/musica/Serration/Dying Wish - Serration"
+  ],
+  "/MEGA/musica/Squarehead/Tunning Blaster": [
+   "/MEGA/musica/Squarehead/Tunning Blaster"
+  ],
+  "/MEGA/musica/Trust Issues/Demo": [
+   "/MEGA/musica/Trust Issues/Demo"
+  ],
+  "/MEGA/musica/Trust Issues/Finding Peace In The Darkness": [
+   "/MEGA/musica/Trust Issues/Finding Peace In The Darkness"
   ]
  },
  "gemini": {
