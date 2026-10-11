@@ -1056,6 +1056,45 @@ def cmd_requeue(st):
     return f"Reencolados {moved} archivo(s) desde {MEGA_NONPROC} hacia {source}."
 
 
+def cmd_retag(st):
+    """Correcciones puntuales de tags desde STATE_DIR/repairs.json: [{"path": ruta remota, "field": "title",
+    "value": "texto correcto"}]. Descarga, corrige el tag y reemplaza en el sitio (sube con nombre
+    temporal, borra el original, renombra). Resultado en retag.json."""
+    from tagio import _open_easy, read_tags
+    items = json.loads((STATE_DIR / "repairs.json").read_text(encoding="utf-8"))
+    results = []
+    for it in items:
+        remote, field, value = it["path"], it["field"], it["value"]
+        res = {"path": remote, "field": field, "value": value}
+        with tempfile.TemporaryDirectory() as tmp:
+            local = Path(tmp) / os.path.basename(remote)
+            try:
+                mega(["mega-get", remote, tmp + "/"], timeout=600,
+                     verify=lambda: local.exists() and local.stat().st_size > 0)
+                if read_tags(local).get(field) == value:
+                    res["resultado"] = "ya_correcto"
+                    results.append(res)
+                    continue
+                audio = _open_easy(local)
+                audio[field] = value
+                audio.save()
+                remote_dir, name = os.path.dirname(remote), os.path.basename(remote)
+                tmp_remote = f"{remote_dir}/{name}.tmp"
+                up = local.with_name(name + ".tmp")
+                local.rename(up)
+                mega(["mega-put", "-c", str(up), remote_dir + "/"], timeout=900, verify=lambda: remote_exists(tmp_remote))
+                mega(["mega-rm", "-f", remote], verify=lambda: not remote_exists(remote))
+                mega(["mega-mv", tmp_remote, remote], verify=lambda: remote_exists(remote) and not remote_exists(tmp_remote))
+                res["resultado"] = "corregido"
+            except RuntimeError as e:
+                res["resultado"] = "error: " + str(e)[:150]
+        results.append(res)
+        print(f"  {res['resultado']}: {remote}")
+    (STATE_DIR / "retag.json").write_text(json.dumps(results, ensure_ascii=False, indent=1), encoding="utf-8")
+    ok = sum(1 for r in results if r["resultado"] == "corregido")
+    return f"Retag: {ok} corregido(s), {len(results) - ok} sin cambios o con error (ver retag.json)."
+
+
 def main():
     global MEGA_DEST, MEGA_NONPROC
     action = (os.environ.get("ACTION") or "run").strip()
@@ -1085,6 +1124,14 @@ def main():
         cmd_find(st)
     elif action == "requeue":
         note = cmd_requeue(st)
+    elif action == "retag":
+        note = cmd_retag(st)
+    elif action == "resume":
+        if st["status"] in ("stopped",):
+            st["status"] = "active"
+            note = "Trabajo reanudado (done y conteos intactos); la proxima corrida sigue donde quedo."
+        else:
+            note = f"Nada que reanudar (estado: {st['status']})."
     elif action in ("start", "run"):
         if action == "run" and st["status"] not in active:
             print(f"El trabajo no esta activo (estado: {st['status']}). No hay nada que hacer.")

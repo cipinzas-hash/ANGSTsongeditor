@@ -34,13 +34,23 @@ def slug(s) -> str:
     return re.sub(r"[\W_]+", "-", d.casefold()).strip("-")
 
 
+def has_junk(s) -> bool:
+    """True si el texto trae marcas de bitrate, sitios web o '#N ' (rules.json)."""
+    return any(rx.search(s or "") for rx in _JUNK)
+
+
 def clean_name_junk(s) -> str:
-    """Quita marcas de bitrate, sitios web y numeracion '#N ' de un nombre de archivo."""
+    """Quita marcas de bitrate, sitios web y numeracion '#N ' de un nombre de archivo.
+    Los separadores sueltos en los bordes solo se recortan SI se quito basura: un titulo legitimo
+    como 'Maou -Satan-' o 'Self Destructive Corp.' no se toca."""
     out = s or ""
+    removed = False
     for rx in _JUNK:
-        out = rx.sub(" ", out)
-    out = re.sub(r"\s+", " ", out)
-    return out.strip(" -_.,;")
+        new = rx.sub(" ", out)
+        removed = removed or new != out
+        out = new
+    out = re.sub(r"\s+", " ", out).strip()
+    return out.strip(" -_.,;") if removed else out
 
 
 def title_is_raw_filename(title, stem) -> bool:
@@ -50,7 +60,7 @@ def title_is_raw_filename(title, stem) -> bool:
     if not title or not stem or slug(title) != slug(stem):
         return False
     st = stem.strip()
-    return (clean_name_junk(st) != st
+    return (has_junk(st)
             or bool(re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+){2,}", st))
             or " - " in st)
 

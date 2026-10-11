@@ -46,6 +46,14 @@ class Nombres(unittest.TestCase):
         # caso real: el flujo viejo dejo "(www hotplayer ru)" (puntos reemplazados por espacios) en el titulo
         self.assertEqual(R.clean_name_junk("I Fink U Freeky (www hotplayer ru)"), "I Fink U Freeky")
 
+    def test_no_recorta_titulos_legitimos(self):
+        # caso real: 'Maou -Satan-' y 'Self Destructive Corp.' se recortaban a 'Maou -Satan' / '...Corp'
+        for t in ("Maou -Satan-", "Self Destructive Corp.", "Agony -Until Death-", "S.O.B.", "Until Death -Us Do Part-"):
+            self.assertEqual(R.clean_name_junk(t), t)
+            self.assertFalse(R.has_junk(t))
+        self.assertTrue(R.has_junk("I Fink U Freeky (www hotplayer ru)"))
+        self.assertTrue(R.has_junk("Copycat (320  kbps)"))
+
     def test_separadores(self):
         a, t, sep = T.parse_filename_ex(Path("Die Antword - I Fink U Freeky (www.hotplayer.ru).mp3"), None)
         self.assertEqual((a, t, sep), ("Die Antword", "I Fink U Freeky", True))

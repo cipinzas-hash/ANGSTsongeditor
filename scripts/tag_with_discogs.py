@@ -26,7 +26,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 import tagio
-from resolve import clean_name_junk, deslug_title, title_is_raw_filename
+from resolve import clean_name_junk, deslug_title, has_junk, title_is_raw_filename
 from tagio import (AUDIO_EXTS, effective, is_complete, read_tags, same_name,
                    strip_discogs_suffix, write_tags)
 
@@ -461,7 +461,7 @@ def process_file_ex(f: Path, raw_dir: Path = None, processed_dir: Path = None, a
         if existing.get("title") and title_is_raw_filename(existing["title"], f.stem):
             existing = dict(existing, title=None)       # el 'titulo' era el nombre de archivo crudo
             info["title_was_filename"] = True
-        elif existing.get("title") and clean_name_junk(existing["title"]) != existing["title"].strip():
+        elif existing.get("title") and has_junk(existing["title"]):
             # titulo real pero con basura pegada ('(www hotplayer ru)', '(320 kbps)'): se limpia
             title_tag_clean = clean_name_junk(existing["title"])
             existing = dict(existing, title=None)
