@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 10,
  "counts": {
-  "sin_cambios": 1108,
+  "sin_cambios": 1128,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -119,6 +119,15 @@
   ],
   "/MEGA/musica/Rotersand/Don't become the thing you hated": [
    "/MEGA/musica/Rotersand/Don't become the thing you hated"
+  ],
+  "/MEGA/musica/Rotersand/How Do You Feel Today": [
+   "/MEGA/musica/Rotersand/How Do You Feel Today"
+  ],
+  "/MEGA/musica/Rotersand/Tentwentythree": [
+   "/MEGA/musica/Rotersand/Tentwentythree"
+  ],
+  "/MEGA/musica/Rotersand/Waiting To Be Born EP": [
+   "/MEGA/musica/Rotersand/Waiting To Be Born EP"
   ]
  },
  "gemini": {
