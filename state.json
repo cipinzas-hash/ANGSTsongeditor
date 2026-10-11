@@ -1,10 +1,10 @@
 {
- "status": "active",
+ "status": "finished_with_leftovers",
  "mega_source": "/MEGA/musica",
  "batch_size": 400,
  "runs": 11,
  "counts": {
-  "sin_cambios": 1687,
+  "sin_cambios": 1704,
   "moved": 75,
   "uploaded": 97,
   "sin_album": 29,
@@ -15,307 +15,15 @@
   "sidecars": 30,
   "con_album": 68,
   "requeued": 12,
-  "replaced": 17,
-  "romanizados": 42,
-  "retry": 1
+  "replaced": 18,
+  "romanizados": 43,
+  "retry": 1,
+  "dirs_removed": 21
  },
  "attempts": {},
- "dir_dest": {
-  "/MEGA/musica": [
-   "/MEGA/musica/PORTWAVE/There Sore Eyes",
-   "/MEGA/musica/PORTWAVE/Untitled album"
-  ],
-  "/MEGA/musica/Angine de Poitrine/Vol.II": [
-   "/MEGA/musica/Angine de Poitrine/Vol.II"
-  ],
-  "/MEGA/musica/Dying Wish/Fragments Of A Bitter Memory": [
-   "/MEGA/musica/Dying Wish/Fragments Of A Bitter Memory"
-  ],
-  "/MEGA/musica/Editors/EBM": [
-   "/MEGA/musica/Editors/EBM"
-  ],
-  "/MEGA/musica/Front 242/Catch The Men": [
-   "/MEGA/musica/Front 242/Catch The Men"
-  ],
-  "/MEGA/musica/Front 242/Front By Front 1988-1989": [
-   "/MEGA/musica/Front 242/Front By Front 1988-1989"
-  ],
-  "/MEGA/musica/Hizaki Grace Project/Dignity of crest": [
-   "/MEGA/musica/Hizaki Grace Project/Dignity of crest"
-  ],
-  "/MEGA/musica/Impura realidad/Demo odioso y rabioso": [
-   "/MEGA/musica/Impura realidad/Demo odioso y rabioso"
-  ],
-  "/MEGA/musica/Nine Treasures/Wisdom Eyes": [
-   "/MEGA/musica/Nine Treasures/Wisdom Eyes"
-  ],
-  "/MEGA/musica/Normoria/Normoria Essentials (EP)": [
-   "/MEGA/musica/Normoria/Normoria Essentials (EP)"
-  ],
-  "/MEGA/musica/Rock & Ron/Impura realidad": [
-   "/MEGA/musica/Rock & Ron/Impura realidad"
-  ],
-  "/MEGA/musica/Rotersand/How Do You Feel Today": [
-   "/MEGA/musica/Rotersand/How Do You Feel Today"
-  ],
-  "/MEGA/musica/Tristania/Illumination": [
-   "/MEGA/musica/Tristania/Illumination"
-  ],
-  "/MEGA/musica/Tristania/World of Glass": [
-   "/MEGA/musica/Tristania/World of Glass"
-  ],
-  "/MEGA/musica/VII-Sense/Black Bird": [
-   "/MEGA/musica/VII-Sense/Black Bird"
-  ],
-  "/MEGA/musica/VII-Sense/Cell division": [
-   "/MEGA/musica/VII-Sense/Cell division"
-  ],
-  "/MEGA/musica/VII-Sense/Silent Assassin": [
-   "/MEGA/musica/VII-Sense/Silent Assassin"
-  ],
-  "/MEGA/musica/VII-Sense/The Reminiscence Of War": [
-   "/MEGA/musica/VII-Sense/The Reminiscence Of War"
-  ],
-  "/MEGA/musica/VNV Nation/Automatic": [
-   "/MEGA/musica/VNV Nation/Automatic"
-  ],
-  "/MEGA/musica/VNV Nation/Electric Sun": [
-   "/MEGA/musica/VNV Nation/Electric Sun"
-  ],
-  "/MEGA/musica/VNV Nation/Transnational": [
-   "/MEGA/musica/VNV Nation/Transnational"
-  ],
-  "/MEGA/musica/Velvet Eden/Witch On Flames": [
-   "/MEGA/musica/Velvet Eden/Witch On Flames"
-  ],
-  "/MEGA/musica/Versailles -Philharmonic Quintet-/JUBILEE": [
-   "/MEGA/musica/Versailles -Philharmonic Quintet-/JUBILEE"
-  ],
-  "/MEGA/musica/Versailles/Lyrical Sympathy": [
-   "/MEGA/musica/Versailles/Lyrical Sympathy"
-  ],
-  "/MEGA/musica/Versailles/VOGUE": [
-   "/MEGA/musica/Versailles/VOGUE"
-  ],
-  "/MEGA/musica/Visions Of Atlantis/Cast Away": [
-   "/MEGA/musica/Visions Of Atlantis/Cast Away"
-  ],
-  "/MEGA/musica/WarCry/La Quinta Esenci": [
-   "/MEGA/musica/Warcry/La Quinta Esenci"
-  ],
-  "/MEGA/musica/Warcry/Donde el Silencio Se Rompió": [
-   "/MEGA/musica/Warcry/Donde el Silencio Se Rompió"
-  ],
-  "/MEGA/musica/Warcry/La Quinta Esenci": [
-   "/MEGA/musica/Warcry/La Quinta Esenci"
-  ],
-  "/MEGA/musica/XOVER/Aureola": [
-   "/MEGA/musica/XOVER/Aureola"
-  ],
-  "/MEGA/musica/XOVER/XGATE": [
-   "/MEGA/musica/XOVER/XGATE"
-  ],
-  "/MEGA/musica/Xerox/Return to the Sauce": [
-   "/MEGA/musica/Xerox/Return to the Sauce"
-  ],
-  "/MEGA/musica/grandson/INERTIA": [
-   "/MEGA/musica/grandson/INERTIA"
-  ],
-  "/MEGA/musica/grandson/a modern tragedy vol. 1": [
-   "/MEGA/musica/grandson/a modern tragedy vol. 1"
-  ],
-  "/MEGA/musica/grandson/a modern tragedy vol. 2": [
-   "/MEGA/musica/grandson/a modern tragedy vol. 2"
-  ],
-  "/MEGA/musica/grandson/a modern tragedy vol. 3": [
-   "/MEGA/musica/grandson/a modern tragedy vol. 3"
-  ],
-  "/MEGA/musica/the GazettE/DIM": [
-   "/MEGA/musica/the GazettE/DIM"
-  ],
-  "/MEGA/musica/the GazettE/DISORDER": [
-   "/MEGA/musica/the GazettE/DISORDER"
-  ],
-  "/MEGA/musica/the GazettE/Ninth": [
-   "/MEGA/musica/the GazettE/Ninth"
-  ],
-  "/MEGA/musica/Ｓｃｈｗａｒｚ　Ｓｔｅｉｎ/Ａｒｔｉｆｉｃｉａｌ　Ｈａｌｌｕｃｉｎａｔｉｏｎ": [
-   "/MEGA/musica/Schwarz Stein/Artificial Hallucination"
-  ],
-  "/MEGA/musica/AKB48/Ralph el Demoledor (Música Original Compuesta)": [
-   "/MEGA/musica/AKB48/Ralph el Demoledor (Música Original Compuesta)"
-  ],
-  "/MEGA/musica/AfroWhitey/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
-   "/MEGA/musica/AfroWhitey/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
-  ],
-  "/MEGA/musica/Bar9/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
-   "/MEGA/musica/Bar9/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
-  ],
-  "/MEGA/musica/Blame/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
-   "/MEGA/musica/Blame/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
-  ],
-  "/MEGA/musica/Deekline & Ed Solo/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
-   "/MEGA/musica/Deekline & Ed Solo/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
-  ],
-  "/MEGA/musica/Dodge & Fuski & Sandro Silva/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
-   "/MEGA/musica/Dodge & Fuski & Sandro Silva/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
-  ],
-  "/MEGA/musica/Drumsound & Bassline Smith/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
-   "/MEGA/musica/Drumsound & Bassline Smith/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
-  ],
-  "/MEGA/musica/Gorillaz/Demon Days": [
-   "/MEGA/musica/Gorillaz/Demon Days"
-  ],
-  "/MEGA/musica/Hurley/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
-   "/MEGA/musica/Hurley/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
-  ],
-  "/MEGA/musica/Josh Money/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
-   "/MEGA/musica/Josh Money/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
-  ],
-  "/MEGA/musica/Queensrÿche/Promised land": [
-   "/MEGA/musica/Queensrÿche/Promised land"
-  ],
-  "/MEGA/musica/Rammstein/Herzeleid": [
-   "/MEGA/musica/Rammstein/Herzeleid"
-  ],
-  "/MEGA/musica/Rammstein/Liebe Ist Für Alle Da": [
-   "/MEGA/musica/Rammstein/Liebe Ist Für Alle Da"
-  ],
-  "/MEGA/musica/Rammstein/Raritäten": [
-   "/MEGA/musica/Rammstein/Raritäten"
-  ],
-  "/MEGA/musica/Rammstein/Sehnsucht (Japanese Edition)": [
-   "/MEGA/musica/Rammstein/Sehnsucht (Japanese Edition)"
-  ],
-  "/MEGA/musica/Rammstein/Zeit": [
-   "/MEGA/musica/Rammstein/Zeit"
-  ],
-  "/MEGA/musica/Revolvr & DJ Red/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
-   "/MEGA/musica/Revolvr & DJ Red/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
-  ],
-  "/MEGA/musica/Schrödinger/International Decay": [
-   "/MEGA/musica/Schrödinger/International Decay"
-  ],
-  "/MEGA/musica/Stadium/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
-   "/MEGA/musica/Stadium/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
-  ],
-  "/MEGA/musica/The Squatters & Steve Edwards/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
-   "/MEGA/musica/The Squatters & Steve Edwards/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
-  ],
-  "/MEGA/musica/Various Artists/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
-   "/MEGA/musica/Various Artists/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
-  ],
-  "/MEGA/musica/Vato Gonzalez, Lethal Bizzle & Donae'o/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
-   "/MEGA/musica/Vato Gonzalez, Lethal Bizzle & Donae'o/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
-  ],
-  "/MEGA/musica/Virus Syndicate/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
-   "/MEGA/musica/Virus Syndicate/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
-  ],
-  "/MEGA/musica/Ashbury Heights/Three Cheers For The Newlydeads": [
-   "/MEGA/musica/Ashbury Heights/Three Cheers For The Newlydeads"
-  ],
-  "/MEGA/musica/Assemblage 23/Disappoint": [
-   "/MEGA/musica/Assemblage 23/Disappoint"
-  ],
-  "/MEGA/musica/Assemblage 23/Null": [
-   "/MEGA/musica/Assemblage 23/Untitled album"
-  ],
-  "/MEGA/musica/Aural Vampire/Aural Vampir II - EP": [
-   "/MEGA/musica/Aural Vampire/Aural Vampir II - EP"
-  ],
-  "/MEGA/musica/Aural Vampire/Freeeeze!! - Single": [
-   "/MEGA/musica/Aural Vampire/Freeeeze!! - Single"
-  ],
-  "/MEGA/musica/Aural Vampire/Kerguelen Vortex": [
-   "/MEGA/musica/Aural Vampire/Kerguelen Vortex"
-  ],
-  "/MEGA/musica/Black Magnet/Megamantra": [
-   "/MEGA/musica/Black Magnet/Megamantra"
-  ],
-  "/MEGA/musica/Black moon secret/Cover-up": [
-   "/MEGA/musica/Black moon secret/Cover-up"
-  ],
-  "/MEGA/musica/Blur/The Best of Blur": [
-   "/MEGA/musica/Blur/The Best of Blur"
-  ],
-  "/MEGA/musica/Children Of Bodom/Hate Crew Deathroll": [
-   "/MEGA/musica/Children Of Bodom/Hate Crew Deathroll"
-  ],
-  "/MEGA/musica/Combichrist/Tunning Blaster": [
-   "/MEGA/musica/Combichrist/Tunning Blaster"
-  ],
-  "/MEGA/musica/Cradle Of Filth/Tunning Blaster": [
-   "/MEGA/musica/Cradle Of Filth/Tunning Blaster"
-  ],
-  "/MEGA/musica/Crystal Castles/(III)": [
-   "/MEGA/musica/Crystal Castles/(III)"
-  ],
-  "/MEGA/musica/Crystal Castles/Crystal Castles ( II )": [
-   "/MEGA/musica/Crystal Castles/Crystal Castles ( II )"
-  ],
-  "/MEGA/musica/Dying Wish/Dying Wish - Serration": [
-   "/MEGA/musica/Dying Wish/Dying Wish - Serration"
-  ],
-  "/MEGA/musica/Evil masquerade/Cover-up": [
-   "/MEGA/musica/Evil masquerade/Cover-up"
-  ],
-  "/MEGA/musica/Hocico/Vile Whispers - EP": [
-   "/MEGA/musica/Hocico/Vile Whispers - EP"
-  ],
-  "/MEGA/musica/In Strict Confidence/Tunning Blaster": [
-   "/MEGA/musica/In Strict Confidence/Tunning Blaster"
-  ],
-  "/MEGA/musica/Infected Mushroom/Tunning Blaster": [
-   "/MEGA/musica/Infected Mushroom/Tunning Blaster"
-  ],
-  "/MEGA/musica/Kartagon/Cover-up": [
-   "/MEGA/musica/Kartagon/Cover-up"
-  ],
-  "/MEGA/musica/Lacrimas profundere/Cover-up": [
-   "/MEGA/musica/Lacrimas profundere/Cover-up"
-  ],
-  "/MEGA/musica/Lacrimosa/Cover-up": [
-   "/MEGA/musica/Lacrimosa/Cover-up"
-  ],
-  "/MEGA/musica/Ladytron/Witching Hour (Bonus Version)": [
-   "/MEGA/musica/Ladytron/Witching Hour (Bonus Version)"
-  ],
-  "/MEGA/musica/Lord of the lost/Cover-up": [
-   "/MEGA/musica/Lord of the lost/Cover-up"
-  ],
-  "/MEGA/musica/Rammstein/Mutter (Limited Tour Edition)": [
-   "/MEGA/musica/Rammstein/Mutter (Limited Tour Edition)"
-  ],
-  "/MEGA/musica/Rammstein/Mutter": [
-   "/MEGA/musica/Rammstein/Mutter"
-  ],
-  "/MEGA/musica/Rammstein/Reise, Reise": [
-   "/MEGA/musica/Rammstein/Reise, Reise"
-  ],
-  "/MEGA/musica/Rammstein/Rosenrot": [
-   "/MEGA/musica/Rammstein/Rosenrot"
-  ],
-  "/MEGA/musica/Rammstein/Sehnsucht (Anniversary Edition - Remastered)": [
-   "/MEGA/musica/Rammstein/Sehnsucht (Anniversary Edition - Remastered)"
-  ],
-  "/MEGA/musica/Semblant/Cover-up": [
-   "/MEGA/musica/Semblant/Cover-up"
-  ],
-  "/MEGA/musica/Serration/Dying Wish - Serration": [
-   "/MEGA/musica/Serration/Dying Wish - Serration"
-  ],
-  "/MEGA/musica/Squarehead/Tunning Blaster": [
-   "/MEGA/musica/Squarehead/Tunning Blaster"
-  ],
-  "/MEGA/musica/Trust Issues/Demo": [
-   "/MEGA/musica/Trust Issues/Demo"
-  ],
-  "/MEGA/musica/Trust Issues/Finding Peace In The Darkness": [
-   "/MEGA/musica/Trust Issues/Finding Peace In The Darkness"
-  ]
- },
+ "dir_dest": {},
  "gemini": {
-  "ok": 117,
+  "ok": 119,
   "fail": 0,
   "errors": []
  },
@@ -367,7 +75,7 @@
  "last_action": "run",
  "started_at": "2026-10-10T23:30:57Z",
  "last_run": "2026-10-11T19:14:02Z",
- "pending": 398,
+ "pending": 0,
  "fix_dl_v2": true,
  "dl_fail": {},
  "fix_dl_v3": true,
@@ -375,6 +83,6 @@
  "mega_nonproc": "/untitledless-nonprocessed",
  "pending_rm": [],
  "pending_rename": [],
- "session_seq": 12,
- "finished_at": null
+ "session_seq": 13,
+ "finished_at": "2026-10-11T19:28:57Z"
 }
