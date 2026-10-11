@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 10,
  "counts": {
-  "sin_cambios": 1288,
+  "sin_cambios": 1308,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -209,6 +209,12 @@
   ],
   "/MEGA/musica/Tristania/Ashes": [
    "/MEGA/musica/Tristania/Ashes"
+  ],
+  "/MEGA/musica/Tristania/Beyond the Veil": [
+   "/MEGA/musica/Tristania/Beyond the Veil"
+  ],
+  "/MEGA/musica/Tristania/Darkest White": [
+   "/MEGA/musica/Tristania/Darkest White"
   ]
  },
  "gemini": {
