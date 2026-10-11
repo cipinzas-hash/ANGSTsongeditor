@@ -4,7 +4,7 @@
  "batch_size": 150,
  "runs": 6,
  "counts": {
-  "sin_cambios": 196,
+  "sin_cambios": 206,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -29,77 +29,11 @@
   "/MEGA/musica": [
    "/MEGA/musica/PORTWAVE/Untitled album"
   ],
-  "/MEGA/musica/2x/pateando craneos": [
-   "/MEGA/musica/2x/pateando craneos"
-  ],
-  "/MEGA/musica/Anabantha/Letanias Capitulo Prohibido": [
-   "/MEGA/musica/Anabantha/Letanias Capitulo Prohibido"
-  ],
-  "/MEGA/musica/Anabantha/Llanto De Libertd [Remasterizado]": [
-   "/MEGA/musica/Anabantha/Llanto De Libertd [Remasterizado]"
-  ],
-  "/MEGA/musica/And One/Anguish": [
-   "/MEGA/musica/And One/Anguish"
-  ],
-  "/MEGA/musica/And One/Bodypop": [
-   "/MEGA/musica/And One/Bodypop"
-  ],
-  "/MEGA/musica/Angine de Poitrine/Fabienk": [
-   "/MEGA/musica/Angine de Poitrine/Fabienk"
-  ],
-  "/MEGA/musica/Angine de Poitrine/MATA ZYKLEK": [
-   "/MEGA/musica/Angine de Poitrine/MATA ZYKLEK"
-  ],
-  "/MEGA/musica/Angine de Poitrine/Vol.1": [
-   "/MEGA/musica/Angine de Poitrine/Vol.1"
-  ],
   "/MEGA/musica/Angine de Poitrine/Vol.II": [
    "/MEGA/musica/Angine de Poitrine/Vol.II"
   ],
-  "/MEGA/musica/Ashbury Heights/Morningstar in a Black Car EP": [
-   "/MEGA/musica/Ashbury Heights/Morningstar in a Black Car EP"
-  ],
-  "/MEGA/musica/Ashbury Heights/The Looking Glass Society": [
-   "/MEGA/musica/Ashbury Heights/The Looking Glass Society"
-  ],
-  "/MEGA/musica/Aural Vampire/Vampire Ecstasy": [
-   "/MEGA/musica/Aural Vampire/Vampire Ecstasy"
-  ],
-  "/MEGA/musica/Beborn Beton/Nightfall": [
-   "/MEGA/musica/Beborn Beton/Nightfall"
-  ],
-  "/MEGA/musica/Beborn Beton/Truth": [
-   "/MEGA/musica/Beborn Beton/Truth"
-  ],
-  "/MEGA/musica/Blutengel & Massive Ego/Nothing But a Void": [
-   "/MEGA/musica/Blutengel & Massive Ego/Nothing But a Void"
-  ],
-  "/MEGA/musica/Blutengel & Solar Fake/Nothing Left": [
-   "/MEGA/musica/Blutengel & Solar Fake/Nothing Left"
-  ],
-  "/MEGA/musica/Blutengel/Black": [
-   "/MEGA/musica/Blutengel/Black"
-  ],
-  "/MEGA/musica/Blutengel/Surrender To The Darkness (Single)": [
-   "/MEGA/musica/Blutengel/Surrender To The Darkness (Single)"
-  ],
-  "/MEGA/musica/Blutengel/Vampire": [
-   "/MEGA/musica/Blutengel/Vampire"
-  ],
-  "/MEGA/musica/Buffalo Daughter feat. Cibo Matto/I": [
-   "/MEGA/musica/Buffalo Daughter feat. Cibo Matto/I"
-  ],
-  "/MEGA/musica/Buffalo Daughter/I": [
-   "/MEGA/musica/Buffalo Daughter/I"
-  ],
-  "/MEGA/musica/Children Of Bodom/Downfall (Single)": [
-   "/MEGA/musica/Children Of Bodom/Downfall (Single)"
-  ],
-  "/MEGA/musica/Children Of Bodom/Follow The Reaper (RELOADED Edition)": [
-   "/MEGA/musica/Children Of Bodom/Follow The Reaper (RELOADED Edition)"
-  ],
-  "/MEGA/musica/Children Of Bodom/Hatebreeder (RELOADED Edition)": [
-   "/MEGA/musica/Children Of Bodom/Hatebreeder (RELOADED Edition)"
+  "/MEGA/musica/Children Of Bodom/Hexed (Deluxe Version)": [
+   "/MEGA/musica/Children Of Bodom/Hexed (Deluxe Version)"
   ]
  },
  "gemini": {
@@ -152,10 +86,10 @@
    }
   }
  ],
- "last_action": "start",
+ "last_action": "run",
  "started_at": "2026-10-10T23:30:57Z",
  "last_run": "2026-10-11T02:22:54Z",
- "pending": 1697,
+ "pending": 1547,
  "fix_dl_v2": true,
  "dl_fail": {},
  "fix_dl_v3": true,
@@ -163,6 +97,6 @@
  "mega_nonproc": "/untitledless-nonprocessed",
  "pending_rm": [],
  "pending_rename": [],
- "session_seq": 7,
+ "session_seq": 8,
  "finished_at": null
 }
