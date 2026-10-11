@@ -4,7 +4,7 @@
  "batch_size": 150,
  "runs": 5,
  "counts": {
-  "sin_cambios": 47,
+  "sin_cambios": 57,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -20,91 +20,21 @@
  },
  "attempts": {},
  "dir_dest": {
-  "/MEGA/musica/Venjent/Unknown Disc": [
-   "/MEGA/musica/Venjent/Untitled album"
-  ],
-  "/MEGA/musica/WAVESTORM/Untitled album": [
-   "/MEGA/musica/WAVESTORM/Untitled album"
-  ],
-  "/MEGA/musica/untitledless/1200 Micrograms/1200 Micrograms": [
-   "/MEGA/musica/1200 Micrograms/1200 Micrograms"
-  ],
-  "/MEGA/musica/Aural Vampire/Aural Vampire III: Border of the Dead - Single": [
-   "/MEGA/musica/Aural Vampire/Aural Vampire III - Border of the Dead - Single"
-  ],
-  "/MEGA/musica/Dope Stars Inc./New Breed Of Digital Fuckers": [
-   "/MEGA/musica/Dope Stars Inc/New Breed Of Digital Fuckers"
-  ],
-  "/MEGA/musica/HEALTH/DISCO4 :: PART II": [
-   "/MEGA/musica/HEALTH/DISCO4 - PART II"
-  ],
-  "/MEGA/musica/Infected Mushroom/Converting Vegetarians: The Other Side": [
-   "/MEGA/musica/Infected Mushroom/Converting Vegetarians - The Other Side"
-  ],
-  "/MEGA/musica/Lareine/Vampire Scream (бlbum)": [
-   "/MEGA/musica/Lareine/Vampire Scream (albom)",
-   "/MEGA/musica/Lareine/Vampire Scream (album)"
-  ],
   "/MEGA/musica/Lord of the lost/Blood & Glitter": [
    "/MEGA/musica/Lord of the lost/Blood & Glitter"
-  ],
-  "/MEGA/musica/Molchat Doma/Belaya Polosa": [
-   "/MEGA/musica/Molchat Doma/Belaya Polosa"
-  ],
-  "/MEGA/musica/Molchat Doma/Etazhi": [
-   "/MEGA/musica/Molchat Doma/Etazhi"
-  ],
-  "/MEGA/musica/Molchat Doma/Monument": [
-   "/MEGA/musica/Molchat Doma/Monument"
-  ],
-  "/MEGA/musica/Molchat Doma/S Krysh Nashikh Domov": [
-   "/MEGA/musica/Molchat Doma/S Krysh Nashikh Domov"
-  ],
-  "/MEGA/musica/Molchat Doma/Zvyozdy": [
-   "/MEGA/musica/Molchat Doma/Zvyozdy"
-  ],
-  "/MEGA/musica/Mono inc./Cover-up": [
-   "/MEGA/musica/Mono inc/Cover-up"
   ],
   "/MEGA/musica/Punto Omega/Nostalgias Del Origen": [
    "/MEGA/musica/Punto Omega/Nostalgias Del Origen"
   ],
-  "/MEGA/musica/Red Hot Chili Peppers/Red Hot Chili Peppers: Greatest Hits": [
-   "/MEGA/musica/Red Hot Chili Peppers/Red Hot Chili Peppers - Greatest Hits"
-  ],
-  "/MEGA/musica/Syrian/Kosmonauta CD2: Re-Synchronized": [
-   "/MEGA/musica/Syrian/Kosmonauta CD2 - Re-Synchronized"
-  ],
   "/MEGA/musica": [
    "/MEGA/musica/PORTWAVE/Untitled album"
   ],
-  "/MEGA/musica/きゃりーぱみゅぱみゅ/CANDY CANDY": [
-   "/MEGA/musica/Kyary Pamyu Pamyu/CANDY CANDY"
-  ],
-  "/MEGA/musica/きゃりーぱみゅぱみゅ/ぱみゅぱみゅレボリューション": [
-   "/MEGA/musica/Kyary Pamyu Pamyu/pamyu pamyu reboryushon"
-  ],
-  "/MEGA/musica/きゃりーぱみゅぱみゅ/もしもし原宿": [
-   "/MEGA/musica/Kyary Pamyu Pamyu/Moshi Moshi Harajuku"
-  ],
-  "/MEGA/musica/オーラルヴァンパイア/Wani - EP": [
-   "/MEGA/musica/O-raru Vanpaia/Wani - EP",
-   "/MEGA/musica/Ooral Vanpaia/Wani - EP",
-   "/MEGA/musica/Ooralu Vanpaia/Wani - EP",
-   "/MEGA/musica/Ooraru Vanpaia/Wani - EP"
-  ],
-  "/MEGA/musica/摩天楼オペラ/Chronos - EP": [
-   "/MEGA/musica/Matenro Opera/Chronos - EP"
-  ],
-  "/MEGA/musica/2x/Como Fenix": [
-   "/MEGA/musica/2x/Como Fenix"
-  ],
-  "/MEGA/musica/2x/Lucha Eterna": [
-   "/MEGA/musica/2x/Lucha Eterna"
+  "/MEGA/musica/2x/pateando craneos": [
+   "/MEGA/musica/2x/pateando craneos"
   ]
  },
  "gemini": {
-  "ok": 0,
+  "ok": 117,
   "fail": 0,
   "errors": []
  },
@@ -153,10 +83,10 @@
    }
   }
  ],
- "last_action": "run",
+ "last_action": "start",
  "started_at": "2026-10-10T23:30:57Z",
  "last_run": "2026-10-10T23:48:31Z",
- "pending": 1847,
+ "pending": 1697,
  "fix_dl_v2": true,
  "dl_fail": {},
  "fix_dl_v3": true,
@@ -164,6 +94,6 @@
  "mega_nonproc": "/untitledless-nonprocessed",
  "pending_rm": [],
  "pending_rename": [],
- "session_seq": 6,
+ "session_seq": 7,
  "finished_at": null
 }

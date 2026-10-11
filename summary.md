@@ -1,22 +1,22 @@
 # ANGSTsongeditor — estado del trabajo
 
-- Estado: **active**  ·  fuente: `/MEGA/musica`  ·  lote: 25
-- Iniciado: 2026-10-10T23:30:57Z  ·  ultima corrida: 2026-10-10T23:45:41Z  ·  corridas: 4
-- Pendientes en la fuente (ultimo conteo): 1847
+- Estado: **active**  ·  fuente: `/MEGA/musica`  ·  lote: 150
+- Iniciado: 2026-10-10T23:30:57Z  ·  ultima corrida: 2026-10-10T23:48:31Z  ·  corridas: 5
+- Pendientes en la fuente (ultimo conteo): 1697
 
 ## Conteos acumulados
 
-- uploaded: 39
-- moved: 3
-- replaced: 0
-- sin_cambios: 5
-- romanizados: 0
+- uploaded: 84
+- moved: 53
+- replaced: 3
+- sin_cambios: 57
+- romanizados: 42
 - ya_completo: 0
-- con_album: 24
-- sin_album: 15
+- con_album: 67
+- sin_album: 17
 - nonprocessed: 13
 - retry: 0
-- sidecars: 2
+- sidecars: 25
 - orphans_rescued: 0
 - folder_images: 0
 - no_latin_kept: 0
@@ -29,4 +29,4 @@
 
 ## Gemini
 
-- ok: 0  ·  fallos: 0
+- ok: 117  ·  fallos: 0
