@@ -4,7 +4,7 @@
  "batch_size": 300,
  "runs": 9,
  "counts": {
-  "sin_cambios": 849,
+  "sin_cambios": 869,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -163,6 +163,15 @@
   ],
   "/MEGA/musica/Lacrimosa/Revolution": [
    "/MEGA/musica/Lacrimosa/Revolution"
+  ],
+  "/MEGA/musica/Lacrimosa/Stille": [
+   "/MEGA/musica/Lacrimosa/Stille"
+  ],
+  "/MEGA/musica/Lacrimosa/Vintage Classix": [
+   "/MEGA/musica/Lacrimosa/Vintage Classix"
+  ],
+  "/MEGA/musica/Leandra/Metamorphine": [
+   "/MEGA/musica/Leandra/Metamorphine"
   ]
  },
  "gemini": {
