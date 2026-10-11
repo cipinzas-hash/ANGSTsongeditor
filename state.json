@@ -4,7 +4,7 @@
  "batch_size": 300,
  "runs": 9,
  "counts": {
-  "sin_cambios": 769,
+  "sin_cambios": 789,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -121,6 +121,24 @@
   ],
   "/MEGA/musica/Infected Mushroom/The Shen (Usha vs. Cortex Remix) WEB": [
    "/MEGA/musica/Infected Mushroom/The Shen (Usha vs. Cortex Remix) WEB"
+  ],
+  "/MEGA/musica/Infected Mushroom/Vicious Delicious": [
+   "/MEGA/musica/Infected Mushroom/Vicious Delicious"
+  ],
+  "/MEGA/musica/Juka/Seventh Sense": [
+   "/MEGA/musica/Juka/Seventh Sense"
+  ],
+  "/MEGA/musica/Jungkook/Golden": [
+   "/MEGA/musica/Jungkook/Golden"
+  ],
+  "/MEGA/musica/Kamelot/Dominion": [
+   "/MEGA/musica/Kamelot/Dominion"
+  ],
+  "/MEGA/musica/Kamelot/Eternity": [
+   "/MEGA/musica/Kamelot/Eternity"
+  ],
+  "/MEGA/musica/Kamelot/Karma": [
+   "/MEGA/musica/Kamelot/Karma"
   ]
  },
  "gemini": {
