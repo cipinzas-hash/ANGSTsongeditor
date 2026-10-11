@@ -4,7 +4,7 @@
  "batch_size": 150,
  "runs": 7,
  "counts": {
-  "sin_cambios": 346,
+  "sin_cambios": 356,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -31,60 +31,6 @@
   ],
   "/MEGA/musica/Angine de Poitrine/Vol.II": [
    "/MEGA/musica/Angine de Poitrine/Vol.II"
-  ],
-  "/MEGA/musica/Children Of Bodom/Hexed (Deluxe Version)": [
-   "/MEGA/musica/Children Of Bodom/Hexed (Deluxe Version)"
-  ],
-  "/MEGA/musica/Children Of Bodom/Something Wild (vinyl rip)": [
-   "/MEGA/musica/Children Of Bodom/Something Wild (vinyl rip)"
-  ],
-  "/MEGA/musica/Cibo Matto/Hotel Valentine (Clean)": [
-   "/MEGA/musica/Cibo Matto/Hotel Valentine (Clean)"
-  ],
-  "/MEGA/musica/Cibo Matto/Stereotype A": [
-   "/MEGA/musica/Cibo Matto/Stereotype A"
-  ],
-  "/MEGA/musica/Cibo Matto/Viva! La Woman": [
-   "/MEGA/musica/Cibo Matto/Viva! La Woman"
-  ],
-  "/MEGA/musica/Code 64/Broken Rhythm": [
-   "/MEGA/musica/Code 64/Broken Rhythm"
-  ],
-  "/MEGA/musica/Code 64/Leaving Earth": [
-   "/MEGA/musica/Code 64/Leaving Earth"
-  ],
-  "/MEGA/musica/Combichrist/Everybody Hates You": [
-   "/MEGA/musica/Combichrist/Everybody Hates You"
-  ],
-  "/MEGA/musica/Combichrist/Making Monsters": [
-   "/MEGA/musica/Combichrist/Making Monsters"
-  ],
-  "/MEGA/musica/Combichrist/Today We Are All Demons - Dark Side": [
-   "/MEGA/musica/Combichrist/Today We Are All Demons - Dark Side"
-  ],
-  "/MEGA/musica/Combichrist/Today We Are All Demons": [
-   "/MEGA/musica/Combichrist/Today We Are All Demons"
-  ],
-  "/MEGA/musica/Conception/State of Deception (Deluxe Edition)": [
-   "/MEGA/musica/Conception/State of Deception (Deluxe Edition)"
-  ],
-  "/MEGA/musica/Covenant/Europa": [
-   "/MEGA/musica/Covenant/Europa"
-  ],
-  "/MEGA/musica/Covenant/Northern Light": [
-   "/MEGA/musica/Covenant/Northern Light"
-  ],
-  "/MEGA/musica/Covenant/Skyshaper": [
-   "/MEGA/musica/Covenant/Skyshaper"
-  ],
-  "/MEGA/musica/Crystal Castles/Crystal Castles": [
-   "/MEGA/musica/Crystal Castles/Crystal Castles"
-  ],
-  "/MEGA/musica/Culture Kultur/Reborn": [
-   "/MEGA/musica/Culture Kultur/Reborn"
-  ],
-  "/MEGA/musica/Dark Moor/Dark Moor": [
-   "/MEGA/musica/Dark Moor/Dark Moor"
   ],
   "/MEGA/musica/Dark Moor/The Gates Of Oblivion": [
    "/MEGA/musica/Dark Moor/The Gates Of Oblivion"
@@ -143,7 +89,7 @@
  "last_action": "run",
  "started_at": "2026-10-10T23:30:57Z",
  "last_run": "2026-10-11T11:03:41Z",
- "pending": 1547,
+ "pending": 1397,
  "fix_dl_v2": true,
  "dl_fail": {},
  "fix_dl_v3": true,
@@ -151,6 +97,6 @@
  "mega_nonproc": "/untitledless-nonprocessed",
  "pending_rm": [],
  "pending_rename": [],
- "session_seq": 8,
+ "session_seq": 9,
  "finished_at": null
 }
