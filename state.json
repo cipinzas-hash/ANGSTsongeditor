@@ -4,7 +4,7 @@
  "batch_size": 150,
  "runs": 7,
  "counts": {
-  "sin_cambios": 226,
+  "sin_cambios": 246,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -40,6 +40,15 @@
   ],
   "/MEGA/musica/Cibo Matto/Hotel Valentine (Clean)": [
    "/MEGA/musica/Cibo Matto/Hotel Valentine (Clean)"
+  ],
+  "/MEGA/musica/Cibo Matto/Stereotype A": [
+   "/MEGA/musica/Cibo Matto/Stereotype A"
+  ],
+  "/MEGA/musica/Cibo Matto/Viva! La Woman": [
+   "/MEGA/musica/Cibo Matto/Viva! La Woman"
+  ],
+  "/MEGA/musica/Code 64/Broken Rhythm": [
+   "/MEGA/musica/Code 64/Broken Rhythm"
   ]
  },
  "gemini": {
