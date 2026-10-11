@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 11,
  "counts": {
-  "sin_cambios": 1648,
+  "sin_cambios": 1668,
   "moved": 74,
   "uploaded": 97,
   "sin_album": 29,
@@ -288,6 +288,15 @@
   ],
   "/MEGA/musica/Rammstein/Mutter": [
    "/MEGA/musica/Rammstein/Mutter"
+  ],
+  "/MEGA/musica/Rammstein/Reise, Reise": [
+   "/MEGA/musica/Rammstein/Reise, Reise"
+  ],
+  "/MEGA/musica/Rammstein/Rosenrot": [
+   "/MEGA/musica/Rammstein/Rosenrot"
+  ],
+  "/MEGA/musica/Rammstein/Sehnsucht (Anniversary Edition - Remastered)": [
+   "/MEGA/musica/Rammstein/Sehnsucht (Anniversary Edition - Remastered)"
   ]
  },
  "gemini": {
