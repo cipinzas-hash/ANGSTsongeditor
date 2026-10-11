@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 10,
  "counts": {
-  "sin_cambios": 1148,
+  "sin_cambios": 1168,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -143,6 +143,24 @@
   ],
   "/MEGA/musica/Snakeskin/Canta'tronic": [
    "/MEGA/musica/Snakeskin/Canta'tronic"
+  ],
+  "/MEGA/musica/Snakeskin/Fucked Up Music For Fucked Up People (Remixes by Combichrist)": [
+   "/MEGA/musica/Snakeskin/Fucked Up Music For Fucked Up People (Remixes by Combichrist)"
+  ],
+  "/MEGA/musica/Snakeskin/Medusa's Spell": [
+   "/MEGA/musica/Snakeskin/Medusa's Spell"
+  ],
+  "/MEGA/musica/Snakeskin/Music For The Lost": [
+   "/MEGA/musica/Snakeskin/Music For The Lost"
+  ],
+  "/MEGA/musica/Snakeskin/Tunes For My Santimea": [
+   "/MEGA/musica/Snakeskin/Tunes For My Santimea"
+  ],
+  "/MEGA/musica/Solar Fake/Don't Push This Button!": [
+   "/MEGA/musica/Solar Fake/Don't Push This Button!"
+  ],
+  "/MEGA/musica/Solar Fake/Reasons To Kill": [
+   "/MEGA/musica/Solar Fake/Reasons To Kill"
   ]
  },
  "gemini": {
