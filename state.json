@@ -4,15 +4,15 @@
  "batch_size": 300,
  "runs": 8,
  "counts": {
-  "sin_cambios": 434,
-  "moved": 53,
+  "sin_cambios": 453,
+  "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
   "nonprocessed": 13,
   "nonprocessed_reasons": {
    "sin_artista": 13
   },
-  "sidecars": 25,
+  "sidecars": 26,
   "con_album": 67,
   "requeued": 12,
   "replaced": 6,
@@ -64,6 +64,21 @@
   ],
   "/MEGA/musica/Diorama/Tiny Missing Fragments": [
    "/MEGA/musica/Diorama/Tiny Missing Fragments"
+  ],
+  "/MEGA/musica/Dope Stars INC/Fuck the Mainstream": [
+   "/MEGA/musica/Dope Stars Inc/Fuck the Mainstream"
+  ],
+  "/MEGA/musica/Dying Wish [USA]/Innate Thirst": [
+   "/MEGA/musica/Dying Wish [USA]/Innate Thirst"
+  ],
+  "/MEGA/musica/Dying Wish/Dying Wish": [
+   "/MEGA/musica/Dying Wish/Dying Wish"
+  ],
+  "/MEGA/musica/Dying Wish/Enemies In Red": [
+   "/MEGA/musica/Dying Wish/Enemies In Red"
+  ],
+  "/MEGA/musica/Dying Wish/Fragments Of A Bitter Memory": [
+   "/MEGA/musica/Dying Wish/Fragments Of A Bitter Memory"
   ]
  },
  "gemini": {
