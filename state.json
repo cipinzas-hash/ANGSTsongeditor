@@ -4,8 +4,8 @@
  "batch_size": 400,
  "runs": 11,
  "counts": {
-  "sin_cambios": 1616,
-  "moved": 71,
+  "sin_cambios": 1628,
+  "moved": 74,
   "uploaded": 97,
   "sin_album": 29,
   "nonprocessed": 13,
@@ -15,7 +15,7 @@
   "sidecars": 30,
   "con_album": 68,
   "requeued": 12,
-  "replaced": 12,
+  "replaced": 17,
   "romanizados": 42,
   "retry": 1
  },
@@ -276,6 +276,12 @@
   ],
   "/MEGA/musica/Lacrimosa/Cover-up": [
    "/MEGA/musica/Lacrimosa/Cover-up"
+  ],
+  "/MEGA/musica/Ladytron/Witching Hour (Bonus Version)": [
+   "/MEGA/musica/Ladytron/Witching Hour (Bonus Version)"
+  ],
+  "/MEGA/musica/Lord of the lost/Cover-up": [
+   "/MEGA/musica/Lord of the lost/Cover-up"
   ]
  },
  "gemini": {
