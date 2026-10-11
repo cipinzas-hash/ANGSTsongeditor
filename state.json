@@ -4,7 +4,7 @@
  "batch_size": 300,
  "runs": 9,
  "counts": {
-  "sin_cambios": 829,
+  "sin_cambios": 849,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -157,6 +157,12 @@
   ],
   "/MEGA/musica/Lacrimosa/Inferno": [
    "/MEGA/musica/Lacrimosa/Inferno"
+  ],
+  "/MEGA/musica/Lacrimosa/Lament": [
+   "/MEGA/musica/Lacrimosa/Lament"
+  ],
+  "/MEGA/musica/Lacrimosa/Revolution": [
+   "/MEGA/musica/Lacrimosa/Revolution"
   ]
  },
  "gemini": {
