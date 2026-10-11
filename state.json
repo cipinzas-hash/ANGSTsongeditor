@@ -4,7 +4,7 @@
  "batch_size": 150,
  "runs": 7,
  "counts": {
-  "sin_cambios": 286,
+  "sin_cambios": 306,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -70,6 +70,12 @@
   ],
   "/MEGA/musica/Covenant/Europa": [
    "/MEGA/musica/Covenant/Europa"
+  ],
+  "/MEGA/musica/Covenant/Northern Light": [
+   "/MEGA/musica/Covenant/Northern Light"
+  ],
+  "/MEGA/musica/Covenant/Skyshaper": [
+   "/MEGA/musica/Covenant/Skyshaper"
   ]
  },
  "gemini": {
