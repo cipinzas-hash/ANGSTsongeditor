@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 10,
  "counts": {
-  "sin_cambios": 1228,
+  "sin_cambios": 1248,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -182,6 +182,15 @@
   ],
   "/MEGA/musica/Symphony X/The Divine Wings of Tragedy": [
    "/MEGA/musica/Symphony X/The Divine Wings of Tragedy"
+  ],
+  "/MEGA/musica/Symphony X/Underworld": [
+   "/MEGA/musica/Symphony X/Underworld"
+  ],
+  "/MEGA/musica/Syrian/Alien Nation": [
+   "/MEGA/musica/Syrian/Alien Nation"
+  ],
+  "/MEGA/musica/Syrian/Kosmonauta (CD 1)": [
+   "/MEGA/musica/Syrian/Kosmonauta (CD 1)"
   ]
  },
  "gemini": {
