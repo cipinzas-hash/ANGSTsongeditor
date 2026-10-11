@@ -4,7 +4,7 @@
  "batch_size": 300,
  "runs": 8,
  "counts": {
-  "sin_cambios": 589,
+  "sin_cambios": 609,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -160,6 +160,24 @@
   ],
   "/MEGA/musica/Hocico/HyperViolent": [
    "/MEGA/musica/Hocico/HyperViolent"
+  ],
+  "/MEGA/musica/Hocico/Spider Bites": [
+   "/MEGA/musica/Hocico/Spider Bites"
+  ],
+  "/MEGA/musica/Hocico/The Screen": [
+   "/MEGA/musica/Hocico/The Screen"
+  ],
+  "/MEGA/musica/Hocico/memorias atrás": [
+   "/MEGA/musica/Hocico/memorias atrás"
+  ],
+  "/MEGA/musica/Hora Zulu, Sho-Hai & Rderumba/Siempre Soñé Saber Sobre Nadie Negó Nunca Nada": [
+   "/MEGA/musica/Hora Zulu, Sho-Hai & Rderumba/Siempre Soñé Saber Sobre Nadie Negó Nunca Nada"
+  ],
+  "/MEGA/musica/Hora Zulu,MarT/La Manera de Decirte": [
+   "/MEGA/musica/Hora Zulu,MarT/La Manera de Decirte"
+  ],
+  "/MEGA/musica/Hora Zulu/Beatus Ille [Single]": [
+   "/MEGA/musica/Hora Zulu/Beatus Ille [Single]"
   ]
  },
  "gemini": {
