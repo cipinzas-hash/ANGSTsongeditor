@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 10,
  "counts": {
-  "sin_cambios": 1068,
+  "sin_cambios": 1088,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -101,6 +101,15 @@
   ],
   "/MEGA/musica/Rage Against the Machine/Evil Empire": [
    "/MEGA/musica/Rage Against the Machine/Evil Empire"
+  ],
+  "/MEGA/musica/Rage Against the Machine/Killing In The Name": [
+   "/MEGA/musica/Rage Against the Machine/Killing In The Name"
+  ],
+  "/MEGA/musica/Rage Against the Machine/Rage Against The Machine": [
+   "/MEGA/musica/Rage Against the Machine/Rage Against The Machine"
+  ],
+  "/MEGA/musica/Robyn/Body Talk (Deluxe Version)": [
+   "/MEGA/musica/Robyn/Body Talk (Deluxe Version)"
   ]
  },
  "gemini": {
