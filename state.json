@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 10,
  "counts": {
-  "sin_cambios": 1168,
+  "sin_cambios": 1188,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -161,6 +161,12 @@
   ],
   "/MEGA/musica/Solar Fake/Reasons To Kill": [
    "/MEGA/musica/Solar Fake/Reasons To Kill"
+  ],
+  "/MEGA/musica/Solar Fake/This Generation Ends": [
+   "/MEGA/musica/Solar Fake/This Generation Ends"
+  ],
+  "/MEGA/musica/Sonata Arctica/Winterheart's Guild": [
+   "/MEGA/musica/Sonata Arctica/Winterheart's Guild"
   ]
  },
  "gemini": {
