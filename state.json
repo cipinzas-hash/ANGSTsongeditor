@@ -4,7 +4,7 @@
  "batch_size": 300,
  "runs": 9,
  "counts": {
-  "sin_cambios": 749,
+  "sin_cambios": 769,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -109,6 +109,18 @@
   ],
   "/MEGA/musica/Infected Mushroom/Legend of the Black Shawarma": [
    "/MEGA/musica/Infected Mushroom/Legend of the Black Shawarma"
+  ],
+  "/MEGA/musica/Infected Mushroom/More than Just a Name": [
+   "/MEGA/musica/Infected Mushroom/More than Just a Name"
+  ],
+  "/MEGA/musica/Infected Mushroom/Pink Nightmares (Single)": [
+   "/MEGA/musica/Infected Mushroom/Pink Nightmares (Single)"
+  ],
+  "/MEGA/musica/Infected Mushroom/Return to the Sauce": [
+   "/MEGA/musica/Infected Mushroom/Return to the Sauce"
+  ],
+  "/MEGA/musica/Infected Mushroom/The Shen (Usha vs. Cortex Remix) WEB": [
+   "/MEGA/musica/Infected Mushroom/The Shen (Usha vs. Cortex Remix) WEB"
   ]
  },
  "gemini": {
