@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 10,
  "counts": {
-  "sin_cambios": 1308,
+  "sin_cambios": 1328,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -215,6 +215,12 @@
   ],
   "/MEGA/musica/Tristania/Darkest White": [
    "/MEGA/musica/Tristania/Darkest White"
+  ],
+  "/MEGA/musica/Tristania/Illumination": [
+   "/MEGA/musica/Tristania/Illumination"
+  ],
+  "/MEGA/musica/Tristania/Rubicon": [
+   "/MEGA/musica/Tristania/Rubicon"
   ]
  },
  "gemini": {
