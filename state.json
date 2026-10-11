@@ -4,7 +4,7 @@
  "batch_size": 300,
  "runs": 8,
  "counts": {
-  "sin_cambios": 513,
+  "sin_cambios": 531,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -15,7 +15,7 @@
   "sidecars": 26,
   "con_album": 67,
   "requeued": 12,
-  "replaced": 6,
+  "replaced": 8,
   "romanizados": 42
  },
  "attempts": {},
@@ -106,6 +106,15 @@
   ],
   "/MEGA/musica/Front 242/Catch The Men": [
    "/MEGA/musica/Front 242/Catch The Men"
+  ],
+  "/MEGA/musica/Front 242/Front By Front 1988-1989": [
+   "/MEGA/musica/Front 242/Front By Front 1988-1989"
+  ],
+  "/MEGA/musica/Front 242/Headhunter": [
+   "/MEGA/musica/Front 242/Headhunter"
+  ],
+  "/MEGA/musica/Frozen Plasma/Gezeiten": [
+   "/MEGA/musica/Frozen Plasma/Gezeiten"
   ]
  },
  "gemini": {
