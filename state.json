@@ -4,16 +4,16 @@
  "batch_size": 400,
  "runs": 11,
  "counts": {
-  "sin_cambios": 1440,
+  "sin_cambios": 1456,
   "moved": 62,
-  "uploaded": 84,
-  "sin_album": 17,
+  "uploaded": 88,
+  "sin_album": 20,
   "nonprocessed": 13,
   "nonprocessed_reasons": {
    "sin_artista": 13
   },
   "sidecars": 26,
-  "con_album": 67,
+  "con_album": 68,
   "requeued": 12,
   "replaced": 10,
   "romanizados": 42,
@@ -22,6 +22,7 @@
  "attempts": {},
  "dir_dest": {
   "/MEGA/musica": [
+   "/MEGA/musica/PORTWAVE/There Sore Eyes",
    "/MEGA/musica/PORTWAVE/Untitled album"
   ],
   "/MEGA/musica/Angine de Poitrine/Vol.II": [
@@ -122,6 +123,15 @@
   ],
   "/MEGA/musica/grandson/a modern tragedy vol. 1": [
    "/MEGA/musica/grandson/a modern tragedy vol. 1"
+  ],
+  "/MEGA/musica/grandson/a modern tragedy vol. 2": [
+   "/MEGA/musica/grandson/a modern tragedy vol. 2"
+  ],
+  "/MEGA/musica/grandson/a modern tragedy vol. 3": [
+   "/MEGA/musica/grandson/a modern tragedy vol. 3"
+  ],
+  "/MEGA/musica/the GazettE/DIM": [
+   "/MEGA/musica/the GazettE/DIM"
   ]
  },
  "gemini": {
