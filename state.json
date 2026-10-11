@@ -4,15 +4,15 @@
  "batch_size": 400,
  "runs": 11,
  "counts": {
-  "sin_cambios": 1493,
-  "moved": 63,
+  "sin_cambios": 1512,
+  "moved": 64,
   "uploaded": 88,
   "sin_album": 20,
   "nonprocessed": 13,
   "nonprocessed_reasons": {
    "sin_artista": 13
   },
-  "sidecars": 26,
+  "sidecars": 27,
   "con_album": 68,
   "requeued": 12,
   "replaced": 12,
@@ -162,6 +162,39 @@
   ],
   "/MEGA/musica/Drumsound & Bassline Smith/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
    "/MEGA/musica/Drumsound & Bassline Smith/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
+  ],
+  "/MEGA/musica/Gorillaz/Demon Days": [
+   "/MEGA/musica/Gorillaz/Demon Days"
+  ],
+  "/MEGA/musica/Hurley/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
+   "/MEGA/musica/Hurley/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
+  ],
+  "/MEGA/musica/Josh Money/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
+   "/MEGA/musica/Josh Money/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
+  ],
+  "/MEGA/musica/Queensrÿche/Promised land": [
+   "/MEGA/musica/Queensrÿche/Promised land"
+  ],
+  "/MEGA/musica/Rammstein/Herzeleid": [
+   "/MEGA/musica/Rammstein/Herzeleid"
+  ],
+  "/MEGA/musica/Rammstein/Liebe Ist Für Alle Da": [
+   "/MEGA/musica/Rammstein/Liebe Ist Für Alle Da"
+  ],
+  "/MEGA/musica/Rammstein/Raritäten": [
+   "/MEGA/musica/Rammstein/Raritäten"
+  ],
+  "/MEGA/musica/Rammstein/Sehnsucht (Japanese Edition)": [
+   "/MEGA/musica/Rammstein/Sehnsucht (Japanese Edition)"
+  ],
+  "/MEGA/musica/Rammstein/Zeit": [
+   "/MEGA/musica/Rammstein/Zeit"
+  ],
+  "/MEGA/musica/Revolvr & DJ Red/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
+   "/MEGA/musica/Revolvr & DJ Red/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
+  ],
+  "/MEGA/musica/Schrödinger/International Decay": [
+   "/MEGA/musica/Schrödinger/International Decay"
   ]
  },
  "gemini": {
