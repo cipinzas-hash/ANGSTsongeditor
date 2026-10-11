@@ -4,7 +4,7 @@
  "batch_size": 300,
  "runs": 8,
  "counts": {
-  "sin_cambios": 394,
+  "sin_cambios": 414,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -46,6 +46,15 @@
   ],
   "/MEGA/musica/Detroit Metal City/Detroit Metal City": [
    "/MEGA/musica/Detroit Metal City/Detroit Metal City"
+  ],
+  "/MEGA/musica/Die Antwoord/$O$": [
+   "/MEGA/musica/Die Antwoord/$O$"
+  ],
+  "/MEGA/musica/Die kreatur/Panoptikum": [
+   "/MEGA/musica/Die kreatur/Panoptikum"
+  ],
+  "/MEGA/musica/Diorama/Cubed Bonus_Disc": [
+   "/MEGA/musica/Diorama/Cubed Bonus_Disc"
   ]
  },
  "gemini": {
