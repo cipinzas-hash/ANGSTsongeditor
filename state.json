@@ -4,7 +4,7 @@
  "batch_size": 150,
  "runs": 7,
  "counts": {
-  "sin_cambios": 246,
+  "sin_cambios": 266,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -49,6 +49,18 @@
   ],
   "/MEGA/musica/Code 64/Broken Rhythm": [
    "/MEGA/musica/Code 64/Broken Rhythm"
+  ],
+  "/MEGA/musica/Code 64/Leaving Earth": [
+   "/MEGA/musica/Code 64/Leaving Earth"
+  ],
+  "/MEGA/musica/Combichrist/Everybody Hates You": [
+   "/MEGA/musica/Combichrist/Everybody Hates You"
+  ],
+  "/MEGA/musica/Combichrist/Making Monsters": [
+   "/MEGA/musica/Combichrist/Making Monsters"
+  ],
+  "/MEGA/musica/Combichrist/Today We Are All Demons - Dark Side": [
+   "/MEGA/musica/Combichrist/Today We Are All Demons - Dark Side"
   ]
  },
  "gemini": {
