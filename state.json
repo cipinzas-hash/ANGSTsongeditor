@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 11,
  "counts": {
-  "sin_cambios": 1456,
+  "sin_cambios": 1475,
   "moved": 62,
   "uploaded": 88,
   "sin_album": 20,
@@ -15,7 +15,7 @@
   "sidecars": 26,
   "con_album": 68,
   "requeued": 12,
-  "replaced": 10,
+  "replaced": 11,
   "romanizados": 42,
   "retry": 1
  },
@@ -132,6 +132,9 @@
   ],
   "/MEGA/musica/the GazettE/DIM": [
    "/MEGA/musica/the GazettE/DIM"
+  ],
+  "/MEGA/musica/the GazettE/DISORDER": [
+   "/MEGA/musica/the GazettE/DISORDER"
   ]
  },
  "gemini": {
