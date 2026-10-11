@@ -9,3 +9,4 @@
 - [007](007-20261010T234831Z.md) · 2026-10-10T23:48:31Z · start · tocados 150 (subida/mv/reemplazo 98, no procesados 0, reintentos 0) · pendientes 1697 · active
 - [008](008-20261011T022254Z.md) · 2026-10-11T02:22:54Z · run · tocados 150 (subida/mv/reemplazo 1, no procesados 0, reintentos 0) · pendientes 1547 · active
 - [009](009-20261011T110341Z.md) · 2026-10-11T11:03:41Z · run · tocados 150 (subida/mv/reemplazo 0, no procesados 0, reintentos 0) · pendientes 1397 · active
+- [010](010-20261011T113407Z.md) · 2026-10-11T11:34:07Z · start · tocados 300 (subida/mv/reemplazo 7, no procesados 0, reintentos 0) · pendientes 1097 · active
