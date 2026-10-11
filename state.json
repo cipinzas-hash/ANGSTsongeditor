@@ -4,7 +4,7 @@
  "batch_size": 150,
  "runs": 7,
  "counts": {
-  "sin_cambios": 266,
+  "sin_cambios": 286,
   "moved": 53,
   "uploaded": 84,
   "sin_album": 17,
@@ -61,6 +61,15 @@
   ],
   "/MEGA/musica/Combichrist/Today We Are All Demons - Dark Side": [
    "/MEGA/musica/Combichrist/Today We Are All Demons - Dark Side"
+  ],
+  "/MEGA/musica/Combichrist/Today We Are All Demons": [
+   "/MEGA/musica/Combichrist/Today We Are All Demons"
+  ],
+  "/MEGA/musica/Conception/State of Deception (Deluxe Edition)": [
+   "/MEGA/musica/Conception/State of Deception (Deluxe Edition)"
+  ],
+  "/MEGA/musica/Covenant/Europa": [
+   "/MEGA/musica/Covenant/Europa"
   ]
  },
  "gemini": {
