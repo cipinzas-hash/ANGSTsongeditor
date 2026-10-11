@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 11,
  "counts": {
-  "sin_cambios": 1512,
+  "sin_cambios": 1532,
   "moved": 64,
   "uploaded": 88,
   "sin_album": 20,
@@ -195,6 +195,24 @@
   ],
   "/MEGA/musica/Schrödinger/International Decay": [
    "/MEGA/musica/Schrödinger/International Decay"
+  ],
+  "/MEGA/musica/Stadium/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
+   "/MEGA/musica/Stadium/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
+  ],
+  "/MEGA/musica/The Squatters & Steve Edwards/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
+   "/MEGA/musica/The Squatters & Steve Edwards/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
+  ],
+  "/MEGA/musica/Various Artists/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
+   "/MEGA/musica/Various Artists/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
+  ],
+  "/MEGA/musica/Vato Gonzalez, Lethal Bizzle & Donae'o/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
+   "/MEGA/musica/Vato Gonzalez, Lethal Bizzle & Donae'o/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
+  ],
+  "/MEGA/musica/Virus Syndicate/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix": [
+   "/MEGA/musica/Virus Syndicate/This Is Bass 2013 – Dubstep, Drum & Bass, Electro Mix"
+  ],
+  "/MEGA/musica/Ashbury Heights/Three Cheers For The Newlydeads": [
+   "/MEGA/musica/Ashbury Heights/Three Cheers For The Newlydeads"
   ]
  },
  "gemini": {
