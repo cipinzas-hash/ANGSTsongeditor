@@ -4,7 +4,7 @@
  "batch_size": 400,
  "runs": 10,
  "counts": {
-  "sin_cambios": 1128,
+  "sin_cambios": 1148,
   "moved": 54,
   "uploaded": 84,
   "sin_album": 17,
@@ -128,6 +128,21 @@
   ],
   "/MEGA/musica/Rotersand/Waiting To Be Born EP": [
    "/MEGA/musica/Rotersand/Waiting To Be Born EP"
+  ],
+  "/MEGA/musica/Röyksopp & Robyn/Do It Again": [
+   "/MEGA/musica/Röyksopp & Robyn/Do It Again"
+  ],
+  "/MEGA/musica/Schwarz Stein/Artificial Hallucination": [
+   "/MEGA/musica/Schwarz Stein/Artificial Hallucination"
+  ],
+  "/MEGA/musica/Schwarz Stein/Schwarz Stein": [
+   "/MEGA/musica/Schwarz Stein/Schwarz Stein"
+  ],
+  "/MEGA/musica/Skrillex/Scary Monsters And Nice Sprites": [
+   "/MEGA/musica/Skrillex/Scary Monsters And Nice Sprites"
+  ],
+  "/MEGA/musica/Snakeskin/Canta'tronic": [
+   "/MEGA/musica/Snakeskin/Canta'tronic"
   ]
  },
  "gemini": {
