@@ -1,5 +1,5 @@
 {
- "status": "finished_with_leftovers",
+ "status": "stopped",
  "mega_source": "/MEGA/musica",
  "batch_size": 400,
  "runs": 11,
@@ -72,7 +72,7 @@
    }
   }
  ],
- "last_action": "run",
+ "last_action": "stop",
  "started_at": "2026-10-10T23:30:57Z",
  "last_run": "2026-10-11T19:14:02Z",
  "pending": 0,

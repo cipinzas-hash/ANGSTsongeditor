@@ -1,10 +1,10 @@
 # ANGSTsongeditor — estado del trabajo
 
-- Estado: **finished_with_leftovers**  ·  fuente: `/MEGA/musica`  ·  lote: 400
+- Estado: **stopped**  ·  fuente: `/MEGA/musica`  ·  lote: 400
 - Iniciado: 2026-10-10T23:30:57Z  ·  ultima corrida: 2026-10-11T19:14:02Z  ·  corridas: 11
 - Pendientes en la fuente (ultimo conteo): 0
 
-> Terminado. Quedan 76 archivo(s) no audio sin acompañante (ver leftovers.json).
+> Detenido a mano.
 
 ## Conteos acumulados
 
