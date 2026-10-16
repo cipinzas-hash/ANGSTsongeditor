@@ -7,6 +7,10 @@ respaldo de iTunes para año y carátula); no huella ni decodifica el audio.
 Pensado para música de nicho. **Reemplaza** el original: borra el crudo de la
 fuente solo después de confirmar la subida.
 
+## Límites de cuota (restricción permanente)
+
+MEGA limita la transferencia, así que el bot trabaja con **lotes de máximo 100 canciones y una corrida cada 5 horas** (cron `0 */5 * * *`). El código lo hace cumplir: el lote se recorta a 100 aunque se pida más, y una corrida que llegue antes de 4,5 h desde la anterior se omite (una corrida manual no puede saltarse el espaciado). Subir estos límites es una decisión del dueño del repo, no una optimización: no cambiar `MAX_BATCH` ni `MIN_INTERVAL_SEC` en `scripts/job.py` sin que se pida.
+
 ## Cómo funciona: un trabajo con inicio y fin
 
 El bot **no procesa nada hasta que se lo pides**. Desde Actions → *Untitled
