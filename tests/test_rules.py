@@ -98,6 +98,25 @@ class RomanizacionDeterminista(unittest.TestCase):
         self.assertEqual(len(calls), 1)
 
 
+class LimitesDeCuota(unittest.TestCase):
+    def test_el_lote_nunca_pasa_de_100(self):
+        import job
+        self.assertEqual(job.clamp_batch(400), 100)
+        self.assertEqual(job.clamp_batch("300"), 100)
+        self.assertEqual(job.clamp_batch(100), 100)
+        self.assertEqual(job.clamp_batch(5), 5)
+        self.assertEqual(job.clamp_batch(None), 5)
+
+    def test_espaciado_minimo_entre_corridas(self):
+        import job
+        base = 1_800_000_000
+        iso = job.datetime.fromtimestamp(base, job.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        self.assertFalse(job.interval_ok(iso, base + 3600))             # 1 h despues: se omite
+        self.assertFalse(job.interval_ok(iso, base + 4 * 3600))         # 4 h: todavia no
+        self.assertTrue(job.interval_ok(iso, base + int(4.6 * 3600)))   # un cron de 5 h puede adelantarse un poco
+        self.assertTrue(job.interval_ok(None, base))
+
+
 class CarpetasCanonicas(unittest.TestCase):
     def test_no_crear_carpeta_que_solo_difiere_en_mayusculas(self):
         # caso real: carpeta '2x' (muchos archivos) y tag de artista '2X'

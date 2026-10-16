@@ -48,6 +48,13 @@ AUDIOISH = AUDIO_EXTS | UNSUPPORTED_AUDIO
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp"}
 FOLDER_IMAGE_RE = re.compile(r"^(album|albumart.*|cover|folder|front|art|artwork)$", re.I)
 CHECKPOINT_EVERY = 20
+
+# LIMITES DE CUOTA (decision de Cristopher, no cambiar sin que lo pida): MEGA limita la transferencia,
+# asi que el lote es como maximo de 100 canciones y el cron corre cada 5 horas. El codigo lo hace
+# cumplir: el lote se recorta a MAX_BATCH y una corrida que llegue antes de MIN_INTERVAL_SEC desde la
+# anterior se omite (asi una corrida manual no puede saltarse el espaciado).
+MAX_BATCH = 100
+MIN_INTERVAL_SEC = int(4.5 * 3600)   # 4.5 h: el cron de 5 h puede adelantarse un poco
 SESSION_ENTRIES = []      # entradas del informe de ESTA corrida (sesion)
 ACCEPTED_EXIT1 = [0]      # veces que MEGAcmd dio exit != 0 con el resultado confirmado
 SESSION = {}
@@ -62,6 +69,25 @@ class AbortRun(Exception):
 
 
 # ------------------------------------------------------------------- estado
+
+def clamp_batch(requested) -> int:
+    try:
+        n = int(requested)
+    except (TypeError, ValueError):
+        n = 5
+    return max(1, min(n, MAX_BATCH))
+
+
+def interval_ok(last_run_iso, now_epoch=None) -> bool:
+    """True si ya pasaron al menos MIN_INTERVAL_SEC desde la ultima corrida (o no hay ultima)."""
+    if not last_run_iso:
+        return True
+    try:
+        last = datetime.strptime(last_run_iso, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc).timestamp()
+    except ValueError:
+        return True
+    return (now_epoch if now_epoch is not None else time.time()) - last >= MIN_INTERVAL_SEC
+
 
 def load_state():
     p = STATE_DIR / "state.json"
@@ -749,11 +775,16 @@ def cmd_run(st):
     import tag_with_discogs as T
 
     source = st["mega_source"].rstrip("/")
+    if not interval_ok(st.get("last_run")):
+        return (f"Corrida omitida: la anterior fue a las {st.get('last_run')} y deben pasar al menos 5 h entre corridas "
+                f"(cuota de transferencia de MEGA). Reintentar mas tarde.")
     if not st.get("fix_dl_v3"):      # los fallos previos eran falsos negativos de mega-get (exit 1 con descarga completa)
         st["attempts"] = {}
         st["dl_fail"] = {}
         st["fix_dl_v3"] = True
-    batch = int(os.environ.get("BATCH_SIZE") or st.get("batch_size") or 5)
+    batch = clamp_batch(os.environ.get("BATCH_SIZE") or st.get("batch_size") or 5)
+    if int(os.environ.get("BATCH_SIZE") or 0) > MAX_BATCH:
+        print(f"AVISO: lote pedido {os.environ.get('BATCH_SIZE')} recortado a {MAX_BATCH} (limite por cuota de MEGA).")
     st["batch_size"] = batch
     st["runs"] = st.get("runs", 0) + 1
     st["last_run"] = now()
@@ -1166,6 +1197,7 @@ def main():
                 st.update(status="active", mega_source=source, started_at=now(), runs=0, counts={}, attempts={}, dir_dest={},
                           gemini={"ok": 0, "fail": 0, "errors": []}, pending_rm=[], pending_rename=[], dl_fail={})
                 st.pop("finished_at", None)
+                st.pop("last_run", None)          # un trabajo nuevo empieza sin espera
         try:
             note = cmd_run(st)
         except AbortRun as e:
