@@ -1,7 +1,7 @@
 {
  "status": "stopped",
  "mega_source": "/MEGA/musica",
- "batch_size": 400,
+ "batch_size": 100,
  "runs": 11,
  "counts": {
   "sin_cambios": 1704,
